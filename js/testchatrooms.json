@@ -1,0 +1,20 @@
+{
+  "chatrooms":
+  [
+    {
+      "chatroom": "chatroom-alpha",
+      "chatterimage": "https://via.placeholder.com/50",
+      "timestamp" : "8"
+    },
+    {
+      "chatroom": "chatroom-beta",
+      "chatterimage": "https://via.placeholder.com/50",
+      "timestamp" : "4"
+    },
+    {
+      "chatroom": "chatroom-charlie",
+      "chatterimage": "https://via.placeholder.com/50",
+      "timestamp" : "16"
+    }
+  ]
+}
