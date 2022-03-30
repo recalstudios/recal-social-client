@@ -246,12 +246,14 @@ body
             {
                 display: flex;
                 flex-direction: column;
-                margin: .5rem;
+                margin: 1rem;
             }
 
             .chat-message
             {
+                display: flex;
                 margin: 0;
+                overflow-wrap: anywhere;
             }
 
             .chat-user

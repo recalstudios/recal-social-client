@@ -104,8 +104,13 @@ ws.onopen = e =>
 
 ws.onmessage = e =>
 {
-    console.log("message", e);
+    console.log(e.data);
     return false;
 }
 
 ws.onerror = e => console.log("error", e);
+
+function send(e)
+{
+    ws.send(e)
+}
