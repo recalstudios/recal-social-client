@@ -223,7 +223,6 @@ body
         justify-content: center;
         flex-direction: column;
 
-
         border-top-left-radius: 25px;
 
 
@@ -234,8 +233,8 @@ body
         {
             display: flex;
             width: $chat-window-width;
-            height: 76vh;
-            max-height: 76vh;
+            height: 77vh;
+            max-height: 77vh;
 
             align-items: flex-start;
             justify-content: flex-start;
@@ -246,35 +245,41 @@ body
             .chat
             {
                 display: flex;
+                flex-direction: column;
+                margin: .5rem;
+            }
+
+            .chat-message
+            {
+                margin: 0;
+            }
+
+            .chat-user
+            {
+                display: flex;
                 flex-direction: row;
                 gap: 0;
                 row-gap: 0;
 
-                margin: 0 10px;
-
+                align-items: center;
 
                 img
                 {
                     border-radius: 15px;
-                    margin: 10px;
+                    margin: 0 10px 0 0;
                     aspect-ratio: 1;
-                    height: auto;
-                    width: 3vw;
+
+                    height: max-content;
+                    width: auto;
+                    //height: 75.7px;
+                    //
+                    //width: 75.7px;
                 }
 
-                .author-message-box
+                .chat-message
                 {
                     margin: 0;
-
-                    &:nth-child(0)
-                    {
-                        margin-bottom: -10px;
-                    }
-
-                    &:nth-child(1)
-                    {
-                        margin-top: -10px;
-                    }
+                    padding: 0;
                 }
             }
         }
@@ -284,8 +289,8 @@ body
             display: flex;
             flex-grow: 1;
             width: $chat-window-width;
-            height: 12vh;
-            max-height: 12vh;
+            height: 13vh;
+            max-height: 13vh;
 
             align-items: center;
             justify-content: center;
