@@ -1,5 +1,6 @@
 let currentChatroom;
-let frmfcs;
+let messages;
+let message;
 
 currentChatroom = localStorage['currentChatroom'] || '/js/chatroom-alpha.json';
 
@@ -7,41 +8,42 @@ currentChatroom = localStorage['currentChatroom'] || '/js/chatroom-alpha.json';
 //    withCredentials: true
 //});
 
-
-// onload= function() {
-//     frmfcs = document.getElementById('focus');
-//     frmfcs.focus();
-// }
-
 // let element = document.getElementById('focus');
 // element.scrollTop = element.offsetHeight
 
 
-loadChat()
+fetchMessages()
 
-function loadChat() {
-    document.querySelector("#chat-list").innerHTML = ` `
+function fetchMessages() {
 
     // Dynamically loads content
     fetch("/js/" + currentChatroom + ".json")
         .then(response => response.json())
         .then(data =>
         {
-            for (let i = 0; i < data.messages.length; i++)
-            {
-                document.querySelector("#chat-list").innerHTML += `
-                <div class="chat">
-                    <div class="chat-user">
-                        <img src="${data.messages[i].chatterimage}" alt="skootskoot">
-                        <p class="bold">${data.messages[i].author}</p>
-                        </div>
-                    <p class="chat-message">${data.messages[i].message}</p>
-                </div>
-            `;
-            }
+            messages = data
 
-            scroll().then()
+            loadChat()
+
         });
+}
+
+function loadChat() {
+  document.querySelector("#chat-list").innerHTML = ''
+  for (const message of messages)
+  {
+    document.querySelector("#chat-list").innerHTML += `
+      <div class="chat">
+          <div class="chat-user">
+              <img src="${message.chatterimage}" alt="skootskoot">
+              <p class="bold">${message.author}</p>
+              </div>
+          <p class="chat-message">${message.message}</p>
+      </div>
+  `;
+  }
+
+  document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
 }
 
 // Dynamically loads content
@@ -79,25 +81,40 @@ function changeChatRoom(chatroomId) {
 
     localStorage['currentChatroom'] = currentChatroom
 
-    loadChat()
+    $("#sendMessage").val('')
+
+    fetchMessages()
 }
 
-async function scroll() {
-    let myDiv = document.querySelector("#chat-list");
-    myDiv.scrollTop = myDiv.scrollHeight;
-}
+$("#sendMessage").keypress(function (e) {
+    if(e.which === 13 && !e.shiftKey) {
+        e.preventDefault();
+
+        $(this).closest("form").submit();
+
+        message = JSON.stringify({"type":"message", "data":$("#sendMessage").val()});
+
+        console.log(message);
+
+        ws.send(message);
+
+        $("#sendMessage").val('')
+
+        // document.querySelector(".chat:last-child").style.color = red;
+    }
+});
 
 ///////////////////////////////////////////////////////////////////////
-const ws = new WebSocket("ws://10.80.18.182:14242/anything");
+const ws = new WebSocket("ws://10.80.18.182:14242/");
 
 ws.onclose = e => console.log("closed", e);
 
 ws.onopen = e =>
 {
+
     console.log("open", e);
     ws.send(JSON.stringify({
-        "author": "little",
-        "data": "soni is not cool"
+        "type": "auth"
     }));
     return false;
 }
@@ -105,12 +122,17 @@ ws.onopen = e =>
 ws.onmessage = e =>
 {
     console.log(e.data);
+    messages.push(
+      {
+      "author": "test",
+      "chatterimage": "https://via.placeholder.com/50",
+      "message": e.data
+      })
+    loadChat()
+
+    // document.querySelector(".chat:last-child").style.color = initial;
     return false;
 }
 
 ws.onerror = e => console.log("error", e);
-
-function send(e)
-{
-    ws.send(e)
-}
+3
