@@ -1,8 +1,6 @@
-let currentChatroom;
-let messages;
-let message;
 
-currentChatroom = localStorage['currentChatroom'] || '/js/chatroom-alpha.json';
+
+currentChatroom = localStorage['currentChatroom'] || 'chatroom-alpha';
 
 //axios.post('URL', data, {
 //    withCredentials: true
@@ -11,13 +9,12 @@ currentChatroom = localStorage['currentChatroom'] || '/js/chatroom-alpha.json';
 // let element = document.getElementById('focus');
 // element.scrollTop = element.offsetHeight
 
-
 fetchMessages()
 
 function fetchMessages() {
 
     // Dynamically loads content
-    fetch("/js/" + currentChatroom + ".json")
+    fetch("/js/json/" + currentChatroom + ".json")
         .then(response => response.json())
         .then(data =>
         {
@@ -47,7 +44,7 @@ function loadChat() {
 }
 
 // Dynamically loads content
-fetch("/js/testchatrooms.json")
+fetch("/js/json/testchatrooms.json")
     .then(response => response.json())
     .then(data =>
     {
@@ -86,13 +83,15 @@ function changeChatRoom(chatroomId) {
     fetchMessages()
 }
 
-$("#sendMessage").keypress(function (e) {
+sendMessage = $("#sendMessage")
+
+sendMessage.keypress(function (e) {
     if(e.which === 13 && !e.shiftKey) {
         e.preventDefault();
 
         $(this).closest("form").submit();
 
-        message = JSON.stringify({"type":"message", "data":$("#sendMessage").val()});
+        message = JSON.stringify({"type":"message", "data":sendMessage.val()});
 
         console.log(message);
 
@@ -135,4 +134,3 @@ ws.onmessage = e =>
 }
 
 ws.onerror = e => console.log("error", e);
-3

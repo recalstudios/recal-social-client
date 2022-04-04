@@ -4,7 +4,7 @@
         <meta charset="UTF-8"> <!-- Allows ÆØÅ -->
         <link rel="stylesheet" type="text/css" href="/style.css"> <!-- Tells HTML where the CSS is located -->
 
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
         <link href="https://social.recalstudios.net/" rel="canonical">
         <title>Login - Recal Social</title>
 
@@ -23,32 +23,33 @@
         <meta property="og:type" content="website">
     </head>
     <body>
-        <div id="header">
-            <a class="btn" href="/">Home</a>
-            <div id="btn-box">
-                <a class="btn" href="/pages/profile/" onclick="savePreviousPage()">Settings</a>
-                <a class="btn" href="/pages/login/" onclick="savePreviousPage()">Log in</a>
-                <a class="btn" href="/pages/register/" onclick="savePreviousPage()">Sign up</a>
-            </div>
-        </div>
 
-        <div id="index-content">
-            <div id="chatroom-list">
-
-            </div>
-            <div id="chat-window">
-                <div id="chat-list" tabindex="-1">
-                </div>
-                <div id="chat-box">
-                    <label>
-                        <textarea id="sendMessage" placeholder="Type your message here"></textarea>
-                    </label>
+    <div id="header">
+        <a href="/">
+            <div class="btn">
+                <div id="btn-flex">
+                    <span class="material-icons-round">navigate_before</span>
+                    <p>Back</p>
                 </div>
             </div>
+        </a>
+    </div>
+
+        <div id="login-content">
+            <form id="form">
+                <h1>Log In to your account</h1>
+                <label for="username"></label><input type="text" id="username" name="username" placeholder="Username" data-index="1"><br>
+                <label for="passphrase"></label><input type="password" id="passphrase" name="passphrase" placeholder="Passphrase" data-index="2"><br>
+                <label for="confirm-passphrase"></label><input type="password" id="confirm-passphrase" name="passphrase" placeholder="Confirm passphrase" data-index="3"><br>
+                <p id="result"></p>
+                <a id="submit" class="btn" onclick="verifyCredentials()">Log in</a>
+
+            </form>
+            <h3 id="register">Don't have an account? <a href="/pages/register/" onclick="savePreviousPage()">Register here!</a></h3>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="/js/general.js"></script>
-        <script src="/js/index.js"></script>
+        <script src="/pages/login/login.js"></script>
     </body>
 </html>

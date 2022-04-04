@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"> <!-- Allows ÆØÅ -->
+        <link rel="stylesheet" type="text/css" href="/style.css"> <!-- Tells HTML where the CSS is located -->
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://social.recalstudios.net/" rel="canonical">
+        <title>Register - Recal Social</title>
+
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Open graph link preview -->
+        <meta property="og:title" content="Recal Social">
+        <meta property="og:image" content="https://little.yessness.com/assets/logos/favicon.png">
+        <meta property="og:image:alt" content="Recal Social Logo">
+        <meta property="og:site_name" content="RS">
+        <meta property="og:link" content="https://social.recalstudios.net/">
+        <meta property="og:url" content="https://social.recalstudios.net/">
+        <meta property="og:description" content="Recal Studios chat app">
+        <meta property="og:type" content="website">
+    </head>
+    <body>
+
+    <div id="login-content">
+        <form id="form">
+            <h1>Register a new account</h1>
+            <label for="email"></label><input type="text" id="email" name="username" placeholder="Email" data-index="1"><br>
+            <label for="username"></label><input type="text" id="username" name="username" placeholder="Username" data-index="2"><br>
+            <label for="passphrase"></label><input type="password" id="passphrase" name="passphrase" placeholder="Passphrase" data-index="3"><br>
+            <label for="confirm-passphrase"></label><input type="password" id="confirm-passphrase" name="confirm-passphrase" placeholder="Confirm passphrase" data-index="4"><br>
+            <p id="result"></p>
+            <a id="submit" class="btn" onclick="verifyCredentials()">Submit</a>
+        </form>
+        <h3 id="register">Already have an account? <a href="/pages/login/" onclick="savePreviousPage()">Log in here!</a></h3>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/js/general.js"></script>
+    <script src="/pages/register/register.js"></script>
+    </body>
+</html>

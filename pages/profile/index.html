@@ -6,7 +6,7 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://social.recalstudios.net/" rel="canonical">
-        <title>Login - Recal Social</title>
+        <title>Settings - Recal Social</title>
 
 
 
@@ -23,32 +23,38 @@
         <meta property="og:type" content="website">
     </head>
     <body>
+
         <div id="header">
             <a class="btn" href="/">Home</a>
             <div id="btn-box">
-                <a class="btn" href="/pages/profile/" onclick="savePreviousPage()">Settings</a>
-                <a class="btn" href="/pages/login/" onclick="savePreviousPage()">Log in</a>
-                <a class="btn" href="/pages/register/" onclick="savePreviousPage()">Sign up</a>
+                <a class="btn" href="/pages/login/">Log out</a>
             </div>
         </div>
 
-        <div id="index-content">
-            <div id="chatroom-list">
-
-            </div>
-            <div id="chat-window">
-                <div id="chat-list" tabindex="-1">
+        <div id="profile-content">
+            <div id="settings-box">
+                <div id="settings">
+                    <h3 onclick="changeSettingsPane('profile')">Profile</h3>
+                    <h3 onclick="changeSettingsPane('settings')">Settings</h3>
                 </div>
-                <div id="chat-box">
-                    <label>
-                        <textarea id="sendMessage" placeholder="Type your message here"></textarea>
-                    </label>
+            </div>
+            <div id="profile-box">
+                <div id="profile">
+                    <img id="pfp" src="https://via.placeholder.com/200x200" alt="smh">
+                    <div>
+                        <p class="italic darken-text small-margin-bottom">Username:</p>
+                        <h2 id="username">Little</h2>
+                        <p class="italic darken-text small-margin-bottom">Email:</p>
+                        <h2 id="email">little@yessness.com</h2>
+                        <p class="italic darken-text small-margin-bottom">Status:</p>
+                        <h2 id="status">Admin</h2>
+                    </div>
                 </div>
             </div>
         </div>
+
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="/js/general.js"></script>
-        <script src="/js/index.js"></script>
     </body>
 </html>
