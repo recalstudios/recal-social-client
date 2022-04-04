@@ -143,19 +143,17 @@ body
         cursor: pointer;
     }
 
-    #btn-flex
-    {
+    #btn-flex{
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
 
-        .material-icons-round
-        {
-            margin: 24px 0;
-            height: 64px;
-            width: 64px;
-            color: #d3d6f0;
-        }
+    .material-icons-round
+    {
+        margin: 24px 0;
+        font-size: 32px;
+        color: #d3d6f0;
     }
 }
 
