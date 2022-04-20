@@ -58,7 +58,6 @@ $integer-limit: 2147483647rem;
 a
 {
     user-select: none;
-
     &:hover
     {
         cursor: pointer;
@@ -138,7 +137,10 @@ body
     font-size: 24px;
     font-weight: bold;
 
-    &:hover {
+
+
+    &:hover
+    {
         text-decoration: underline;
         cursor: pointer;
     }
@@ -147,6 +149,16 @@ body
         display: flex;
         flex-direction: row;
         align-items: center;
+
+        #btn-img
+        {
+            text-decoration: none;
+
+            &:hover
+            {
+                text-decoration: none ;
+            }
+        }
     }
 
     .material-icons-round
@@ -176,14 +188,6 @@ body
     position: relative;
 
     //box-shadow: 0 0 1rem rgba(black, 0.6);
-
-    #btn-box
-    {
-        display: flex;
-
-        flex-direction: row;
-        gap: 15px;
-    }
 }
 
 
@@ -416,7 +420,6 @@ body
 
         &:hover
         {
-            text-decoration: underline;
             cursor: pointer;
         }
     }

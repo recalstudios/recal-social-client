@@ -104,7 +104,7 @@ sendMessage.keypress(function (e) {
 });
 
 ///////////////////////////////////////////////////////////////////////
-const ws = new WebSocket("ws://10.80.18.182:14242/");
+const ws = new WebSocket("ws://10.111.59.109:14242/");
 
 ws.onclose = e => console.log("closed", e);
 
@@ -113,7 +113,8 @@ ws.onopen = e =>
 
     console.log("open", e);
     ws.send(JSON.stringify({
-        "type": "auth"
+        "type": "auth",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiI5MTE0Mjg2YS04ZjcyLTRjZTEtYjcwMC05NTAyYWRkZDNiMzQiLCJpYXQiOiI0LzIwLzIwMjIgOToyOTowNSBBTSIsIlVzZXJJZCI6IjEiLCJVc2VybmFtZSI6InJvb3QiLCJleHAiOjE2NTA0NDc1NDUsImlzcyI6InJlY2Fsc3R1ZGlvcy5uZXQiLCJhdWQiOiJyZWNhbHN0dWRpb3MubmV0In0.unEp_mgKs6LHRs-uMWd0Ml1TPDbYRXj_UiE61ClxQa8"
     }));
     return false;
 }

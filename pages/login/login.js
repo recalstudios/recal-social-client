@@ -1,3 +1,4 @@
+
 reset()
 
 // Function to reset login results
@@ -7,6 +8,7 @@ function reset() {
 
 // Verifies the credentials provided with the apico
 async function verifyCredentials() {
+    // Tries given commands and catches the errors if any occur
 
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0 || document.querySelector("#confirm-passphrase").value.length === 0) {
         $("#result").text("Please fill all fields")
@@ -15,43 +17,49 @@ async function verifyCredentials() {
 
         // Tries given commands and catches the errors if any occur
 
-    } else if ($("#passphrase").val() === $("#confirm-passphrase").val()) {
-        $("#result").text("Valid")
-        console.log("valid");
-
+    } else {
         try {
 
-            console.log("axios request");
+            username = document.querySelector("#username").value;
+            passphrase = document.querySelector("#passphrase").value;
+
             // API request with axios. Post request where the url field describes where the request should go and the data field what should be in it.
-            // token = (await axios({
-            //     method: 'post',
-            //     url: api + '/auth/token/new',
-            //     data: {
-            //         user: document.querySelector("#username").value,
-            //         pass: document.querySelector("#password").value
-            //     }
-            // })).data;
+            authToken = (await axios({
+                method: 'post',
+                url: api + 'auth/token/new',
+                data: {
+                    user: username,
+                    pass: passphrase
+                }
+            })).data;
         }
-        catch(e) {
+        catch {
             //console.error();
-            console.log(e)
         }
-    } else {
-        $("#result").text("Fields does not match")
-        console.log("Fields does not match")
+
+        console.log(authToken)
     }
 
 
 
     // Stores token in localstorage
-    // localStorage['token'] = token; // only strings
+    localStorage['token'] = token; // only strings
 
-    // if (token.length === 0) {
-    //
-    // }
+    if (token.length === 0) {
+        verifyTextfield("none", "initial", "none")
+    }
 
     await getUser();
+
+    verifyTextfield("none", "none", "initial")
+
+    // Changes user page to the specified page
+    window.location.href = '/';
+
+    // Stores full name in localstorage
+    localStorage['fullName'] = `${user.firstName} ${user.lastName}`;
 }
+
 
 // Function to check i've a user is logged in or not
 // function checkIfLoggedIn() {

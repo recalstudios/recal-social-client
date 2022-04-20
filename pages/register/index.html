@@ -32,11 +32,12 @@
             <label for="passphrase"></label><input type="password" id="passphrase" name="passphrase" placeholder="Passphrase" data-index="3"><br>
             <label for="confirm-passphrase"></label><input type="password" id="confirm-passphrase" name="confirm-passphrase" placeholder="Confirm passphrase" data-index="4"><br>
             <p id="result"></p>
-            <a id="submit" class="btn" onclick="verifyCredentials()">Submit</a>
+            <a id="submit" class="btn" onclick="createUser()">Submit</a>
         </form>
         <h3 id="register">Already have an account? <a href="/pages/login/" onclick="savePreviousPage()">Log in here!</a></h3>
     </div>
 
+    <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/js/general.js"></script>
     <script src="/pages/register/register.js"></script>
