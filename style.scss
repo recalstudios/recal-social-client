@@ -1,514 +1,76 @@
-// soni made this work, without soni this code would be nothing - SOny howni (system operator for northern ireland)
-// https://haha.yessness.com/index.html#
-
-// TODO: Make chatlist resizable
-
 /* STYLESHEET TABLE OF CONTENTS
-    1 Setup
-        1.1 Variables
-        1.2 Fonts
-        1.3 Root styling
-        1.4 Utility Classes
-    2 General elements
-        2.1 Tags
-            2.1.1 Scrollbar
-            2.1.2 Buttons
-        2.2 Titles
-        2.3 Separators
-    3 Reusable sections
-        3.1 Header
-    4 Specific sections
-        4.1 Home page
-            4.1.1 Introduction section
-        4.2 Login & Register
-            4.2.1 Projects list
-        4.3 Profile
-        4.4 404 Page
-            4.1.1
-            4.1.2
-    5 Useless elements
+    1 Declarations
+        1.1 Fonts
+        1.2 Colors
+    2 Sections
+        2.1 Body
+        2.2 Logo
+        2.3 Text
+    3 Animations
  */
 
-//====================================
-// 1 Setup
-//====================================
+// 1.1 Fonts
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-// 1.1 Variables
+// 1.2 Colors
+$background: #212227;
+$accent: #40446e;
+$primary: #8892ec;
+$light: #d3d6f0;
+$foreground: #ffffff;
 
-$accent-raisin-black: #212227; // Primary
-$accent-purple-navy: #40446e; // Tertiary
-$accent-cornflower-blue: #8892ec;
-$accent-light-periwinkle: #d3d6f0; // Secondary
-$accent-white: #ffffff;
-
-$header-height: 15vh;
-$content-height: 85vh;
-
-$chat-list-width: 20vw;
-$chat-window-width: 80vw;
-
-$integer-limit: 2147483647rem;
-
-// 1.2 Fonts
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-// 1.3 Root styling
-
-a
-{
-    user-select: none;
-    &:hover
-    {
-        cursor: pointer;
-    }
-}
-
+// 2.1 Body
 body
 {
-    background-color: $accent-raisin-black;
-    color: $accent-light-periwinkle;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 100vh;
+    color: $light;
+    background: $background;
     font-family: 'Poppins', sans-serif;
+}
+
+// 2.2 Logo
+div
+{
+    width: 40rem;
+    aspect-ratio: 1;
+    margin: -6rem;
+    background: linear-gradient(45deg, $accent, $primary);
+    mask-image: url("/assets/brand/logo.svg");
+    -webkit-mask-image: url("/assets/brand/logo.svg");
+    transform: scale(.85);
+    opacity: 0;
+    animation: in .9s ease forwards .2s;
+}
+
+// 2.3 Text
+h1
+{
     margin: 0;
+    font-size: 3rem;
+    opacity: 0;
+    transform: translateY(.5em);
+    animation: in .5s ease forwards .35s;
 }
 
-// 1.4 Utility Classes
-
-.bold
+h3
 {
-    font-weight: bold;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(.5em);
+    animation: in .5s ease forwards .5s;
 }
 
-.italic
+// 3 Animations
+@keyframes in
 {
-    font-style: italic;
-}
-
-.darken-text
-{
-    color: darken($accent-light-periwinkle, 20);
-}
-
-.small-margin-bottom
-{
-    margin-bottom: -10px !important;
-}
-
-//====================================
-// 2 General Elements
-//====================================
-
-// 2.1 Tags
-
-// 2.1.1 Scroll bar
-
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: darken($accent-raisin-black, 3);
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: $accent-cornflower-blue;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: $accent-white;
-}
-
-// 2.1.2 Buttons
-
-.btn {
-    display: inline-block; // Fixes collapsing marges issue
-    color: $accent-light-periwinkle;
-    background-color: $accent-purple-navy;
-    padding: 10px 45px;
-    min-width: 5vw;
-    border-radius: 15px;
-    text-decoration: none;
-    justify-content: center;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-
-
-
-    &:hover
+    to
     {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-
-    #btn-flex{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        #btn-img
-        {
-            text-decoration: none;
-
-            &:hover
-            {
-                text-decoration: none ;
-            }
-        }
-    }
-
-    .material-icons-round
-    {
-        margin: 24px 0;
-        font-size: 32px;
-        color: #d3d6f0;
-    }
-}
-
-//====================================
-// 3 Reusable
-//====================================
-
-// 3.1 Header
-
-#header
-{
-    display: flex;
-    max-width: 100vw;
-    height: $header-height;
-    padding: 0 2vw;
-
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
-    position: relative;
-
-    //box-shadow: 0 0 1rem rgba(black, 0.6);
-}
-
-
-//====================================
-// 4 Spesific Sections
-//====================================
-
-// 4.1 Home
-
-#index-content
-{
-    display: flex;
-    width: 100vw;
-    height: $content-height;
-    max-height: $content-height;
-
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-
-    #chatroom-list
-    {
-        display: flex;
-        width: $chat-list-width;
-        height: $content-height;
-        max-height: $content-height;
-
-        align-items: flex-start;
-        justify-content: flex-start;
-        flex-direction: column;
-
-        //background-color: $accent-purple-navy;
-
-        .chatroom
-        {
-            display: flex;
-
-            max-width: 16vw;
-            min-width: 14vw;
-
-
-            margin: 1vw 2vw;
-            padding: 1.5vw 1vw;
-            height: 3vh;
-
-
-            align-items: center;
-            justify-content: flex-start;
-            flex-direction: row;
-            gap: 10px;
-
-            background-color: $accent-purple-navy;
-
-            border-radius: 15px;
-
-            &:nth-child(1)
-            {
-                margin: 2vw 2vw 1vw 2vw;
-            }
-
-            img
-            {
-                aspect-ratio: 1;
-                height: auto;
-                width: 3vw;
-            }
-        }
-    }
-
-    #chat-window
-    {
-        display: flex;
-        width: $chat-window-width;
-        height: $content-height;
-        max-height: $content-height;
-
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-
-        border-top-left-radius: 25px;
-
-
-        //box-shadow: 0 0 2rem rgba(0, 0, 0, 0.5) inset;
-        background-color: darken($accent-raisin-black, 3);
-
-        #chat-list
-        {
-            display: flex;
-            width: $chat-window-width;
-            height: 77vh;
-            max-height: 77vh;
-
-            align-items: flex-start;
-            justify-content: flex-start;
-            flex-direction: column;
-
-            overflow-y: scroll;
-
-            .chat
-            {
-                display: flex;
-                flex-direction: column;
-                margin: 1rem;
-            }
-
-            .chat-message
-            {
-                display: flex;
-                margin: 0;
-                overflow-wrap: anywhere;
-            }
-
-            .chat-user
-            {
-                display: flex;
-                flex-direction: row;
-                gap: 0;
-                row-gap: 0;
-
-                align-items: center;
-
-                img
-                {
-                    border-radius: 15px;
-                    margin: 0 10px 0 0;
-                    aspect-ratio: 1;
-
-                    height: max-content;
-                    width: auto;
-                    //height: 75.7px;
-                    //
-                    //width: 75.7px;
-                }
-
-                .chat-message
-                {
-                    margin: 0;
-                    padding: 0;
-                }
-            }
-        }
-
-        #chat-box
-        {
-            display: flex;
-            flex-grow: 1;
-            width: $chat-window-width;
-            height: 13vh;
-            max-height: 13vh;
-
-            align-items: center;
-            justify-content: center;
-            flex-direction: row;
-
-            textarea
-            {
-                width: 76.5vw;
-
-                margin: 10px;
-                padding: 1vh;
-
-                background-color: $accent-purple-navy;
-                color: $accent-white;
-
-                border-radius: 5px;
-                border: 0;
-
-                border: none;
-                overflow: auto;
-                outline: none;
-
-                -webkit-box-shadow: none;
-                -moz-box-shadow: none;
-                box-shadow: none;
-
-                resize: none; /*remove the resize handle on the bottom right*/
-
-                font-family: "Poppins", sans-serif;
-
-                &::placeholder
-                {
-                    color: $accent-light-periwinkle;
-                }
-            }
-        }
-    }
-}
-
-// 4.2 Login & Register
-
-#form
-{
-    display:grid;
-    place-items:center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    input
-    {
-
-        padding: 15px;
-        margin: 10px;
-        text-align: center;
-        font-size: 25px;
-        border-radius: 15px;
-        color: #1A1A1D;
-
-        &:active
-        {
-            color: #1A1A1D;
-        }
-    }
-}
-
-#register
-{
-    text-align: center;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    position: absolute;
-
-    a
-    {
-        color: $accent-light-periwinkle;
-        text-decoration: none;
-
-        &:hover
-        {
-            cursor: pointer;
-        }
-    }
-}
-
-// 4.3 Profile
-
-#profile-content
-{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
-    width: 100vw;
-    height: $content-height;
-
-
-
-    #profile-box
-    {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        width: 80vw;
-        height: $content-height;
-
-        #profile
-        {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-
-
-            width: 50vw;
-            gap: 25px;
-            padding: 25px;
-
-            background: $accent-purple-navy;
-            color: papayawhip;
-
-            border-radius: 25px;
-            border-collapse: collapse;
-            text-align: left;
-
-            img
-            {
-                aspect-ratio: 1/1;
-                height: 20rem;
-                border-radius: $integer-limit;
-            }
-
-            div
-            {
-                display: flex;
-                flex-direction: column;
-            }
-
-            div *
-            {
-                margin: 5px 0;
-            }
-        }
-    }
-
-    #settings-box
-    {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        //padding: 100px 0 0 0;
-
-
-        #settings
-        {
-            display: flex;
-            flex-direction: column;
-            width: 20vw;
-            height: $content-height;
-
-
-            padding: 0 25px;
-            background: $accent-purple-navy;
-
-            border-top-right-radius: 25px;
-        }
+        transform: none;
+        opacity: 1;
     }
 }
