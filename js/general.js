@@ -1,25 +1,51 @@
-let api;
-let authToken;
-let currentChatroom;
-let messages;
-let message;
-let sendMessage;
-let input;
+// Load document sections
+$("#back").load("/assets/left-arrow.svg");
 
-let username;
-let email;
-let passphrase;
-let result;
+// Declare variables
+let authToken, currentChatroom, messages, message, sendMessage, input;
+let username, email, passphrase, result;
+let user;
 
-api = "https://api.social.recalstudios.net/"
+const api = "https://api.social.recalstudios.net/";
 
-function savePreviousPage() {
-    if (localStorage['previousPage'] !== window.location) {
-        console.log(window.location)
-        localStorage['previousPage'] = window.location;
+// Gets auth token with credentials
+async function getAuthToken()
+{
+    try
+    {
+        // API request with axios. Post request where the url field describes where the request should go and the data field what should be in it.
+        authToken = (await axios({
+            method: 'post',
+            url: api + 'auth/token/renew',
+            data: {
+                username: username,
+                password: passphrase
+            }
+        })).data;
+    }
+    catch (e)
+    {
+        console.log(e);
+        console.log(result);
+        console.log(authToken);
     }
 }
 
-function goBack() {
-    window.location.href = localStorage['previousPage'];
+async function chainRefreshToken()
+{
+    axios.post(api + 'auth/token/renew', { withCredentials: true });
+}
+
+async function getUser() {
+    authToken = localStorage['token']
+
+    user = (await axios({
+        method: 'post',
+        url: api + 'user/user',
+        data: {
+            Authorization: 'Bearer ' + authToken
+        }
+    })).data;
+
+    console.log(user)
 }

@@ -24,22 +24,33 @@
     </head>
     <body>
 
+    <div id="header">
+        <a href="/login">
+            <div class="btn">
+                <div id="btn-flex">
+                    <div id="back"></div>
+                    <p id="btn-text">Back</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
     <div id="login-content">
         <form id="form">
             <h1>Register a new account</h1>
-            <label for="email"></label><input type="text" id="email" name="username" placeholder="Email" data-index="1"><br>
+            <label for="email"></label><input type="text" id="email" name="email" placeholder="Email" data-index="1"><br>
             <label for="username"></label><input type="text" id="username" name="username" placeholder="Username" data-index="2"><br>
             <label for="passphrase"></label><input type="password" id="passphrase" name="passphrase" placeholder="Passphrase" data-index="3"><br>
             <label for="confirm-passphrase"></label><input type="password" id="confirm-passphrase" name="confirm-passphrase" placeholder="Confirm passphrase" data-index="4"><br>
             <p id="result"></p>
             <a id="submit" class="btn" onclick="createUser()">Submit</a>
         </form>
-        <h3 id="register">Already have an account? <a href="/pages/login/" onclick="savePreviousPage()">Log in here!</a></h3>
+        <h3 id="register">Already have an account? <a href="/login" onclick="savePreviousPage()">Log in here!</a></h3>
     </div>
 
     <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/js/general.js"></script>
-    <script src="/pages/register/register.js"></script>
+    <script src="/register/register.js"></script>
     </body>
 </html>

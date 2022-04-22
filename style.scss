@@ -149,6 +149,18 @@ body
         display: flex;
         flex-direction: row;
         align-items: center;
+        align-content: center;
+
+        #back
+        {
+            width: 30px;
+            height: 30px;
+        }
+
+        #btn-text
+        {
+            margin: 0;
+        }
 
         #btn-img
         {

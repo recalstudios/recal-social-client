@@ -28,7 +28,7 @@
         <a href="/">
             <div class="btn">
                 <div id="btn-flex">
-                    <a id="left-arrow"></a>
+                    <div id="back"></div>
                     <p id="btn-text">Back</p>
                 </div>
             </div>
@@ -40,17 +40,16 @@
                 <h1>Log In to your account</h1>
                 <label for="username"></label><input type="text" id="username" name="username" placeholder="Username" data-index="1"><br>
                 <label for="passphrase"></label><input type="password" id="passphrase" name="passphrase" placeholder="Passphrase" data-index="2"><br>
-                <label for="confirm-passphrase"></label><input type="password" id="confirm-passphrase" name="passphrase" placeholder="Confirm passphrase" data-index="3"><br>
                 <p id="result"></p>
-                <a id="submit" class="btn" onclick="createUser()">Log in</a>
+                <a id="submit" class="btn" onclick="verifyCredentials()">Log in</a>
 
             </form>
-            <h3 id="register">Don't have an account? <a href="/pages/register/" onclick="savePreviousPage()">Register here!</a></h3>
+            <h3 id="register">Don't have an account? <a href="/register" onclick="savePreviousPage()">Register here!</a></h3>
         </div>
 
         <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="/js/general.js"></script>
-        <script src="/pages/login/login.js"></script>
+        <script src="/login/login.js"></script>
     </body>
 </html>

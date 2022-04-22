@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8"> <!-- Allows ÆØÅ -->
-        <link rel="stylesheet" type="text/css" href="/style.css"> <!-- Tells HTML where the CSS is located -->
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="/style.css">
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://social.recalstudios.net/" rel="canonical">
         <title>Login - Recal Social</title>
-
-
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -26,9 +24,9 @@
         <div id="header">
             <a class="btn" href="/">Home</a>
             <div id="btn-box">
-                <a class="btn" href="/pages/profile/" onclick="savePreviousPage()">Settings</a>
-                <a class="btn" href="/pages/login/" onclick="savePreviousPage()">Log in</a>
-                <a class="btn" href="/pages/register/" onclick="savePreviousPage()">Sign up</a>
+                <a class="btn" href="/profile/">Settings</a>
+                <a class="btn" href="/login/">Log in</a>
+                <a class="btn" href="/register/">Sign up</a>
             </div>
         </div>
 
@@ -46,6 +44,12 @@
                 </div>
             </div>
         </div>
+
+        <dialog>
+            <h1>Accept cookies</h1>
+            <p>We are going to steal your information, and you need to accept it</p>
+            <button>close</button>
+        </dialog>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="/js/general.js"></script>

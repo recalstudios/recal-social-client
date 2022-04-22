@@ -1,4 +1,3 @@
-$("#left-arrow").load("assets/left-arrow.svg")
 
 reset()
 
@@ -7,7 +6,7 @@ function reset() {
     document.querySelector("#result").innerHTML = "";
 }
 
-// Verifies the credentials provided with the apico
+// Verifies the credentials provided with the api
 async function createUser() {
 
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0 || document.querySelector("#confirm-passphrase").value.length === 0) {
@@ -26,22 +25,27 @@ async function createUser() {
             console.log("axios request");
 
             // Grabs all values from necessary fields
-            username = document.querySelector("#username").value;
-            email = document.querySelector("#email").value;
-            passphrase = document.querySelector("#passphrase").value;
+            username = document.querySelector("#username").value.toString();
+            email = document.querySelector("#email").value.toString();
+            passphrase = document.querySelector("#passphrase").value.toString();
+
+
+            console.log(username, email, passphrase)
 
             // API request with axios. Post request where the url field describes where the request should go and the data field what should be in it.
-            result = await axios ({
+            result = (await axios ({
                 method: 'post',
                 url: api + 'user/create',
                 data: {
-                    Username: JSON.stringify(username),
-                    Email: JSON.stringify(email),
-                    Pass: JSON.stringify(passphrase)
-                }.data
-            });
+                    Username: username,
+                    Email: email,
+                    Pass: passphrase
+                }
+            })).data;
             if (result) {
                 $("#result").text("User made, you will now be logged in")
+
+                await getAuthToken();
             }
         }
         catch(e) {
@@ -101,3 +105,12 @@ input.addEventListener("keydown", function(event) {
         document.querySelector('#submit').click();
     }
 });
+
+function test() {
+    // Grabs all values from necessary fields
+    username = document.querySelector("#username").value;
+    email = document.querySelector("#email").value;
+    passphrase = document.querySelector("#passphrase").value;
+
+    console.log(username,email,passphrase)
+}

@@ -3,14 +3,14 @@ reset()
 
 // Function to reset login results
 function reset() {
-  document.querySelector("#result").innerHTML = "";
+    document.querySelector("#result").innerHTML = "";
 }
 
-// Verifies the credentials provided with the apico
+// Verifies the credentials provided with the api
 async function verifyCredentials() {
     // Tries given commands and catches the errors if any occur
 
-    if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0 || document.querySelector("#confirm-passphrase").value.length === 0) {
+    if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0) {
         $("#result").text("Please fill all fields")
 
         console.log("fill all fields");
@@ -18,46 +18,23 @@ async function verifyCredentials() {
         // Tries given commands and catches the errors if any occur
 
     } else {
-        try {
+        username = document.querySelector("#username").value.toString();
+        passphrase = document.querySelector("#passphrase").value.toString();
 
-            username = document.querySelector("#username").value;
-            passphrase = document.querySelector("#passphrase").value;
-
-            // API request with axios. Post request where the url field describes where the request should go and the data field what should be in it.
-            authToken = (await axios({
-                method: 'post',
-                url: api + 'auth/token/new',
-                data: {
-                    user: username,
-                    pass: passphrase
-                }
-            })).data;
-        }
-        catch {
-            //console.error();
-        }
+        await getAuthToken()
 
         console.log(authToken)
     }
 
-
-
     // Stores token in localstorage
-    localStorage['token'] = token; // only strings
+    localStorage['token'] = authToken; // only strings
 
-    if (token.length === 0) {
-        verifyTextfield("none", "initial", "none")
-    }
+
 
     await getUser();
 
-    verifyTextfield("none", "none", "initial")
-
     // Changes user page to the specified page
-    window.location.href = '/';
-
-    // Stores full name in localstorage
-    localStorage['fullName'] = `${user.firstName} ${user.lastName}`;
+    // window.location.href = '/';
 }
 
 
@@ -99,17 +76,7 @@ async function verifyCredentials() {
 // }
 
 // Function to get the user from api and loads token (if available from localstorage)
-async function getUser() {
-    // token = localStorage['token']
-    //
-    // user = (await axios({
-    //     method: 'get',
-    //     url: api + '/users',
-    //     data: {
-    //         token: token
-    //     }
-    // })).data;
-}
+
 
 $('#form').on('keydown', 'input', function (event) {
     if (event.which === 13) {
@@ -121,7 +88,7 @@ $('#form').on('keydown', 'input', function (event) {
 });
 
 // Get the input field
-input = document.querySelector("#confirm-passphrase")
+input = document.querySelector("#passphrase")
 
 // Execute a function when the user releases a key on the keyboard
 input.addEventListener("keydown", function(event) {

@@ -1,5 +1,4 @@
-
-
+// Sets the current chatroom from localstorage
 currentChatroom = localStorage['currentChatroom'] || 'chatroom-alpha';
 
 //axios.post('URL', data, {
@@ -11,36 +10,37 @@ currentChatroom = localStorage['currentChatroom'] || 'chatroom-alpha';
 
 fetchMessages()
 
-function fetchMessages() {
-
+// Fetches messages from test json file
+function fetchMessages()
+{
     // Dynamically loads content
     fetch("/js/json/" + currentChatroom + ".json")
         .then(response => response.json())
         .then(data =>
         {
             messages = data
-
             loadChat()
-
         });
 }
 
-function loadChat() {
-  document.querySelector("#chat-list").innerHTML = ''
-  for (const message of messages)
-  {
-    document.querySelector("#chat-list").innerHTML += `
-      <div class="chat">
-          <div class="chat-user">
-              <img src="${message.chatterimage}" alt="skootskoot">
-              <p class="bold">${message.author}</p>
-              </div>
-          <p class="chat-message">${message.message}</p>
-      </div>
-  `;
-  }
+// Loads the chat from the current chat room
+function loadChat()
+{
+    document.querySelector("#chat-list").innerHTML = ''; // Clears previous chat log
+    for (const message of messages)
+    {
+        document.querySelector("#chat-list").innerHTML += `
+            <div class="chat">
+                <div class="chat-user">
+                    <img src="${message.chatterimage}" alt="skootskoot">
+                    <p class="bold">${message.author}</p>
+                </div>
+                <p class="chat-message">${message.message}</p>
+            </div>
+        `;
+    }
 
-  document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
+    document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
 }
 
 // Dynamically loads content
@@ -58,47 +58,40 @@ fetch("/js/json/testchatrooms.json")
             `;
         }
 
-        changeChatRoom(currentChatroom)
+        changeChatRoom(currentChatroom);
     });
 
 let chatroom = "chatroom-alpha";
 
-function changeChatRoom(chatroomId) {
-
+// Changes chat room and highlight colours
+function changeChatRoom(chatroomId)
+{
     //oldchatroomname = chatroom || "chatroom-alpha";
-
     document.querySelector("#" + chatroom).style.backgroundColor = "#40446e";
-
     document.querySelector("#" + chatroomId).style.backgroundColor = "#123";
     // document.querySelector("#" + chatroom).classList.add =
 
     chatroom = chatroomId
-
     currentChatroom = chatroomId
 
     localStorage['currentChatroom'] = currentChatroom
-
     $("#sendMessage").val('')
-
     fetchMessages()
 }
 
 sendMessage = $("#sendMessage")
 
-sendMessage.keypress(function (e) {
-    if(e.which === 13 && !e.shiftKey) {
+// Sends message to ws
+sendMessage.keypress(function (e)
+{
+    if (e.which === 13 && !e.shiftKey)
+    {
         e.preventDefault();
-
         $(this).closest("form").submit();
-
-        message = JSON.stringify({"type":"message", "data":sendMessage.val()});
-
+        message = JSON.stringify({"type": "message", "data": sendMessage.val()});
         console.log(message);
-
         ws.send(message);
-
         $("#sendMessage").val('')
-
         // document.querySelector(".chat:last-child").style.color = red;
     }
 });
@@ -106,10 +99,7 @@ sendMessage.keypress(function (e) {
 ///////////////////////////////////////////////////////////////////////
 const ws = new WebSocket("ws://10.111.59.109:14242/");
 
-ws.onclose = e => console.log("closed", e);
-
-ws.onopen = e =>
-{
+ws.onopen = e => {
 
     console.log("open", e);
     ws.send(JSON.stringify({
@@ -119,19 +109,16 @@ ws.onopen = e =>
     return false;
 }
 
-ws.onmessage = e =>
-{
+ws.onmessage = e => {
     console.log(e.data);
     messages.push(
-      {
-      "author": "test",
-      "chatterimage": "https://via.placeholder.com/50",
-      "message": e.data
-      })
+        {
+            "author": "test",
+            "chatterimage": "https://via.placeholder.com/50",
+            "message": e.data
+        })
     loadChat()
 
     // document.querySelector(".chat:last-child").style.color = initial;
     return false;
 }
-
-ws.onerror = e => console.log("error", e);
