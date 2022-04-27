@@ -406,7 +406,7 @@ body
         padding: 15px;
         margin: 10px;
         text-align: center;
-        font-size: 25px;
+        font-size: 25px ;
         border-radius: 15px;
         color: #1A1A1D;
 
@@ -439,8 +439,7 @@ body
 
 // 4.3 Profile
 
-#profile-content
-{
+#profile-content {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -449,78 +448,54 @@ body
     width: 100vw;
     height: $content-height;
 
+    #profile-page {
+        background: deeppink;
+        border-radius: 10rem 10rem 0 0;
 
 
-    #profile-box
-    {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
 
-        width: 80vw;
-        height: $content-height;
+            #profile-box{
 
-        #profile
-        {
             display: flex;
             flex-direction: row;
             align-items: center;
+            justify-content: center;
 
-
-            width: 50vw;
-            gap: 25px;
-            padding: 25px;
-
-            background: $accent-purple-navy;
-            color: papayawhip;
-
-            border-radius: 25px;
-            border-collapse: collapse;
-            text-align: left;
-
-            img
-            {
-                aspect-ratio: 1/1;
-                height: 20rem;
-                border-radius: $integer-limit;
-            }
-
-            div
-            {
-                display: flex;
-                flex-direction: column;
-            }
-
-            div *
-            {
-                margin: 5px 0;
-            }
-        }
-    }
-
-    #settings-box
-    {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        //padding: 100px 0 0 0;
-
-
-        #settings
-        {
-            display: flex;
-            flex-direction: column;
-            width: 20vw;
+            width: 80vw;
             height: $content-height;
 
+            #profile {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
 
-            padding: 0 25px;
-            background: $accent-purple-navy;
 
-            border-top-right-radius: 25px;
+                width: 50vw;
+                gap: 25px;
+                padding: 25px;
+
+                background: $accent-purple-navy;
+                color: papayawhip;
+
+                border-radius: 25px;
+                border-collapse: collapse;
+                text-align: left;
+
+                img {
+                    aspect-ratio: 1/1;
+                    height: 20rem;
+                    border-radius: $integer-limit;
+                }
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                div * {
+                    margin: 5px 0;
+                }
+            }
         }
     }
 }
