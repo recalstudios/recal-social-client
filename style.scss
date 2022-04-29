@@ -442,59 +442,53 @@ body
 #profile-content {
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: center;
+    margin: auto auto 0;
+    width: 50vw;
 
-    width: 100vw;
     height: $content-height;
 
-    #profile-page {
-        background: deeppink;
-        border-radius: 10rem 10rem 0 0;
+    #profile-box{
 
+        background: $accent-purple-navy;
+        border-radius: 50px 50px 0 0;
 
+        display: flex;
+        flex-direction: row;
 
-            #profile-box{
+        justify-content: center;
+
+        width: 70vw;
+        padding: 5rem;
+
+        #profile {
 
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: center;
 
-            width: 80vw;
-            height: $content-height;
+            width: 50vw;
+            gap: 25px;
+            height: 40vh;
+            padding: 25px;
+            background: lighten($accent-purple-navy, 15) ;
+            color: papayawhip;
 
-            #profile {
+            border-radius: 25px;
+            border-collapse: collapse;
+            text-align: left;
+
+            img {
+                aspect-ratio: 1/1;
+                height: 20rem;
+                border-radius: $integer-limit;
+            }
+            div {
                 display: flex;
-                flex-direction: row;
-                align-items: center;
-
-
-                width: 50vw;
-                gap: 25px;
-                padding: 25px;
-
-                background: $accent-purple-navy;
-                color: papayawhip;
-
-                border-radius: 25px;
-                border-collapse: collapse;
-                text-align: left;
-
-                img {
-                    aspect-ratio: 1/1;
-                    height: 20rem;
-                    border-radius: $integer-limit;
-                }
-
-                div {
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                div * {
-                    margin: 5px 0;
-                }
+                flex-direction: column;
+            }
+            div * {
+                margin: 5px 0;
             }
         }
     }

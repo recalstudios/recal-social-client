@@ -32,25 +32,35 @@
         </div>
 
         <div id="profile-content">
-            <div id="profile-page">
-                <div id="profile-box">
-                    <div id="profile">
-                        <img id="pfp" src="https://via.placeholder.com/200x200" alt="smh">
+            <div id="profile-box">
+                <div id="profile">
+                    <img id="pfp" src="https://via.placeholder.com/200x200" alt="smh">
+                    <div>
+                        <p class="italic darken-text small-margin-bottom">Username:</p>
+                        <h2 id="username"></h2>
                         <div>
-                            <p class="italic darken-text small-margin-bottom">Username:</p>
-                            <h2 id="username">Little</h2>
-                            <p class="italic darken-text small-margin-bottom">Email:</p>
-                            <h2 id="email">little@yessness.com</h2>
-                            <p class="italic darken-text small-margin-bottom">Status:</p>
-                            <h2 id="status">Admin</h2>
+                            <p class="italic darken-text small-margin-bottom">New username:</p>
+                            <label for="newUsername"></label>
+                            <input name="newUsername" placeholder="New username" id="newUsername">
                         </div>
+                        <p class="italic darken-text small-margin-bottom">Email:</p>
+                        <h2 id="email"></h2>
+                        <div>
+                            <p class="italic darken-text small-margin-bottom">New email:</p>
+                            <label for="newEmail"></label>
+                            <input name="newEmail" placeholder="New email" id="newEmail">
+                        </div>
+                        <p class="italic darken-text small-margin-bottom">Status:</p>
+                        <h2 id="status">Admin</h2>
                     </div>
                 </div>
             </div>
         </div>
 
 
+        <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="/js/general.js"></script>
+        <script src="/profile/profile.js"></script>
     </body>
 </html>

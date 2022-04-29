@@ -1,6 +1,8 @@
 // Sets the current chatroom from localstorage
 currentChatroom = localStorage['currentChatroom'] || 'chatroom-alpha';
 
+checkIfLoggedIn()
+
 //axios.post('URL', data, {
 //    withCredentials: true
 //});
