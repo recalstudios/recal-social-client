@@ -1,5 +1,7 @@
 // Sets the current chatroom from localstorage
-currentChatroom = localStorage['currentChatroom'] || 'chatroom-alpha';
+currentChatroom = localStorage['currentChatroom'] || 'chatroom-1';
+
+let chatroom = "chatroom-1";
 
 checkIfLoggedIn()
 
@@ -10,13 +12,30 @@ checkIfLoggedIn()
 // let element = document.getElementById('focus');
 // element.scrollTop = element.offsetHeight
 
-fetchMessages()
+
 
 // Fetches messages from test json file
-function fetchMessages()
+async function fetchMessages()
 {
-    // Dynamically loads content
-    fetch("/js/json/" + currentChatroom + ".json")
+    // authToken = localStorage['token']
+    //
+    // messages = (await axios({
+    //     method: 'post',
+    //     url: api + 'chat/room/backlog',
+    //     data: {
+    //         ChatroomId: 1,
+    //         Start:1,
+    //         Length:10000
+    //     },
+    //     headers: {
+    //         Authorization: 'Bearer ' + authToken
+    //     }
+    // })).data.messages;
+    //
+    // loadChat()
+
+    //Dynamically loads content
+    fetch("/js/json/chatroom-alpha.json")
         .then(response => response.json())
         .then(data =>
         {
@@ -28,57 +47,97 @@ function fetchMessages()
 // Loads the chat from the current chat room
 function loadChat()
 {
-    document.querySelector("#chat-list").innerHTML = ''; // Clears previous chat log
+    const chatListElement = document.querySelector("#chat-list");
+
+    chatListElement.innerHTML = ''; // Clears previous chat log
     for (const message of messages)
     {
-        document.querySelector("#chat-list").innerHTML += `
+        chatListElement.innerHTML += `
             <div class="chat">
                 <div class="chat-user">
-                    <img src="${message.chatterimage}" alt="skootskoot">
+                    <img src="${publicUser.pfp}" alt="skootskoot">
                     <p class="bold">${message.author}</p>
                 </div>
-                <p class="chat-message">${message.message}</p>
+                <p class="chat-message">${message.content.text}</p>
             </div>
         `;
+
+
     }
 
     document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
 }
 
-// Dynamically loads content
-fetch("/js/json/testchatrooms.json")
-    .then(response => response.json())
-    .then(data =>
+// // Dynamically loads content
+// fetch("/js/json/testchatrooms.json")
+//     .then(response => response.json())
+//     .then(data =>
+//     {
+//         for (let i = 0; i < data.chatrooms.length; i++)
+//         {
+//             document.querySelector("#chatroom-list").innerHTML += `
+//                 <div id="${data.chatrooms[i].chatroom}" class="chatroom" onclick="changeChatRoom('${data.chatrooms[i].chatroom}')">
+//                     <img src="https://via.placeholder.com/50" alt="Placholder">
+//                     <p>${data.chatrooms[i].chatroom}</p>
+//                 </div>
+//             `;
+//         }
+//
+//         changeChatRoom(currentChatroom);
+//     });
+getUserChatrooms().then(() => loadChatrooms())
+
+fetchMessages()
+
+function loadChatrooms() {
+    for (const chatroom of chatroomList)
     {
-        for (let i = 0; i < data.chatrooms.length; i++)
-        {
-            document.querySelector("#chatroom-list").innerHTML += `
-                <div id="${data.chatrooms[i].chatroom}" class="chatroom" onclick="changeChatRoom('${data.chatrooms[i].chatroom}')">
+        document.querySelector("#chatroom-list").innerHTML += `
+                <div id="chatroom-${chatroom.id}" class="chatroom" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
                     <img src="https://via.placeholder.com/50" alt="Placholder">
-                    <p>${data.chatrooms[i].chatroom}</p>
+                    <p>${chatroom.name}</p>
                 </div>
             `;
-        }
 
-        changeChatRoom(currentChatroom);
-    });
+        changeChatRoom(currentChatroom)
+    }
+}
 
-let chatroom = "chatroom-alpha";
+
 
 // Changes chat room and highlight colours
-function changeChatRoom(chatroomId)
+function changeChatRoom(chatroomName, chatroomId)
 {
     //oldchatroomname = chatroom || "chatroom-alpha";
     document.querySelector("#" + chatroom).style.backgroundColor = "#40446e";
-    document.querySelector("#" + chatroomId).style.backgroundColor = "#123";
+    document.querySelector("#" + chatroomName).style.backgroundColor = "#123";
     // document.querySelector("#" + chatroom).classList.add =
 
-    chatroom = chatroomId
-    currentChatroom = chatroomId
+    chatroom = chatroomName
+    currentChatroom = chatroomName
 
     localStorage['currentChatroom'] = currentChatroom
+    localStorage['currentChatroomId'] = chatroomId
     $("#sendMessage").val('')
-    fetchMessages()
+    //fetchMessages()
+}
+
+// Renews auth token
+async function getUserChatrooms()
+{
+
+
+    // Gets chatroomList from API
+    chatroomList = (await axios({
+        method: 'get',
+        url: api + 'user/rooms',
+        headers: {
+            Authorization: 'Bearer ' + authToken
+        }
+    })).data;
+
+    console.log(chatroomList)
+    localStorage['chatroomList'] = chatroomList
 }
 
 sendMessage = $("#sendMessage")
@@ -90,37 +149,54 @@ sendMessage.keypress(function (e)
     {
         e.preventDefault();
         $(this).closest("form").submit();
-        message = JSON.stringify({"type": "message", "data": sendMessage.val()});
-        console.log(message);
-        ws.send(message);
-        $("#sendMessage").val('')
+        if (document.querySelector("#sendMessage").value.length >= 1) {
+            message = JSON.stringify({
+                "type": "message",
+                "room": 1,
+                "author": user.username,
+                "content": {
+                    "attachments": [
+                        {
+                            "type": "image",
+                            "src": "https://via.placeholder.com/50"
+                        }
+                    ],
+                    "text": sendMessage.val()
+                }
+
+            });
+            //console.log(message);
+            ws.send(message);
+            $("#sendMessage").val('')
+        }
         // document.querySelector(".chat:last-child").style.color = red;
     }
 });
 
 ///////////////////////////////////////////////////////////////////////
-const ws = new WebSocket("ws://10.111.59.109:14242/");
+// const ws = new WebSocket("ws://10.111.59.109:14242/");// Opens websocket connection
+const ws = new WebSocket("ws://ws.social.recalstudios.net:14242");// Opens websocket connection
 
+// After connection is established send this message
 ws.onopen = e => {
+    checkIfAuthTokenExpired()
 
     console.log("open", e);
     ws.send(JSON.stringify({
         "type": "auth",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiI5MTE0Mjg2YS04ZjcyLTRjZTEtYjcwMC05NTAyYWRkZDNiMzQiLCJpYXQiOiI0LzIwLzIwMjIgOToyOTowNSBBTSIsIlVzZXJJZCI6IjEiLCJVc2VybmFtZSI6InJvb3QiLCJleHAiOjE2NTA0NDc1NDUsImlzcyI6InJlY2Fsc3R1ZGlvcy5uZXQiLCJhdWQiOiJyZWNhbHN0dWRpb3MubmV0In0.unEp_mgKs6LHRs-uMWd0Ml1TPDbYRXj_UiE61ClxQa8"
+        "token": "Bearer " + authToken
     }));
     return false;
 }
 
+// What to do when receives a message
 ws.onmessage = e => {
-    console.log(e.data);
-    messages.push(
-        {
-            "author": "test",
-            "chatterimage": "https://via.placeholder.com/50",
-            "message": e.data
-        })
-    loadChat()
+    const receivedData = JSON.parse(e.data);
 
-    // document.querySelector(".chat:last-child").style.color = initial;
-    return false;
+    if (receivedData.type === "message")
+    {
+        user = JSON.parse(localStorage['user']);
+        messages.push(receivedData);
+        loadChat();
+    }
 }

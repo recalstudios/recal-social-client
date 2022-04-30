@@ -1,12 +1,7 @@
-function changeSettingsPane(e) {
-    $("#profile-box").text('')
-}
-
-
-
+// Loads profile
 async function loadProfile() {
 
-    await getUser();
+    await getUserUsingToken();
 
     document.querySelector("#pfp").src = user.pfp
 

@@ -1,4 +1,3 @@
-
 reset()
 
 // Function to reset login results
@@ -14,12 +13,13 @@ async function createUser() {
 
         console.log("fill all fields");
 
-        // Tries given commands and catches the errors if any occur
 
-    } else if ($("#passphrase").val() === $("#confirm-passphrase").val()) {
+
+    } else if ($("#passphrase").val() === $("#confirm-passphrase").val()) { // Checks if passphrase and confirm-passphrase fields are the same
         $("#result").text("Valid")
         console.log("valid");
 
+        // Tries given commands and catches the errors if any occur
         try {
 
             console.log("axios request");
@@ -55,10 +55,7 @@ async function createUser() {
         }
     } else {
         $("#result").text("Fields does not match")
-        console.log("Fields does not match")
     }
-
-
 
     // Stores token in localstorage
     // localStorage['token'] = token; // only strings
@@ -67,22 +64,10 @@ async function createUser() {
     //
     // }
 
-    await getUser();
+    await getUserUsingToken();
 }
 
-// Function to get the user from api and loads token (if available from localstorage)
-async function getUser() {
-    // token = localStorage['token']
-    //
-    // user = (await axios({
-    //     method: 'get',
-    //     url: api + '/users',
-    //     data: {
-    //         token: token
-    //     }
-    // })).data;
-}
-
+// If enter go to next text field
 $('#form').on('keydown', 'input', function (event) {
     if (event.which === 13) {
         event.preventDefault();
@@ -105,12 +90,3 @@ input.addEventListener("keydown", function(event) {
         document.querySelector('#submit').click();
     }
 });
-
-function test() {
-    // Grabs all values from necessary fields
-    username = document.querySelector("#username").value;
-    email = document.querySelector("#email").value;
-    passphrase = document.querySelector("#passphrase").value;
-
-    console.log(username,email,passphrase)
-}

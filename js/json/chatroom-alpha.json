@@ -1,137 +1,380 @@
 [
   {
-    "author": "Little",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "hi"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "Soni",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "your mom"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "Little",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "why"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "Soni",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "because"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "Soni",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "keyboards"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "Little",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "cool"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "Test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "olcoolcoolcoolcoolcooloolcoolcoolcoolc lcoolcoolcoolcoolcoolcoolcoolcoolcoo lcoolcoolraslksdfhkjw sdghskdhghsldglksdflksjdfj sdlfksjdfjlskdjflksdjfl kslkdfjlsdjflasklfjsdlfkslkdfjl skdjflksdjflksdjflkjs dflkjksjdflksdfjlskdfjlskdjflkj"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message" : "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message": "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   },
   {
-    "author": "test",
-    "chatterimage": "https://via.placeholder.com/50",
-    "message": "test"
+    "type": "message",
+    "room": 1,
+    "author": 11,
+    "content": {
+      "attachments": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/50"
+        }
+      ],
+      "text": "hi there"
+    }
   }
 ]

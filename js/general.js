@@ -2,10 +2,21 @@
 $("#back").load("/assets/left-arrow.svg");
 
 // Declare variables
-let authTokenValidity, authToken, currentChatroom, messages, message, sendMessage, input;
+let authTokenValidity, authToken, message, sendMessage, input;
 let username, email, passphrase, result;
 let user;
+let chatroomList, chatroomId, currentChatroom;
+let messages = [];
+let publicUser =
+    {
+    "id": 11,
+    "username": "woot",
+    "pfp": "https://via.placeholder.com/50"
+    };
 
+localStorage['publicUser'] = publicUser
+
+// Defines api path
 const api = "https://api.social.recalstudios.net/";
 //const api = "https://10.80.18.152:7184/";
 
@@ -27,6 +38,7 @@ async function getAuthToken()
             }
         })).data;
 
+        // Stores auth token in localStorage
         localStorage['token'] = authToken;
     }
     catch (e)
@@ -37,27 +49,24 @@ async function getAuthToken()
     }
 }
 
+// Renews auth token
 async function chainRefreshToken()
 {
     authToken = localStorage['token']
     console.log(authToken)
 
-    authToken = axios.post(api + 'auth/token/renew', { withCredentials: true }).data;
+    authToken = (await axios.post(api + 'auth/token/renew', { withCredentials: true }).data);
 
     console.log(authToken)
     //localStorage['token'] = authToken
 }
 
-async function getUser() {
+// Gets user from API
+async function getUserUsingToken() {
 
-    await checkIfAuthTokenExpired()
+    await checkIfAuthTokenExpired() // Checks if auth token is valid
 
-    if (!authTokenValidity) {
-        await chainRefreshToken()
-    }
-
-    authToken = localStorage['token']
-
+    // Gets user from API
     user = (await axios({
         method: 'post',
         url: api + 'user/user',
@@ -66,15 +75,32 @@ async function getUser() {
         }
     })).data;
 
-    console.log(user)
+    console.log(user);
 
-    localStorage['user'] = user;
+    // Stores user in localStorage
+    localStorage['user'] = JSON.stringify(user);
 }
 
+async function getUserUsingId() {
+    // Gets user from API
+    publicUser = (await axios({
+        method: 'post',
+        url: api + 'user/user/public',
+        data: user.id
+    })).data;
+
+    console.log(publicUser)
+
+    // Stores user in localStorage
+    localStorage['publicUser'] = JSON.stringify(publicUser);
+}
+
+// Checks if the auth token is expired
 async function checkIfAuthTokenExpired()
 {
     authToken = localStorage['token']
 
+    // Request to check if auth token is valid
     authTokenValidity = (await axios({
         method: 'post',
         url: api + 'auth/token/test',
@@ -84,10 +110,17 @@ async function checkIfAuthTokenExpired()
     })).data;
 
     console.log(authTokenValidity)
+
+    // If auth token isn't valid request new one
+    if (!authTokenValidity) {
+        await chainRefreshToken()
+    }
+
+    authToken = localStorage['token'] // Gets auth token from localStorage
 }
 
 // Function to check i've a user is logged in or not
-function checkIfLoggedIn() {
+async function checkIfLoggedIn() {
     // Checks localstorage for token and name and puts them into variables
     authToken = localStorage['token'] || '';
 
@@ -95,9 +128,13 @@ function checkIfLoggedIn() {
     if (authToken.length !== 0) {
         document.querySelector("#profile-logout-cluster").style.display = "initial";
         document.querySelector("#login-register-cluster").style.display = "none";
+
+        await getUserUsingToken()
     } else {
         document.querySelector("#profile-logout-cluster").style.display = "none";
         document.querySelector("#login-register-cluster").style.display = "initial";
+
+        window.location.href = "/login/"
     }
 }
 
@@ -105,6 +142,16 @@ function checkIfLoggedIn() {
 function logOut() {
     localStorage['token'] = "";
 
-
-    checkIfLoggedIn();
+    checkIfLoggedIn(); // Checks if logged in
 }
+
+// async function test() {
+//     await checkIfAuthTokenExpired() // Checks if auth token is valid
+//
+//     // If auth token isn't valid request new one
+//     if (!authTokenValidity) {
+//         await chainRefreshToken()
+//     }
+//
+//     authToken = localStorage['token'] // Gets auth token from localStorage
+// }

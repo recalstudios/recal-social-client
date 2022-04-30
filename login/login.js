@@ -1,4 +1,3 @@
-
 reset()
 
 // Function to reset login results
@@ -18,6 +17,7 @@ async function verifyCredentials() {
         // Tries given commands and catches the errors if any occur
 
     } else {
+        // Gets values of input fields
         username = document.querySelector("#username").value.toString();
         passphrase = document.querySelector("#passphrase").value.toString();
 
@@ -28,29 +28,20 @@ async function verifyCredentials() {
         // Stores token in localstorage
         localStorage['token'] = authToken; // only strings
 
-        await getUser();
+        // Gets user from api
+        await getUserUsingToken();
 
-        await test()
+        // Changes page
+        //await changePage()
     }
 }
 
-function test() {
+function changePage() {
     // Changes user page to the specified page
     window.location.href = '/';
 }
 
-
-//
-// // Function to check if i have logged in or not when i click on the cart button.
-// function checkIfLoggedInCart(state) {
-//     token = localStorage['token'] || '';
-// }
-//
-
-
-// Function to get the user from api and loads token (if available from localstorage)
-
-
+// If enter go to next text field
 $('#form').on('keydown', 'input', function (event) {
     if (event.which === 13) {
         event.preventDefault();
