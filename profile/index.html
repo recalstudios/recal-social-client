@@ -27,7 +27,10 @@
         <div id="header">
             <a class="btn" href="/">Home</a>
             <div id="btn-box">
+                <a class="btn" onclick="changeUser('initial', 'none')">Edit</a>
+                <a class="btn" onclick="changeUser('none', 'initial')">Done</a>
                 <a class="btn" href="/login">Log out</a>
+                <a class="btn" href="/login">Log out all</a>
             </div>
         </div>
 
@@ -37,23 +40,22 @@
                     <img id="pfp" src="https://via.placeholder.com/200x200" alt="smh">
                     <div>
                         <p class="italic darken-text small-margin-bottom">Username:</p>
-                        <h2 id="username"></h2>
-                        <div>
-                            <p class="italic darken-text small-margin-bottom">New username:</p>
-                            <label for="newUsername"></label>
-                            <input name="newUsername" placeholder="New username" id="newUsername">
-                        </div>
+                        <h2 id="username" class="information"></h2>
+                        <label for="newUsername"></label>
+                        <input name="newUsername" placeholder="New username" id="newUsername" class="input">
                         <p class="italic darken-text small-margin-bottom">Email:</p>
-                        <h2 id="email"></h2>
-                        <div>
-                            <p class="italic darken-text small-margin-bottom">New email:</p>
-                            <label for="newEmail"></label>
-                            <input name="newEmail" placeholder="New email" id="newEmail">
-                        </div>
-                        <p class="italic darken-text small-margin-bottom">Status:</p>
-                        <h2 id="status">Admin</h2>
+                        <h2 id="email" class="information"></h2>
+                        <label for="newEmail"></label>
+                        <input name="newEmail" placeholder="New email" id="newEmail" class="input">
+                        <p class="italic darken-text small-margin-bottom">Profile Pfp:</p>
+                        <h2 id="status" class="information">heinzinininininin</h2>
+                        <label for="newPfp"></label>
+                        <input name="profilePicture" placeholder="Paste picture link here" id="newPfp" class="input">
+                        <label for="newPassphrase"></label>
+                        <input name="profilePicture" placeholder="New Passphrase" id="newPassphrase" class="input">
                     </div>
                 </div>
+
             </div>
         </div>
 

@@ -137,7 +137,18 @@ async function getUserChatrooms()
     })).data;
 
     console.log(chatroomList)
-    localStorage['chatroomList'] = chatroomList
+    localStorage['chatroomList'] = JSON.stringify(chatroomList)
+}
+
+if (!dialog)
+{
+    document.querySelector("#dialog").style.display = "initial"
+}
+
+function closeDialog() {
+    dialog = true;
+    localStorage['dialog'] = dialog
+    document.querySelector("#dialog").style.display = "none";
 }
 
 sendMessage = $("#sendMessage")

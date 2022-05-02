@@ -208,6 +208,14 @@ body
     //box-shadow: 0 0 1rem rgba(black, 0.6);
 }
 
+#dialog
+{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-75%, 0%);
+}
+
 
 //====================================
 // 4 Spesific Sections
@@ -419,21 +427,21 @@ body
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
 
-    input
+input
+{
+
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+    font-size: 25px ;
+    border-radius: 15px;
+    color: #1A1A1D;
+
+    &:active
     {
-
-        padding: 15px;
-        margin: 10px;
-        text-align: center;
-        font-size: 25px ;
-        border-radius: 15px;
         color: #1A1A1D;
-
-        &:active
-        {
-            color: #1A1A1D;
-        }
     }
 }
 
@@ -509,6 +517,11 @@ body
             }
             div * {
                 margin: 5px 0;
+            }
+
+            input
+            {
+                display: none;
             }
         }
     }

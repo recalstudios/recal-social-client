@@ -6,6 +6,7 @@ let authTokenValidity, authToken, message, sendMessage, input;
 let username, email, passphrase, result;
 let user;
 let chatroomList, chatroomId, currentChatroom;
+let dialog = localStorage['dialog'] || false;
 let messages = [];
 let publicUser =
     {
@@ -14,7 +15,7 @@ let publicUser =
     "pfp": "https://via.placeholder.com/50"
     };
 
-localStorage['publicUser'] = publicUser
+localStorage['publicUser'] = JSON.stringify(publicUser)
 
 // Defines api path
 const api = "https://api.social.recalstudios.net/";
@@ -86,7 +87,9 @@ async function getUserUsingId() {
     publicUser = (await axios({
         method: 'post',
         url: api + 'user/user/public',
-        data: user.id
+        data: {
+            UserId: user.id
+        }
     })).data;
 
     console.log(publicUser)
