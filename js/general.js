@@ -5,7 +5,7 @@ $("#back").load("/assets/left-arrow.svg");
 let authTokenValidity, authToken, message, sendMessage, input;
 let username, email, passphrase, result;
 let user;
-let chatroomList, chatroomId, currentChatroom;
+let chatroomList, chatroomId, currentChatroom, chatroomResult, int;
 let dialog = localStorage['dialog'] || false;
 let messages = [];
 let publicUser =

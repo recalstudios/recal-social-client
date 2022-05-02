@@ -90,17 +90,20 @@ getUserChatrooms().then(() => loadChatrooms())
 fetchMessages()
 
 function loadChatrooms() {
+    const chatroomBox = document.querySelector("#chatroom-list");
+
+    chatroomBox.innerHTML = ''
+
     for (const chatroom of chatroomList)
     {
-        document.querySelector("#chatroom-list").innerHTML += `
+        chatroomBox.innerHTML += `
                 <div id="chatroom-${chatroom.id}" class="chatroom" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
                     <img src="https://via.placeholder.com/50" alt="Placholder">
                     <p>${chatroom.name}</p>
                 </div>
             `;
-
-        changeChatRoom(currentChatroom)
     }
+    changeChatRoom(currentChatroom)
 }
 
 
@@ -125,8 +128,6 @@ function changeChatRoom(chatroomName, chatroomId)
 // Renews auth token
 async function getUserChatrooms()
 {
-
-
     // Gets chatroomList from API
     chatroomList = (await axios({
         method: 'get',
@@ -149,6 +150,54 @@ function closeDialog() {
     dialog = true;
     localStorage['dialog'] = dialog
     document.querySelector("#dialog").style.display = "none";
+}
+
+async function createChatroom() {
+    // Creates chatroomList with API
+    chatroomResult = (await axios({
+        method: 'post',
+        url: api + 'chat/room/create',
+        headers: {
+            Authorization: 'Bearer ' + authToken
+        },
+        data: {
+            Name:"testeteste" + int,
+            Pass:"root"
+        }
+    })).data;
+
+    console.log(chatroomResult)
+
+    if (chatroomResult)
+    {
+        console.log('your mom')
+    }
+
+    await getUserChatrooms().then(() => loadChatrooms())
+}
+
+intCounter()
+
+function intCounter() {
+    int = Math.floor(Math.random() * 10000);
+    JSON.parse(int);
+    console.log(int)
+}
+
+async function joinChatroom() {
+    // Joins chatroomList with API
+    chatroomResult = (await axios({
+        method: 'post',
+        url: api + 'chat/room/join',
+        headers: {
+            Authorization: 'Bearer ' + authToken
+        },
+        data: {
+            Code: prompt("Insert room code here"),
+            Pass: prompt("Insert password for room here")
+        }
+    })).data;
+
 }
 
 sendMessage = $("#sendMessage")
