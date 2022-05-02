@@ -29,7 +29,7 @@ async function verifyCredentials() {
         localStorage['token'] = authToken; // only strings
 
         // Gets user from api
-        await getUserUsingToken();
+        await getUserUsingToken().then(() => changePage());
 
         // Changes page
         //await changePage()
