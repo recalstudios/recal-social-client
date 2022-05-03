@@ -4,6 +4,8 @@ async function loadProfile() {
     await getUserUsingToken();
 
     document.querySelector("#pfp").src = user.pfp
+    document.querySelector("#pfpUrl").innerHTML = user.pfp
+    document.querySelector("#newPfp").value = user.pfp
 
     document.querySelector("#username").innerHTML = user.username
     document.querySelector("#newUsername").value = user.username
@@ -29,5 +31,9 @@ function changeUser(one, two) {
 }
 
 function doneChangingUser() {
+
+}
+
+function newPassword() {
 
 }

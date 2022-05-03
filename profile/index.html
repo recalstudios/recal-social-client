@@ -27,8 +27,6 @@
         <div id="header">
             <a class="btn" href="/">Home</a>
             <div id="btn-box">
-                <a class="btn" onclick="changeUser('initial', 'none')">Edit</a>
-                <a class="btn" onclick="changeUser('none', 'initial')">Done</a>
                 <a class="btn" href="/login">Log out</a>
                 <a class="btn" href="/login">Log out all</a>
             </div>
@@ -48,17 +46,15 @@
                         <label for="newEmail"></label>
                         <input name="newEmail" placeholder="New email" id="newEmail" class="input">
                         <p class="italic darken-text small-margin-bottom">Profile Pfp:</p>
-                        <h2 id="status" class="information">heinzinininininin</h2>
+                        <h2 id="pfpUrl" class="information"></h2>
                         <label for="newPfp"></label>
                         <input name="profilePicture" placeholder="Paste picture link here" id="newPfp" class="input">
-                        <label for="newPassphrase"></label>
-                        <input name="profilePicture" placeholder="New Passphrase" id="newPassphrase" class="input">
+                        <a class="btn input" id="updateUser" onclick="changeUser('none', 'initial')" >Update credentials</a>
+                        <a class="btn information" onclick="changeUser('initial', 'none')">Edit Credentials</a>
                     </div>
                 </div>
-
             </div>
         </div>
-
 
         <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
