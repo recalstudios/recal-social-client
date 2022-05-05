@@ -22,7 +22,7 @@ loadProfile();
 
 function changeUser(one, two) {
 
-    document.querySelectorAll(".input").forEach(box => {
+    document.querySelectorAll(".inputUser").forEach(box => {
         box.style.display = one;
     });
     document.querySelectorAll(".information").forEach(box => {
@@ -30,10 +30,36 @@ function changeUser(one, two) {
     });
 }
 
+function editPassword(one, two) {
+
+    document.querySelectorAll(".userinfo").forEach(box => {
+        box.style.display = one;
+    });
+    document.querySelectorAll(".passwordInfo").forEach(box => {
+        box.style.display = two;
+    });
+}
+
+
 function doneChangingUser() {
 
 }
 
-function newPassword() {
+async function changePassword() {
 
+    if ($("#new1Password").val() === $("#new2Password").val())
+    {
+
+        changePasswordResult = (await axios({
+            method: 'post',
+            url: api + 'auth/update/pass',
+            headers: {
+                Authorization: 'Bearer ' + authToken
+            },
+            data: {
+                Pass: $("#oldPassword").val(),
+                NewPass: $("#new1Password").val()
+            }
+        })).data;
+    }
 }

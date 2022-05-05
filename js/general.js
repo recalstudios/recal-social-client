@@ -4,6 +4,7 @@ $("#back").load("/assets/left-arrow.svg");
 // Declare variables
 let authTokenValidity, authToken, message, sendMessage, input;
 let username, email, passphrase, result;
+let changePasswordResult;
 let user;
 let chatroomList, chatroomId, currentChatroom, chatroomResult, int;
 let dialog = localStorage['dialog'] || false;

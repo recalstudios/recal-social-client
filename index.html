@@ -24,8 +24,8 @@
         <div id="header">
             <a class="btn" href="/">Home</a>
             <div id="btn-box">
-                <a class="btn" id="join-chatroom" onclick="joinChatroom()">Join Chatroom</a>
-                <a class="btn" id="make-chatroom" onclick="createChatroom()">Make Chatroom</a>
+                <a class="btn" id="join-chatroom" onclick="openDialog('join-chatroom-dialog')">Join Chatroom</a>
+                <a class="btn" id="make-chatroom" onclick="openDialog('create-chatroom-dialog')">Make Chatroom</a>
                 <div id="profile-logout-cluster">
                     <a class="btn" id="profile-btn" href="/profile/">Profile</a>
                     <a class="btn" id="logout-btn" onclick="logOut()">Log Out</a>
@@ -53,10 +53,28 @@
             </div>
         </div>
 
-        <dialog id="dialog" >
+        <dialog id="cookie-dialog">
             <h1>Accept cookies</h1>
             <p>We are going to steal your information, and you need to accept it</p>
-            <a class="btn" onclick="closeDialog()">Accept</a>
+            <a class="btn" onclick="closeDialog('cookie-dialog')">Accept</a>
+        </dialog>
+
+        <dialog id="join-chatroom-dialog">
+            <h1>Join chatroom</h1>
+            <label for="join-chatroom-code"></label><input type="text" name="Chatroom Code" placeholder="Insert chatroom code here" id="join-chatroom-code">
+            <br>
+            <label for="join-chatroom-password"></label><input type="password" name="Chatroom Password" placeholder="Insert chatroom password here" id="join-chatroom-password">
+            <br>
+            <a class="btn" onclick="joinChatroom('join-chatroom-dialog')">Accept</a>
+        </dialog>
+
+        <dialog id="create-chatroom-dialog">
+            <h1>Create chatroom</h1>
+            <label for="create-chatroom-name"></label><input type="text" name="Chatroom Code" placeholder="Insert chatroom name here" id="create-chatroom-name">
+            <br>
+            <label for="create-chatroom-password"></label><input type="password" name="Chatroom Password" placeholder="Insert chatroom password here" id="create-chatroom-password">
+            <br>
+            <a class="btn" onclick="createChatroom('create-chatroom-dialog')">Accept</a>
         </dialog>
 
         <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>

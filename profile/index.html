@@ -36,21 +36,43 @@
             <div id="profile-box">
                 <div id="profile">
                     <img id="pfp" src="https://via.placeholder.com/200x200" alt="smh">
-                    <div>
-                        <p class="italic darken-text small-margin-bottom">Username:</p>
-                        <h2 id="username" class="information"></h2>
+                    <div class="userinfo">
+                        <p class="userinfo italic darken-text small-margin-bottom">Username:</p>
+                        <h2 id="username" class="information "></h2>
                         <label for="newUsername"></label>
-                        <input name="newUsername" placeholder="New username" id="newUsername" class="input">
-                        <p class="italic darken-text small-margin-bottom">Email:</p>
-                        <h2 id="email" class="information"></h2>
+                        <input name="newUsername" placeholder="New username" id="newUsername" class="inputUser">
+
+                        <p class="userinfo italic darken-text small-margin-bottom">Email:</p>
+                         <h2 id="email" class="information "></h2>
                         <label for="newEmail"></label>
-                        <input name="newEmail" placeholder="New email" id="newEmail" class="input">
-                        <p class="italic darken-text small-margin-bottom">Profile Pfp:</p>
-                        <h2 id="pfpUrl" class="information"></h2>
+                        <input name="newEmail" placeholder="New email" id="newEmail" class="inputUser">
+
+                        <p class="userinfo italic darken-text small-margin-bottom">Profile Pfp:</p>
+                        <h2 id="pfpUrl" class="information "></h2>
                         <label for="newPfp"></label>
-                        <input name="profilePicture" placeholder="Paste picture link here" id="newPfp" class="input">
-                        <a class="btn input" id="updateUser" onclick="changeUser('none', 'initial')" >Update credentials</a>
-                        <a class="btn information" onclick="changeUser('initial', 'none')">Edit Credentials</a>
+                        <input name="profilePicture" placeholder="Paste picture link here" id="newPfp" class="inputUser">
+
+                        <a class="btn inputUser" id="updateUser" onclick="changeUser('none', 'flex')" >Update credentials</a>
+                        <div id="edit" class="">
+                            <a class="btn information" onclick="changeUser('flex', 'none')">Edit Credentials</a>
+                            <a class="btn information" onclick="changePassword('none', 'flex')">Change Password</a>
+                        </div>
+
+                    </div>
+                    <div class="passwordInfo" id="passwordBox">
+                        <p class="italic darken-text small-margin-bottom ">Password:</p>
+                        <label for="oldPassword"></label>
+                        <input name="oldPassword" placeholder="Password" id="oldPassword" class="passwordInfo">
+
+                        <p class="italic darken-text small-margin-bottom ">New Password:</p>
+                        <label for="new1Password"></label>
+                        <input name="new1Password" placeholder="New Password" id="new1Password" class="passwordInfo">
+
+                        <p class="italic darken-text small-margin-bottom ">Password:</p>
+                        <label for="new2Password"></label>
+                        <input name="new2Password" placeholder="Password" id="new2Password" class="passwordInfo">
+
+                        <a class="btn" onclick="changePassword('flex', 'none')">Update Password</a>
                     </div>
                 </div>
             </div>

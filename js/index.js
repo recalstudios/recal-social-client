@@ -1,7 +1,7 @@
 // Sets the current chatroom from localstorage
-currentChatroom = localStorage['currentChatroom'] || 'chatroom-1';
+currentChatroom = localStorage['currentChatroom'] || 'chatroom-dummy';
 
-let chatroom = "chatroom-1";
+let chatroom = "chatroom-dummy";
 
 checkIfLoggedIn()
 
@@ -94,12 +94,17 @@ function loadChatrooms() {
 
     chatroomBox.innerHTML = ''
 
+    chatroomBox.innerHTML += `<div id="chatroom-dummy"></div>`
+
     for (const chatroom of chatroomList)
     {
         chatroomBox.innerHTML += `
                 <div id="chatroom-${chatroom.id}" class="chatroom" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
-                    <img src="https://via.placeholder.com/50" alt="Placholder">
-                    <p>${chatroom.name}</p>
+                    <div class="chatroom-info">
+                        <img src="https://via.placeholder.com/50" alt="Placholder">
+                        <p>${chatroom.name}</p>
+                    </div>
+                    <a class="" onclick="leaveChatroom(${chatroom.id})">x</a>
                 </div>
             `;
     }
@@ -143,16 +148,26 @@ async function getUserChatrooms()
 
 if (!dialog)
 {
-    document.querySelector("#dialog").style.display = "initial"
+    document.querySelector("#dialog").showModal()
 }
 
-function closeDialog() {
+function closeCookieConsent(dialogName) {
     dialog = true;
     localStorage['dialog'] = dialog
-    document.querySelector("#dialog").style.display = "none";
+    closeDialog(dialogName)
 }
 
-async function createChatroom() {
+function openDialog(dialogeName) {
+    document.querySelector("#" + dialogeName).showModal();
+}
+
+function closeDialog(dialogeName) {
+    document.querySelector("#" + dialogeName).close();
+}
+
+async function createChatroom(dialogName) {
+    closeDialog(dialogName)
+
     // Creates chatroomList with API
     chatroomResult = (await axios({
         method: 'post',
@@ -161,8 +176,8 @@ async function createChatroom() {
             Authorization: 'Bearer ' + authToken
         },
         data: {
-            Name:"testeteste" + int,
-            Pass:"root"
+            Name: $("#create-chatroom-name").val(),
+            Pass: $("#create-chatroom-password").val()
         }
     })).data;
 
@@ -176,15 +191,10 @@ async function createChatroom() {
     await getUserChatrooms().then(() => loadChatrooms())
 }
 
-intCounter()
+async function joinChatroom(dialogName) {
 
-function intCounter() {
-    int = Math.floor(Math.random() * 10000);
-    JSON.parse(int);
-    console.log(int)
-}
+    closeDialog(dialogName)
 
-async function joinChatroom() {
     // Joins chatroomList with API
     chatroomResult = (await axios({
         method: 'post',
@@ -193,11 +203,32 @@ async function joinChatroom() {
             Authorization: 'Bearer ' + authToken
         },
         data: {
-            Code: prompt("Insert room code here"),
-            Pass: prompt("Insert password for room here")
+            Code: $("#join-chatroom-code").val(),
+            Pass: $("#join-chatroom-password").val()
         }
     })).data;
 
+    await getUserChatrooms().then(() => loadChatrooms())
+}
+
+async function leaveChatroom(chatroomid) {
+    // Leave chatroomList with API
+    chatroomResult = (await axios({
+        method: 'post',
+        url: api + 'chat/room/leave',
+        headers: {
+            Authorization: 'Bearer ' + authToken
+        },
+        data: {
+            ChatroomId: chatroomid
+        }
+    })).data;
+
+    chatroom = "chatroom-dummy"
+    currentChatroom = "chatroom-dummy"
+    localStorage['currentChatroom'] = currentChatroom
+
+    await getUserChatrooms().then(() => loadChatrooms())
 }
 
 sendMessage = $("#sendMessage")
@@ -223,7 +254,6 @@ sendMessage.keypress(function (e)
                     ],
                     "text": sendMessage.val()
                 }
-
             });
             //console.log(message);
             ws.send(message);
