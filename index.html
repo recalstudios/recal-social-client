@@ -54,27 +54,33 @@
         </div>
 
         <dialog id="cookie-dialog">
-            <h1>Accept cookies</h1>
-            <p>We are going to steal your information, and you need to accept it</p>
-            <a class="btn" onclick="closeCookieConsent('cookie-dialog')">Accept</a>
+            <div class="popup">
+                <h1>Accept cookies</h1>
+                <p>We are going to steal your information, and you need to accept it</p>
+                <a class="btn" onclick="closeCookieConsent('cookie-dialog')">Accept</a>
+            </div>
         </dialog>
 
         <dialog id="join-chatroom-dialog">
-            <h1>Join chatroom</h1>
-            <label for="join-chatroom-code"></label><input type="text" name="Chatroom Code" placeholder="Insert chatroom code here" id="join-chatroom-code">
-            <br>
-            <label for="join-chatroom-password"></label><input type="password" name="Chatroom Password" placeholder="Insert chatroom password here" id="join-chatroom-password">
-            <br>
-            <a class="btn" onclick="joinChatroom('join-chatroom-dialog')">Accept</a>
+            <div class="popup">
+                <h1>Join chatroom</h1>
+                <label for="join-chatroom-code"></label><input type="text" name="Chatroom Code" placeholder="Insert chatroom code here" id="join-chatroom-code">
+                <br>
+                <label for="join-chatroom-password"></label><input type="password" name="Chatroom Password" placeholder="Insert chatroom password here" id="join-chatroom-password">
+                <br>
+                <a class="btn" onclick="joinChatroom('join-chatroom-dialog')">Accept</a>
+            </div>
         </dialog>
 
         <dialog id="create-chatroom-dialog">
+            <div class="popup">
             <h1>Create chatroom</h1>
             <label for="create-chatroom-name"></label><input type="text" name="Chatroom Code" placeholder="Insert chatroom name here" id="create-chatroom-name">
             <br>
             <label for="create-chatroom-password"></label><input type="password" name="Chatroom Password" placeholder="Insert chatroom password here" id="create-chatroom-password">
             <br>
             <a class="btn" onclick="createChatroom('create-chatroom-dialog')">Accept</a>
+            </div>
         </dialog>
 
         <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>

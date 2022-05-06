@@ -50,8 +50,32 @@ function editPassword(one, two) {
 
 function changeUser() {
 
+    pfp = $("#newPfp").val()
+    theUsername = $("#newUsername").val()
+    mail = $("#newEmail").val()
 
+    if(pfp.length === 0 || theUsername.length === 0 || mail.length === 0)
+    {
+        openDialog("MissingUserInfo");
+    }else{
 
+        changePasswordResult = (await axios({
+            method: 'post',
+            url: api + 'user/update',
+            headers: {
+                Authorization: 'Bearer ' + authToken
+            },
+            data: {
+                Pass:
+                Username: theUsername,
+                Email: mail,
+                Pfp: pfp
+            }
+        })).data;
+
+        loadProfile();
+        //editUser('none', 'flex')
+    }
 }
 
 async function changePassword() {
