@@ -45,9 +45,7 @@ function editPassword(one, two) {
 
 function changeUser() {
 
-    let userName =
-
-        if
+        if ( $("#new1Password").val() =)
 
 
 }

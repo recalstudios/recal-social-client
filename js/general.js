@@ -85,7 +85,7 @@ async function chainRefreshToken2() {
         method: 'post',
         url: api + 'auth/token/renew',
         headers: {
-            Cookie: "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RSZWZyZXNoVG9rZW4iLCJqdGkiOiJhOWEyYTE1ZC1mNGFjLTRhNGItYTMyMS0wYmEwZDcwOWNiZjIiLCJpYXQiOiI1LzYvMjAyMiAxMTo0MToyNCBBTSIsIlVzZXJJZCI6IjEiLCJUb2tlbiI6IkNkOTRmaFF6Uk91WTRPTW5XN1RrdXFIM1ZGYnRrR2NGOGl2ZDdRSlR4TzFEQXVhVUxWU29LR0NGQzhIUERucm8rZDA4VzlJT0V0MG56UGdKcTQ1bk9RPT0iLCJleHAiOjE2NTIyNjkyODQsImlzcyI6InJlY2Fsc3R1ZGlvcy5uZXQiLCJhdWQiOiJyZWNhbHN0dWRpb3MubmV0In0.SIo40b_SRLwuDUAjwcp7recBnOyTCc5kkZs5Ipedgf4; Path=/; Domain=social.recalstudios.net; Secure; HttpOnly; Expires=Wed, 11 May 2022 11:41:24 GMT;"
+            SetCookie: "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RSZWZyZXNoVG9rZW4iLCJqdGkiOiJhOWEyYTE1ZC1mNGFjLTRhNGItYTMyMS0wYmEwZDcwOWNiZjIiLCJpYXQiOiI1LzYvMjAyMiAxMTo0MToyNCBBTSIsIlVzZXJJZCI6IjEiLCJUb2tlbiI6IkNkOTRmaFF6Uk91WTRPTW5XN1RrdXFIM1ZGYnRrR2NGOGl2ZDdRSlR4TzFEQXVhVUxWU29LR0NGQzhIUERucm8rZDA4VzlJT0V0MG56UGdKcTQ1bk9RPT0iLCJleHAiOjE2NTIyNjkyODQsImlzcyI6InJlY2Fsc3R1ZGlvcy5uZXQiLCJhdWQiOiJyZWNhbHN0dWRpb3MubmV0In0.SIo40b_SRLwuDUAjwcp7recBnOyTCc5kkZs5Ipedgf4; Path=/; Domain=social.recalstudios.net; Secure; HttpOnly; Expires=Wed, 11 May 2022 11:41:24 GMT;"
         },
     }));
 
