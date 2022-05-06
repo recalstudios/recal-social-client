@@ -47,6 +47,20 @@
             <h3 id="register">Don't have an account? <a href="/register" onclick="savePreviousPage()">Register here!</a></h3>
         </div>
 
+        <dialog id="BadNewPassword">
+            <div class="popup">
+                <p>The confirm password is not the same as the new password</p>
+                <a class="btn" onclick="closeDialog('BadNewPassword')">Close</a>
+            </div>
+        </dialog>
+
+        <dialog id="MissingUserInfo">
+            <div class="popup">
+                <p>All input fields need to be filed</p>
+                <a class="btn" onclick="closeDialog('MissingUserInfo')">Close</a>
+            </div>
+        </dialog>
+
         <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="/js/general.js"></script>

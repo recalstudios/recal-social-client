@@ -3,9 +3,7 @@ currentChatroom = localStorage['currentChatroom'] || 'chatroom-dummy';
 
 let chatroom = "chatroom-dummy";
 
-checkIfLoggedIn()
-
-getUserChatrooms().then(() => loadChatrooms())
+checkIfLoggedIn().then(() => getUserChatrooms().then(() => loadChatrooms()))
 
 //axios.post('URL', data, {
 //    withCredentials: true
@@ -17,7 +15,9 @@ getUserChatrooms().then(() => loadChatrooms())
 // Fetches messages from test json file
 async function fetchMessages()
 {
-    authToken = localStorage['token']
+    await checkIfAuthTokenExpired()
+
+    authToken = localStorage['authToken']
 
     messages = (await axios({
         method: 'post',
@@ -61,25 +61,24 @@ async function fetchMessages()
 //     });
 
 // Loads the chat from the current chat room
-function loadChat()
+async function loadChat()
 {
     const chatListElement = document.querySelector("#chat-list");
 
     chatListElement.innerHTML = ''; // Clears previous chat log
     for (const message of messages)
     {
+
         chatListElement.innerHTML += `
             <div class="chat">
                 <div class="chat-user">
-                    <img src="${publicUser.pfp}" alt="skootskoot">
-                    <p class="bold">${findCorrectUser(message.id)}_____________</p>
+                    <img src="https://via.placeholder.com/50x50" alt="skootskoot">
+                    <p class="bold">${await getUserUsingId(message.author)}‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ</p>
                     <p class="bold">${message.timestamp}</p>
                 </div>
                 <p class="chat-message">${message.content.text}</p>
             </div>
         `;
-
-
     }
     document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
 }
@@ -129,6 +128,8 @@ function changeChatRoom(chatroomName, chatroomId)
 // Renews auth token
 async function getUserChatrooms()
 {
+    await checkIfAuthTokenExpired()
+
     // Gets chatroomList from API
     chatroomList = (await axios({
         method: 'get',
@@ -158,6 +159,8 @@ function closeCookieConsent(dialogName) {
 async function createChatroom(dialogName) {
     closeDialog(dialogName)
 
+    await checkIfAuthTokenExpired()
+
     // Creates chatroomList with API
     chatroomResult = (await axios({
         method: 'post',
@@ -182,8 +185,9 @@ async function createChatroom(dialogName) {
 }
 
 async function joinChatroom(dialogName) {
-
     closeDialog(dialogName)
+
+    await checkIfAuthTokenExpired()
 
     // Joins chatroomList with API
     chatroomResult = (await axios({
@@ -202,6 +206,9 @@ async function joinChatroom(dialogName) {
 }
 
 async function leaveChatroom(chatroomid) {
+
+    await checkIfAuthTokenExpired()
+
     // Leave chatroomList with API
     chatroomResult = (await axios({
         method: 'post',

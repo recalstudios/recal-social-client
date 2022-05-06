@@ -2,7 +2,7 @@
 $("#back").load("/assets/left-arrow.svg");
 
 // Declare variables
-let authTokenValidity, authToken, message, sendMessage, input, input2;
+let authTokenValidity, authToken, refreshToken, message, sendMessage, input, input2, publicUsername;
 let username, email, passphrase, result;
 let changePasswordResult;
 let theUsername, mail, pfp;
@@ -33,7 +33,7 @@ async function getAuthToken()
     try
     {
         // API request with axios. Post request where the url field describes where the request should go and the data field what should be in it.
-        authToken = (await axios({
+        const response = (await axios({
             method: 'post',
             url: api + 'auth/token/new',
             data: {
@@ -42,8 +42,16 @@ async function getAuthToken()
             }
         })).data;
 
+        authToken = response.authToken
+        
+        refreshToken = response.refreshToken
+
+        console.log(response)
+
+        localStorage['refreshToken'] = refreshToken
+
         // Stores auth token in localStorage
-        localStorage['token'] = authToken;
+        localStorage['authToken'] = authToken;
     }
     catch (e)
     {
@@ -56,40 +64,30 @@ async function getAuthToken()
 // Renews auth token
 async function chainRefreshToken()
 {
-    authToken = localStorage['token']
-    console.log(authToken)
+    refreshToken = localStorage['refreshToken']
+    console.log(refreshToken)
 
     //authToken = (await axios.post(api + 'auth/token/renew', { withCredentials: true }).data);
 
     // Renews auth token from API
-    authToken = (await axios({
+    const response = (await axios({
         method: 'post',
         url: api + 'auth/token/renew',
-        // headers: {
-        //     Cookie: "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RSZWZyZXNoVG9rZW4iLCJqdGkiOiI0ZDY2YjRhYi1kMDZlLTQ4NzItOTk1OC1jNzY2MzYzOTI1NmQiLCJpYXQiOiI1LzYvMjAyMiA5OjIzOjE0IEFNIiwiVXNlcklkIjoiMSIsIlRva2VuIjoiei9HREtZNjRZQW5VR05lVDJ2ZFVaMHBkZDVHS0RhakkzYnUwVDV2Q3FsclhZVDFxN0I0UWdXOTM4QXBKZWhudVozZTh2elpiMVh6b3BqVHAwbG1Za2c9PSIsImV4cCI6MTY1MjI2MDk5NCwiaXNzIjoicmVjYWxzdHVkaW9zLm5ldCIsImF1ZCI6InJlY2Fsc3R1ZGlvcy5uZXQifQ.0sLIHA--hXBgay9hlwxiKi8_ENpS8Ad2sTWiMktEP_Q"
-        // },
-        withCredentials: true
-    }));
+        headers: {
+            Authorization: 'Bearer ' + refreshToken
+        }
+    })).data;
 
-    console.log(authToken)
-    localStorage['token'] = authToken
-}
+    authToken = response.authToken
 
-async function chainRefreshToken2() {
-    authToken = localStorage['token']
-    console.log(authToken)
+    refreshToken = response.refreshToken
 
-    //authToken = (await axios.post(api + 'auth/token/renew', { withCredentials: true }).data);
+    console.log(response)
 
-    // Renews auth token from API
-    authToken = (await axios({
-        method: 'post',
-        url: api + 'auth/token/renew',
-        Cookies: "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RSZWZyZXNoVG9rZW4iLCJqdGkiOiJhOWEyYTE1ZC1mNGFjLTRhNGItYTMyMS0wYmEwZDcwOWNiZjIiLCJpYXQiOiI1LzYvMjAyMiAxMTo0MToyNCBBTSIsIlVzZXJJZCI6IjEiLCJUb2tlbiI6IkNkOTRmaFF6Uk91WTRPTW5XN1RrdXFIM1ZGYnRrR2NGOGl2ZDdRSlR4TzFEQXVhVUxWU29LR0NGQzhIUERucm8rZDA4VzlJT0V0MG56UGdKcTQ1bk9RPT0iLCJleHAiOjE2NTIyNjkyODQsImlzcyI6InJlY2Fsc3R1ZGlvcy5uZXQiLCJhdWQiOiJyZWNhbHN0dWRpb3MubmV0In0.SIo40b_SRLwuDUAjwcp7recBnOyTCc5kkZs5Ipedgf4; Path=/; Domain=social.recalstudios.net; Secure; HttpOnly; Expires=Wed, 11 May 2022 11:41:24 GMT;"
-}));
+    localStorage['refreshToken'] = refreshToken
 
-    console.log(authToken)
-    localStorage['token'] = authToken
+    // Stores auth token in localStorage
+    localStorage['authToken'] = authToken;
 }
 
 // Gets user from API
@@ -112,28 +110,23 @@ async function getUserUsingToken() {
     localStorage['user'] = JSON.stringify(user);
 }
 
-async function getUserUsingId() {
+async function getUserUsingId(id) {
     // Gets user from API
-    publicUser = (await axios({
+    publicUsername = (await axios({
         method: 'post',
         url: api + 'user/user/public',
         data: {
-            UserId: user.id
+            UserId: id
         }
     })).data;
 
-    console.log(publicUser)
-
-    // Stores user in localStorage
-    localStorage['publicUser'] = JSON.stringify(publicUser);
-
-    return publicUser.username
+    return publicUsername.username
 }
 
 // Checks if the auth token is expired
 async function checkIfAuthTokenExpired()
 {
-    authToken = localStorage['token']
+    authToken = localStorage['authToken']
 
     // Request to check if auth token is valid
     authTokenValidity = (await axios({
@@ -144,38 +137,61 @@ async function checkIfAuthTokenExpired()
         }
     })).data;
 
-    console.log(authTokenValidity)
-
     // If auth token isn't valid request new one
     if (!authTokenValidity) {
         await chainRefreshToken()
     }
 
-    authToken = localStorage['token'] // Gets auth token from localStorage
+    authToken = localStorage['authToken'] // Gets auth token from localStorage
 }
 
 // Function to check i've a user is logged in or not
 async function checkIfLoggedIn() {
     // Checks localstorage for token and name and puts them into variables
-    authToken = localStorage['token'] || '';
+    authToken = localStorage['authToken'] || '';
 
     // Checks if if token is empty or not and changes ui depending
     if (authToken.length !== 0) {
-        document.querySelector("#profile-logout-cluster").style.display = "initial";
-        document.querySelector("#login-register-cluster").style.display = "none";
-
         await getUserUsingToken()
     } else {
-        document.querySelector("#profile-logout-cluster").style.display = "none";
-        document.querySelector("#login-register-cluster").style.display = "initial";
-
         window.location.href = "/login/"
     }
 }
 
 // Function to log out the user and to make its logged out no matter.
-function logOut() {
-    localStorage['token'] = "";
+async function logOut() {
+    refreshToken = localStorage['refreshToken']
+
+    // Renews auth token from API
+    const response = (await axios({
+        method: 'post',
+        url: api + 'auth/token/logout',
+        headers: {
+            Authorization: 'Bearer ' + refreshToken
+        }
+    })).data;
+
+    localStorage['authToken'] = "";
+    localStorage['refreshToken'] = "";
+
+    checkIfLoggedIn(); // Checks if logged in
+}
+
+// Function to log out the user and to make its logged out no matter.
+async function logOutAll() {
+    refreshToken = localStorage['refreshToken']
+
+        // Renews auth token from API
+        const response = (await axios({
+            method: 'post',
+            url: api + 'auth/token/logout/all',
+            headers: {
+                Authorization: 'Bearer ' + refreshToken
+            }
+        })).data ;
+
+    localStorage['authToken'] = "";
+    localStorage['refreshToken'] = "";
 
     checkIfLoggedIn(); // Checks if logged in
 }
@@ -206,5 +222,5 @@ $('.form').on('keydown', 'input', function (event) {
 //         await chainRefreshToken()
 //     }
 //
-//     authToken = localStorage['token'] // Gets auth token from localStorage
+//     authToken = localStorage['authToken'] // Gets auth token from localStorage
 // }

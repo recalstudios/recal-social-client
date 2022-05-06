@@ -23,11 +23,6 @@ async function verifyCredentials() {
 
         await getAuthToken()
 
-        console.log(authToken)
-
-        // Stores token in localstorage
-        localStorage['token'] = authToken; // only strings
-
         // Gets user from api
         await getUserUsingToken().then(() => changePage());
 

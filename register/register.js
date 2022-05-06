@@ -58,7 +58,7 @@ async function createUser() {
     }
 
     // Stores token in localstorage
-    // localStorage['token'] = token; // only strings
+    // localStorage['authToken'] = token; // only strings
 
     // if (token.length === 0) {
     //

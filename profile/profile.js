@@ -48,16 +48,17 @@ function editPassword(one, two) {
 }
 
 
-function changeUser() {
+async function changeUser() {
+
+    await checkIfAuthTokenExpired()
 
     pfp = $("#newPfp").val()
     theUsername = $("#newUsername").val()
     mail = $("#newEmail").val()
 
-    if(pfp.length === 0 || theUsername.length === 0 || mail.length === 0)
-    {
+    if (pfp.length === 0 || theUsername.length === 0 || mail.length === 0) {
         openDialog("MissingUserInfo");
-    }else{
+    } else {
 
         changePasswordResult = (await axios({
             method: 'post',
@@ -66,7 +67,7 @@ function changeUser() {
                 Authorization: 'Bearer ' + authToken
             },
             data: {
-                Pass:
+                //Pass:
                 Username: theUsername,
                 Email: mail,
                 Pfp: pfp
@@ -80,9 +81,11 @@ function changeUser() {
 
 async function changePassword() {
 
-     Password1 = $("#new1Password").val();
-     Password2 = $("#new2Password").val();
-     OldPassword = $("#oldPassword").val();
+    await checkIfAuthTokenExpired()
+
+    Password1 = $("#new1Password").val();
+    Password2 = $("#new2Password").val();
+    OldPassword = $("#oldPassword").val();
 
     if (Password1 === Password2)
     {
