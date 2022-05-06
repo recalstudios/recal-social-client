@@ -5,6 +5,7 @@ $("#back").load("/assets/left-arrow.svg");
 let authTokenValidity, authToken, message, sendMessage, input, input2;
 let username, email, passphrase, result;
 let changePasswordResult;
+let theUsername, mail, pfp;
 let user;
 let chatroomList, chatroomId, currentChatroom, chatroomResult, int;
 let Password1, Password2, OldPassword

@@ -3,19 +3,24 @@ async function loadProfile() {
 
     await getUserUsingToken();
 
-    document.querySelector("#pfp").src = user.pfp
-    document.querySelector("#pfpUrl").innerHTML = user.pfp
-    document.querySelector("#newPfp").value = user.pfp
 
-    document.querySelector("#username").innerHTML = user.username
-    document.querySelector("#newUsername").value = user.username
 
-    document.querySelector("#email").innerHTML = user.email
-    document.querySelector("#newEmail").value = user.email
+    pfp = user.pfp
+    theUsername = user.username
+    mail = user.email
 
-    console.log(user.email, user.username, user.pfp)
+    document.querySelector("#pfp").src = pfp
+    document.querySelector("#pfpUrl").innerHTML = pfp
+    document.querySelector("#newPfp").value = pfp
 
-    console.log(user)
+    document.querySelector("#username").innerHTML = theUsername
+    document.querySelector("#newUsername").value = theUsername
+
+    document.querySelector("#email").innerHTML = mail
+    document.querySelector("#newEmail").value = mail
+
+    //console.log(user.email, user.username, user.pfp, user)
+
 }
 
 loadProfile();
@@ -45,7 +50,6 @@ function editPassword(one, two) {
 
 function changeUser() {
 
-        if ( $("#new1Password").val() =)
 
 
 }
