@@ -20,7 +20,7 @@ async function loadProfile() {
 
 loadProfile();
 
-function changeUser(one, two) {
+function editUser(one, two) {
 
 
     document.querySelectorAll(".inputUser").forEach(box => {
@@ -43,7 +43,12 @@ function editPassword(one, two) {
 }
 
 
-function doneChangingUser() {
+function changeUser() {
+
+    let userName =
+
+        if
+
 
 }
 

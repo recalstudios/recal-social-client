@@ -284,3 +284,7 @@ ws.onmessage = e => {
         loadChat();
     }
 }
+
+ws.onclose = () => {
+    setTimeout(ws.open, 5000)
+}
