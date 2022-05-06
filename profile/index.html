@@ -36,49 +36,63 @@
             <div id="profile-box">
                 <div id="profile">
                     <img id="pfp" src="https://via.placeholder.com/200x200" alt="smh">
-                    <div class="userinfo">
+                    <div class="userinfo form">
                         <p class="userinfo italic darken-text small-margin-bottom">Username:</p>
                         <h2 id="username" class="information "></h2>
                         <label for="newUsername"></label>
-                        <input name="newUsername" placeholder="New username" id="newUsername" class="inputUser">
+                        <input name="newUsername" placeholder="New username" id="newUsername" class="inputUser" data-index="1">
 
                         <p class="userinfo italic darken-text small-margin-bottom">Email:</p>
                          <h2 id="email" class="information "></h2>
                         <label for="newEmail"></label>
-                        <input name="newEmail" placeholder="New email" id="newEmail" class="inputUser">
+                        <input name="newEmail" placeholder="New email" id="newEmail" class="inputUser" data-index="2">
 
                         <p class="userinfo italic darken-text small-margin-bottom">Profile Pfp:</p>
                         <h2 id="pfpUrl" class="information "></h2>
                         <label for="newPfp"></label>
-                        <input name="profilePicture" placeholder="Paste picture link here" id="newPfp" class="inputUser">
+                        <input name="profilePicture" placeholder="Paste picture link here" id="newPfp" class="inputUser" data-index="3">
 
-                        <a class="btn inputUser" id="updateUser" onclick="changeUser('none', 'flex')" >Update credentials</a>
+                        <a class="btn inputUser change-user-submit" id="updateUser" onclick="changeUser('none', 'flex')" >Update credentials</a>
                         <div id="edit" class="">
                             <a class="btn information" onclick="changeUser('flex', 'none')">Edit Credentials</a>
-                            <a class="btn information" onclick="changePassword('none', 'flex')">Change Password</a>
+                            <a class="btn information" onclick="editPassword('none', 'flex')">Change Password</a>
                         </div>
 
                     </div>
-                    <div class="passwordInfo" id="passwordBox">
-                        <p class="italic darken-text small-margin-bottom ">Password:</p>
+                    <div class="passwordInfo form" id="passwordBox">
+                        <p class="italic darken-text small-margin-bottom ">Old Password</p>
                         <label for="oldPassword"></label>
-                        <input name="oldPassword" placeholder="Password" id="oldPassword" class="passwordInfo">
+                        <input name="oldPassword" placeholder="Password" id="oldPassword" class="passwordInfo" type="password" data-index="1">
 
                         <p class="italic darken-text small-margin-bottom ">New Password:</p>
                         <label for="new1Password"></label>
-                        <input name="new1Password" placeholder="New Password" id="new1Password" class="passwordInfo">
+                        <input name="new1Password" placeholder="New Password" id="new1Password" class="passwordInfo" data-index="2">
 
-                        <p class="italic darken-text small-margin-bottom ">Password:</p>
+                        <p class="italic darken-text small-margin-bottom ">Confirm Password:</p>
                         <label for="new2Password"></label>
-                        <input name="new2Password" placeholder="Password" id="new2Password" class="passwordInfo">
+                        <input name="new2Password" placeholder="Password" id="new2Password" class="passwordInfo" data-index="3">
 
-                        <a class="btn" onclick="changePassword('flex', 'none')">Update Password</a>
+                        <a class="btn change-password-submit submit" onclick="changePassword()">Update Password</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <dialog id="BadOldPassword">
+            <div class="popup">
+                <p>The old password is written wrong</p>
+                <a class="btn" onclick="closeDialog('BadOldPassword')">Close</a>
+            </div>
+        </dialog>
+
+        <dialog id="BadNewPassword">
+            <div class="popup">
+                <p>The confirm password is not the same as the new password</p>
+                <a class="btn" onclick="closeDialog('BadNewPassword')" >Close</a>
+            </div>
+        </dialog>
+
+        <script type="text/java script" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="/js/general.js"></script>
         <script src="/profile/profile.js"></script>

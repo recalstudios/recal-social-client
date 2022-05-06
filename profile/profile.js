@@ -22,6 +22,7 @@ loadProfile();
 
 function changeUser(one, two) {
 
+
     document.querySelectorAll(".inputUser").forEach(box => {
         box.style.display = one;
     });
@@ -31,6 +32,7 @@ function changeUser(one, two) {
 }
 
 function editPassword(one, two) {
+
 
     document.querySelectorAll(".userinfo").forEach(box => {
         box.style.display = one;
@@ -47,9 +49,12 @@ function doneChangingUser() {
 
 async function changePassword() {
 
-    if ($("#new1Password").val() === $("#new2Password").val())
-    {
+     Password1 = $("#new1Password").val();
+     Password2 = $("#new2Password").val();
+     OldPassword = $("#oldPassword").val();
 
+    if (Password1 === Password2)
+    {
         changePasswordResult = (await axios({
             method: 'post',
             url: api + 'auth/update/pass',
@@ -57,9 +62,47 @@ async function changePassword() {
                 Authorization: 'Bearer ' + authToken
             },
             data: {
-                Pass: $("#oldPassword").val(),
-                NewPass: $("#new1Password").val()
+                Pass: OldPassword,
+                NewPass: Password1
             }
         })).data;
+
+        console.log(changePasswordResult)
+
+        if (changePasswordResult === true)
+        {
+            editPassword('flex', 'none');
+        } else {
+            openDialog("BadOldPassword");
+        }
+    } else {
+        console.log("fuc")
+        openDialog('BadNewPassword');
     }
 }
+
+input = document.querySelector("#newPfp")
+
+input2 = document.querySelector("#new2Password")
+
+// Execute a function when the user releases a key on the keyboard
+input.addEventListener("keydown", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.querySelector('.change-user-submit').click();
+    }
+});
+
+// Execute a function when the user releases a key on the keyboard
+input2.addEventListener("keydown", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.querySelector('.change-password-submit').click();
+    }
+});

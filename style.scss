@@ -96,6 +96,23 @@ body
     margin-bottom: -10px !important;
 }
 
+dialog
+{
+    justify-content: center;
+    justify-items: center;
+    background: $accent-raisin-black;
+    color: $accent-white;
+    border: solid $accent-purple-navy 4px;
+    border-radius: 1rem;
+
+    .popup
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
 //====================================
 // 2 General Elements
 //====================================
@@ -549,7 +566,6 @@ input
             {
                 display: none;
             }
-
 
         }
     }

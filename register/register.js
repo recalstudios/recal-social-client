@@ -67,16 +67,6 @@ async function createUser() {
     await getUserUsingToken();
 }
 
-// If enter go to next text field
-$('#form').on('keydown', 'input', function (event) {
-    if (event.which === 13) {
-        event.preventDefault();
-        let $this = $(event.target);
-        let index = parseFloat($this.attr('data-index'));
-        $('[data-index="' + (index + 1).toString() + '"]').focus();
-    }
-});
-
 // Get the input field
 input = document.querySelector("#confirm-passphrase")
 

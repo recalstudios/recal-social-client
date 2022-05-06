@@ -1,12 +1,13 @@
-// Load document sections
+    // Load document sections
 $("#back").load("/assets/left-arrow.svg");
 
 // Declare variables
-let authTokenValidity, authToken, message, sendMessage, input;
+let authTokenValidity, authToken, message, sendMessage, input, input2;
 let username, email, passphrase, result;
 let changePasswordResult;
 let user;
 let chatroomList, chatroomId, currentChatroom, chatroomResult, int;
+let Password1, Password2, OldPassword
 let dialog = localStorage['dialog'] || false;
 let messages = [];
 let publicUser =
@@ -57,10 +58,20 @@ async function chainRefreshToken()
     authToken = localStorage['token']
     console.log(authToken)
 
-    authToken = (await axios.post(api + 'auth/token/renew', { withCredentials: true }).data);
+    //authToken = (await axios.post(api + 'auth/token/renew', { withCredentials: true }).data);
+
+    // Renews auth token from API
+    authToken = (await axios({
+        method: 'post',
+        url: api + 'auth/token/renew',
+        // headers: {
+        //     Cookie: "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RSZWZyZXNoVG9rZW4iLCJqdGkiOiI0ZDY2YjRhYi1kMDZlLTQ4NzItOTk1OC1jNzY2MzYzOTI1NmQiLCJpYXQiOiI1LzYvMjAyMiA5OjIzOjE0IEFNIiwiVXNlcklkIjoiMSIsIlRva2VuIjoiei9HREtZNjRZQW5VR05lVDJ2ZFVaMHBkZDVHS0RhakkzYnUwVDV2Q3FsclhZVDFxN0I0UWdXOTM4QXBKZWhudVozZTh2elpiMVh6b3BqVHAwbG1Za2c9PSIsImV4cCI6MTY1MjI2MDk5NCwiaXNzIjoicmVjYWxzdHVkaW9zLm5ldCIsImF1ZCI6InJlY2Fsc3R1ZGlvcy5uZXQifQ.0sLIHA--hXBgay9hlwxiKi8_ENpS8Ad2sTWiMktEP_Q"
+        // },
+        withCredentials: true
+    }));
 
     console.log(authToken)
-    //localStorage['token'] = authToken
+    localStorage['token'] = authToken
 }
 
 // Gets user from API
@@ -97,6 +108,8 @@ async function getUserUsingId() {
 
     // Stores user in localStorage
     localStorage['publicUser'] = JSON.stringify(publicUser);
+
+    return publicUser.username
 }
 
 // Checks if the auth token is expired
@@ -148,6 +161,24 @@ function logOut() {
 
     checkIfLoggedIn(); // Checks if logged in
 }
+
+function openDialog(dialogName) {
+    document.querySelector("#" + dialogName).showModal();
+}
+
+function closeDialog(dialogName) {
+    document.querySelector("#" + dialogName).close();
+}
+
+// If enter go to next text field
+$('.form').on('keydown', 'input', function (event) {
+    if (event.which === 13) {
+        event.preventDefault();
+        let $this = $(event.target);
+        let index = parseFloat($this.attr('data-index'));
+        $('[data-index="' + (index + 1).toString() + '"]').focus();
+    }
+});
 
 // async function test() {
 //     await checkIfAuthTokenExpired() // Checks if auth token is valid

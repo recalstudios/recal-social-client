@@ -5,6 +5,8 @@ let chatroom = "chatroom-dummy";
 
 checkIfLoggedIn()
 
+getUserChatrooms().then(() => loadChatrooms())
+
 //axios.post('URL', data, {
 //    withCredentials: true
 //});
@@ -12,60 +14,32 @@ checkIfLoggedIn()
 // let element = document.getElementById('focus');
 // element.scrollTop = element.offsetHeight
 
-
-
 // Fetches messages from test json file
 async function fetchMessages()
 {
-    // authToken = localStorage['token']
-    //
-    // messages = (await axios({
-    //     method: 'post',
-    //     url: api + 'chat/room/backlog',
-    //     data: {
-    //         ChatroomId: 1,
-    //         Start:1,
-    //         Length:10000
-    //     },
-    //     headers: {
-    //         Authorization: 'Bearer ' + authToken
-    //     }
-    // })).data.messages;
-    //
-    // loadChat()
+    authToken = localStorage['token']
+
+    messages = (await axios({
+        method: 'post',
+        url: api + 'chat/room/backlog',
+        data: {
+            ChatroomId: localStorage['currentChatroomId'],
+            Start: 1,
+            Length: 1000000
+        },
+        headers: {
+            Authorization: 'Bearer ' + authToken
+        }
+    })).data.messages;
 
     //Dynamically loads content
-    fetch("/js/json/chatroom-alpha.json")
-        .then(response => response.json())
-        .then(data =>
-        {
-            messages = data
-            loadChat()
-        });
-}
-
-// Loads the chat from the current chat room
-function loadChat()
-{
-    const chatListElement = document.querySelector("#chat-list");
-
-    chatListElement.innerHTML = ''; // Clears previous chat log
-    for (const message of messages)
-    {
-        chatListElement.innerHTML += `
-            <div class="chat">
-                <div class="chat-user">
-                    <img src="${publicUser.pfp}" alt="skootskoot">
-                    <p class="bold">${message.author}</p>
-                </div>
-                <p class="chat-message">${message.content.text}</p>
-            </div>
-        `;
-
-
-    }
-
-    document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
+    // fetch("/js/json/chatroom-alpha.json")
+    //     .then(response => response.json())
+    //     .then(data =>
+    //     {
+    //         messages = data
+    //         loadChat()
+    //     });
 }
 
 // // Dynamically loads content
@@ -85,9 +59,30 @@ function loadChat()
 //
 //         changeChatRoom(currentChatroom);
 //     });
-getUserChatrooms().then(() => loadChatrooms())
 
-fetchMessages()
+// Loads the chat from the current chat room
+function loadChat()
+{
+    const chatListElement = document.querySelector("#chat-list");
+
+    chatListElement.innerHTML = ''; // Clears previous chat log
+    for (const message of messages)
+    {
+        chatListElement.innerHTML += `
+            <div class="chat">
+                <div class="chat-user">
+                    <img src="${publicUser.pfp}" alt="skootskoot">
+                    <p class="bold">${findCorrectUser(message.id)}_____________</p>
+                    <p class="bold">${message.timestamp}</p>
+                </div>
+                <p class="chat-message">${message.content.text}</p>
+            </div>
+        `;
+
+
+    }
+    document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
+}
 
 function loadChatrooms() {
     const chatroomBox = document.querySelector("#chatroom-list");
@@ -125,9 +120,10 @@ function changeChatRoom(chatroomName, chatroomId)
     currentChatroom = chatroomName
 
     localStorage['currentChatroom'] = currentChatroom
-    localStorage['currentChatroomId'] = chatroomId
+    localStorage['currentChatroomId'] = chatroomId || "1"
     $("#sendMessage").val('')
-    //fetchMessages()
+
+    fetchMessages().then(() => loadChat())
 }
 
 // Renews auth token
@@ -148,7 +144,7 @@ async function getUserChatrooms()
 
 if (!dialog)
 {
-    document.querySelector("#dialog").showModal()
+    document.querySelector("#cookie-dialog").showModal()
 }
 
 function closeCookieConsent(dialogName) {
@@ -157,13 +153,7 @@ function closeCookieConsent(dialogName) {
     closeDialog(dialogName)
 }
 
-function openDialog(dialogeName) {
-    document.querySelector("#" + dialogeName).showModal();
-}
 
-function closeDialog(dialogeName) {
-    document.querySelector("#" + dialogeName).close();
-}
 
 async function createChatroom(dialogName) {
     closeDialog(dialogName)
@@ -231,6 +221,10 @@ async function leaveChatroom(chatroomid) {
     await getUserChatrooms().then(() => loadChatrooms())
 }
 
+function findCorrectUser(id) {
+    return "ayour mom"
+}
+
 sendMessage = $("#sendMessage")
 
 // Sends message to ws
@@ -243,13 +237,13 @@ sendMessage.keypress(function (e)
         if (document.querySelector("#sendMessage").value.length >= 1) {
             message = JSON.stringify({
                 "type": "message",
-                "room": 1,
-                "author": user.username,
+                "room": JSON.parse(localStorage['currentChatroomId']),
+                "author": JSON.parse(user.id),
                 "content": {
                     "attachments": [
                         {
-                            "type": "image",
-                            "src": "https://via.placeholder.com/50"
+                            "type":"image",
+                            "src":"yorumom"
                         }
                     ],
                     "text": sendMessage.val()
@@ -264,8 +258,8 @@ sendMessage.keypress(function (e)
 });
 
 ///////////////////////////////////////////////////////////////////////
-// const ws = new WebSocket("ws://10.111.59.109:14242/");// Opens websocket connection
-const ws = new WebSocket("ws://ws.social.recalstudios.net:14242");// Opens websocket connection
+ const ws = new WebSocket("ws://10.80.18.182/");// Opens websocket connection
+//const ws = new WebSocket("ws://ws.social.recalstudios.net");// Opens websocket connection
 
 // After connection is established send this message
 ws.onopen = e => {
