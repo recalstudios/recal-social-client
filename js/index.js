@@ -263,35 +263,3 @@ sendMessage.keypress(function (e)
         // document.querySelector(".chat:last-child").style.color = red;
     }
 });
-
-///////////////////////////////////////////////////////////////////////
- const ws = new WebSocket("ws://10.80.18.182/");// Opens websocket connection
-//const ws = new WebSocket("ws://ws.social.recalstudios.net");// Opens websocket connection
-
-// After connection is established send this message
-ws.onopen = e => {
-    checkIfAuthTokenExpired()
-
-    console.log("open", e);
-    ws.send(JSON.stringify({
-        "type": "auth",
-        "token": "Bearer " + authToken
-    }));
-    return false;
-}
-
-// What to do when receives a message
-ws.onmessage = e => {
-    const receivedData = JSON.parse(e.data);
-
-    if (receivedData.type === "message")
-    {
-        user = JSON.parse(localStorage['user']);
-        messages.push(receivedData);
-        loadChat();
-    }
-}
-
-ws.onclose = () => {
-    setTimeout(ws.open, 5000)
-}
