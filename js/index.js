@@ -25,12 +25,12 @@ async function fetchMessages()
         data: {
             ChatroomId: localStorage['currentChatroomId'],
             Start: 1,
-            Length: 1000000
+            Length: 500
         },
         headers: {
             Authorization: 'Bearer ' + authToken
         }
-    })).data.messages;
+    })).data.messages.reverse();
 
     //Dynamically loads content
     // fetch("/js/json/chatroom-alpha.json")
@@ -63,6 +63,11 @@ async function fetchMessages()
 // Loads the chat from the current chat room
 async function loadChat()
 {
+    // Do some fuckery which isn't really needed, but little is dumb as fuck, so we're going to have it here for now
+    // We can remove it later when little decides to write good code (probably never)
+    const currentRoomUsers = chatroomList.find(r => r.id === parseInt(currentChatroom.replace(/\D/g,''))).users;
+    console.log(currentRoomUsers);
+
     const chatListElement = document.querySelector("#chat-list");
 
     chatListElement.innerHTML = ''; // Clears previous chat log
@@ -72,9 +77,9 @@ async function loadChat()
         chatListElement.innerHTML += `
             <div class="chat">
                 <div class="chat-user">
-                    <img src="https://via.placeholder.com/50x50" alt="skootskoot">
-                    <p class="bold">${await getUserUsingId(message.author)}‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ‎‎‎‎‎‎‎‎ㅤ</p>
-                    <p class="bold">${message.timestamp}</p>
+                    <img src="${currentRoomUsers.find(u => u.id === message.author).pfp}" alt="skootskoot">
+                    <p class="bold">${currentRoomUsers.find(u => u.id === message.author).username}</p>
+                    <p class="bold"><i><sub>${message.timestamp}</sub></i></p>
                 </div>
                 <p class="chat-message">${message.content.text}</p>
             </div>

@@ -1,5 +1,4 @@
 // Declare and open the WebSocket
-const wsUrl = "ws://localhost:5502";
 let ws = new WebSocket(wsUrl);
 
 // Global variable for debugging network
@@ -50,9 +49,9 @@ ws.onmessage = message =>
 
 // Function for debugging networking code
 // This function is meant for being run in the browser console
-function toggleNetworkDebug()
+function toggleNetworkDebug(state = !debuggingNetwork)
 {
-    debuggingNetwork = !debuggingNetwork;
+    debuggingNetwork = state;
 
     if (debuggingNetwork) console.info("Entering network debug mode");
     else console.info("Exited network debug mode");

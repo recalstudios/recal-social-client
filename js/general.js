@@ -1,27 +1,58 @@
-    // Load document sections
-$("#back").load("/assets/left-arrow.svg");
+// Global data
 
-// Declare variables
-let authTokenValidity, authToken, refreshToken, message, sendMessage, input, input2, publicUsername;
+// URLs
+const apiUrl = "https://api.social.recalstudios.net/"
+const wsUrl = "ws://localhost:5502";
+
+// Variable declarations
+let dev = false;
+let authToken, refreshToken, message, sendMessage, input, input2, publicUsername;
 let username, email, passphrase, result;
 let changePasswordResult;
 let theUsername, mail, pfp;
 let user;
-let chatroomList, chatroomId, currentChatroom, chatroomResult, int;
+let chatroomList, currentChatroom, chatroomResult;
 let Password1, Password2, OldPassword
 let dialog = localStorage['dialog'] || false;
 let messages = [];
-let publicUser =
-    {
+let publicUser = {
     "id": 11,
     "username": "woot",
     "pfp": "https://via.placeholder.com/50"
-    };
+};
 
+// Global functions for running through browser console
+
+// Function for enabling development mode, this will show more details in the console
+function enterDev()
+{
+    console.info("Entering development mode");
+    dev = true;
+
+    // Put other stuff that should also be run on dev mode here
+    toggleNetworkDebug(true);
+}
+
+// Function for enabling production mode, this will disable development mode and provide a smoother experience
+function enterProd()
+{
+    console.info("Enabling production mode");
+    dev = false;
+
+    // Put other stuff that should also be run on prod mode here
+    toggleNetworkDebug(false);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+// Load document sections
+$("#back").load("/assets/left-arrow.svg");
+
+// Declare variables
 localStorage['publicUser'] = JSON.stringify(publicUser)
 
 // Defines api path
-const api = "https://api.social.recalstudios.net/";
+const api = apiUrl;
 //const api = "https://10.80.18.152:7184/";
 
 // Gets auth token with credentials
@@ -55,9 +86,7 @@ async function getAuthToken()
     }
     catch (e)
     {
-        console.log(e);
-        console.log(result);
-        console.log(authToken);
+        console.log(e, result, authToken);
     }
 }
 
@@ -120,7 +149,7 @@ async function getUserUsingId(id) {
         }
     })).data;
 
-    return publicUsername.username
+    return publicUsername.username;
 }
 
 // Checks if the auth token is expired
@@ -129,7 +158,7 @@ async function checkIfAuthTokenExpired()
     authToken = localStorage['authToken']
 
     // Request to check if auth token is valid
-    authTokenValidity = (await axios({
+    const authTokenValid = (await axios({
         method: 'post',
         url: api + 'auth/token/test',
         headers: {
@@ -138,38 +167,33 @@ async function checkIfAuthTokenExpired()
     })).data;
 
     // If auth token isn't valid request new one
-    if (!authTokenValidity) {
-        await chainRefreshToken()
-    }
+    if (!authTokenValid) await chainRefreshToken();
 
     authToken = localStorage['authToken'] // Gets auth token from localStorage
 }
 
-// Function to check i've a user is logged in or not
+// Function to check if a user is logged in or not
 async function checkIfLoggedIn() {
     // Checks localstorage for token and name and puts them into variables
     authToken = localStorage['authToken'] || '';
 
-    // Checks if if token is empty or not and changes ui depending
-    if (authToken.length !== 0) {
-        await getUserUsingToken()
-    } else {
-        window.location.href = "/login/"
-    }
+    // Checks if token is empty or not and changes ui depending on it
+    if (authToken.length !== 0) await getUserUsingToken()
+    else window.location.href = "/login/";
 }
 
 // Function to log out the user and to make its logged out no matter.
 async function logOut() {
-    refreshToken = localStorage['refreshToken']
+    refreshToken = localStorage['refreshToken'];
 
     // Renews auth token from API
-    const response = (await axios({
+    await axios({
         method: 'post',
         url: api + 'auth/token/logout',
         headers: {
             Authorization: 'Bearer ' + refreshToken
         }
-    })).data;
+    });
 
     localStorage['authToken'] = "";
     localStorage['refreshToken'] = "";
@@ -213,14 +237,3 @@ $('.form').on('keydown', 'input', function (event) {
         $('[data-index="' + (index + 1).toString() + '"]').focus();
     }
 });
-
-// async function test() {
-//     await checkIfAuthTokenExpired() // Checks if auth token is valid
-//
-//     // If auth token isn't valid request new one
-//     if (!authTokenValidity) {
-//         await chainRefreshToken()
-//     }
-//
-//     authToken = localStorage['authToken'] // Gets auth token from localStorage
-// }
