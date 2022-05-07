@@ -2,7 +2,7 @@
 
 // URLs
 const apiUrl = "https://api.social.recalstudios.net/"
-const wsUrl = "ws://localhost:5502";
+const wsUrl = "wss://ws.social.recalstudios.net/";
 
 // Variable declarations
 let dev = false;
