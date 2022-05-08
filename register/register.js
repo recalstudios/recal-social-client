@@ -9,20 +9,17 @@ function reset() {
 async function createUser() {
 
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0 || document.querySelector("#confirm-passphrase").value.length === 0) {
-        $("#result").text("Please fill all fields")
+        if (dev) console.debug("fill all fields");
 
-        console.log("fill all fields");
-
-
+        openDialog("missing-user-info")
 
     } else if ($("#passphrase").val() === $("#confirm-passphrase").val()) { // Checks if passphrase and confirm-passphrase fields are the same
-        $("#result").text("Valid")
-        console.log("valid");
+        if (dev) console.debug("valid");
 
         // Tries given commands and catches the errors if any occur
         try {
 
-            console.log("axios request");
+            if (dev) console.debug("axios request");
 
             // Grabs all values from necessary fields
             username = document.querySelector("#username").value.toString();
@@ -30,7 +27,7 @@ async function createUser() {
             passphrase = document.querySelector("#passphrase").value.toString();
 
 
-            console.log(username, email, passphrase)
+            if (dev) console.debug(username, email, passphrase)
 
             // API request with axios. Post request where the url field describes where the request should go and the data field what should be in it.
             result = (await axios ({
@@ -43,18 +40,21 @@ async function createUser() {
                 }
             })).data;
             if (result) {
-                $("#result").text("User made, you will now be logged in")
+                await getAuthToken()
 
-                await getAuthToken();
+                checkIfLoggedIn().then(() => window.location.href = "/")
+            } else {
+                openDialog("email-or-username-is-already-taken")
             }
+
         }
         catch(e) {
             console.error();
-            console.log(onerror);
-            console.log(result)
+            if (dev) console.debug(onerror);
+            if (dev) console.debug(result)
         }
     } else {
-        $("#result").text("Fields does not match")
+        openDialog("bad-new-password")
     }
 
     // Stores token in localstorage

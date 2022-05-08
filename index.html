@@ -6,7 +6,7 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://social.recalstudios.net/" rel="canonical">
-        <title>Login - Recal Social</title>
+        <title>Recal Social</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -22,7 +22,10 @@
     </head>
     <body>
         <div id="header">
-            <a class="btn" href="/">Home</a>
+            <div>
+                <h1 id="current-chatroom-name"></h1>
+                <p>Code: <code id="current-chatroom-code"></code></p>
+            </div>
             <div id="btn-box">
                 <a class="btn" id="join-chatroom" onclick="openDialog('join-chatroom-dialog')">Join Chatroom</a>
                 <a class="btn" id="make-chatroom" onclick="openDialog('create-chatroom-dialog')">Make Chatroom</a>

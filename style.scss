@@ -104,6 +104,7 @@ dialog
     color: $accent-white;
     border: solid $accent-purple-navy 4px;
     border-radius: 1rem;
+    min-width: 50ch;
 
     .popup
     {
@@ -203,6 +204,15 @@ dialog
     }
 }
 
+// 2.x Rest
+
+code
+{
+    background: lighten($accent-raisin-black, 5);
+    padding: 0.2rem;
+    border-radius: 3px;
+}
+
 //====================================
 // 3 Reusable
 //====================================
@@ -259,6 +269,15 @@ dialog
         overflow-y: scroll;
         overflow-x: hidden;
 
+        /* Hide scrollbar for IE, Edge and Firefox */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
         //background-color: $accent-purple-navy;
 
         // Each individual chatroom btn styling
@@ -302,6 +321,14 @@ dialog
                 display: flex;
                 gap: 10px;
                 flex-direction: row !important;
+
+                p
+                {
+                    width: 10vw;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
         }
     }
@@ -345,7 +372,8 @@ dialog
             {
                 display: flex;
                 flex-direction: column;
-                margin: 1rem;
+                margin: 1%;
+                width: 98%;
             }
 
             // Inside each individual chat there is the message, username and pfp
@@ -354,6 +382,7 @@ dialog
             .chat-message
             {
                 display: flex;
+                justify-content: space-between;
                 margin: 0;
                 overflow-wrap: anywhere;
             }
@@ -363,10 +392,17 @@ dialog
             {
                 display: flex;
                 flex-direction: row;
+                justify-content: space-between;
                 gap: 0;
                 row-gap: 0;
 
                 align-items: center;
+
+                div
+                {
+                    display: flex;
+                    justify-content: space-between;
+                }
 
                 // User pfp
                 img

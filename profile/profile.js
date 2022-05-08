@@ -19,7 +19,7 @@ async function loadProfile() {
     document.querySelector("#email").innerHTML = mail
     document.querySelector("#newEmail").value = mail
 
-    //console.log(user.email, user.username, user.pfp, user)
+    //if (dev) console.debug(user.email, user.username, user.pfp, user)
 
 }
 
@@ -101,7 +101,7 @@ async function changePassword() {
             }
         })).data;
 
-        console.log(changePasswordResult)
+        if (dev) console.debug(changePasswordResult)
 
         if (changePasswordResult === true)
         {
@@ -110,7 +110,7 @@ async function changePassword() {
             openDialog("BadOldPassword");
         }
     } else {
-        console.log("fuc")
+        if (dev) console.debug("fuc")
         openDialog('BadNewPassword');
     }
 }

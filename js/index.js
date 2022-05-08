@@ -66,7 +66,7 @@ async function loadChat()
     // Do some fuckery which isn't really needed, but little is dumb as fuck, so we're going to have it here for now
     // We can remove it later when little decides to write good code (probably never)
     const currentRoomUsers = chatroomList.find(r => r.id === parseInt(currentChatroom.replace(/\D/g,''))).users;
-    console.log(currentRoomUsers);
+    if (dev) console.debug(currentRoomUsers);
 
     const chatListElement = document.querySelector("#chat-list");
 
@@ -77,8 +77,10 @@ async function loadChat()
         chatListElement.innerHTML += `
             <div class="chat">
                 <div class="chat-user">
-                    <img src="${currentRoomUsers.find(u => u.id === message.author).pfp}" alt="skootskoot">
-                    <p class="bold">${currentRoomUsers.find(u => u.id === message.author).username}</p>
+                    <div>
+                        <img src="${currentRoomUsers.find(u => u.id === message.author).pfp}" alt="skootskoot">
+                        <p class="bold">${currentRoomUsers.find(u => u.id === message.author).username}</p>
+                    </div>
                     <p class="bold"><i><sub>${message.timestamp}</sub></i></p>
                 </div>
                 <p class="chat-message">${message.content.text}</p>
@@ -113,7 +115,7 @@ function loadChatrooms() {
 
 
 // Changes chat room and highlight colours
-function changeChatRoom(chatroomName, chatroomId)
+async function changeChatRoom(chatroomName, chatroomId)
 {
     //oldchatroomname = chatroom || "chatroom-alpha";
     document.querySelector("#" + chatroom).style.backgroundColor = "#40446e";
@@ -128,6 +130,8 @@ function changeChatRoom(chatroomName, chatroomId)
     $("#sendMessage").val('')
 
     fetchMessages().then(() => loadChat())
+
+    await fetchChatroomDetails()
 }
 
 // Renews auth token
@@ -144,7 +148,7 @@ async function getUserChatrooms()
         }
     })).data;
 
-    console.log(chatroomList)
+    if (dev) console.debug(chatroomList)
     localStorage['chatroomList'] = JSON.stringify(chatroomList)
 }
 
@@ -158,8 +162,6 @@ function closeCookieConsent(dialogName) {
     localStorage['dialog'] = dialog
     closeDialog(dialogName)
 }
-
-
 
 async function createChatroom(dialogName) {
     closeDialog(dialogName)
@@ -179,11 +181,11 @@ async function createChatroom(dialogName) {
         }
     })).data;
 
-    console.log(chatroomResult)
+    if (dev) console.debug(chatroomResult)
 
     if (chatroomResult)
     {
-        console.log('your mom')
+        if (dev) console.debug('your mom')
     }
 
     await getUserChatrooms().then(() => loadChatrooms())
@@ -233,8 +235,22 @@ async function leaveChatroom(chatroomid) {
     await getUserChatrooms().then(() => loadChatrooms())
 }
 
-function findCorrectUser(id) {
-    return "ayour mom"
+async function fetchChatroomDetails() {
+    await checkIfAuthTokenExpired()
+
+    // Leave chatroomList with API
+    chatroomDetails = (await axios({
+        method: 'post',
+        url: api + 'chat/room/details',
+        headers: {
+            Authorization: 'Bearer ' + authToken
+        },
+        data: {
+            ChatroomId: localStorage['currentChatroomId']
+        }
+    })).data;
+
+    if (dev) console.log(chatroomDetails);
 }
 
 sendMessage = $("#sendMessage")
@@ -261,7 +277,7 @@ sendMessage.keypress(function (e)
                     "text": sendMessage.val()
                 }
             });
-            //console.log(message);
+            //if (dev) console.debug(message);
             ws.send(message);
             $("#sendMessage").val('')
         }

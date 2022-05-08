@@ -10,9 +10,8 @@ async function verifyCredentials() {
     // Tries given commands and catches the errors if any occur
 
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0) {
-        $("#result").text("Please fill all fields")
 
-        console.log("fill all fields");
+        openDialog("missing-user-info")
 
         // Tries given commands and catches the errors if any occur
 
@@ -23,11 +22,12 @@ async function verifyCredentials() {
 
         await getAuthToken()
 
+        if (!localStorage['authToken']) {
+            openDialog("incorrect-info")
+        }
+
         // Gets user from api
         await getUserUsingToken().then(() => changePage());
-
-        // Changes page
-        //await changePage()
     }
 }
 

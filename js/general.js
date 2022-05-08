@@ -11,15 +11,11 @@ let username, email, passphrase, result;
 let changePasswordResult;
 let theUsername, mail, pfp;
 let user;
-let chatroomList, currentChatroom, chatroomResult;
+let chatroomList, currentChatroom, chatroomResult, chatroomDetails;
 let Password1, Password2, OldPassword
 let dialog = localStorage['dialog'] || false;
 let messages = [];
-let publicUser = {
-    "id": 11,
-    "username": "woot",
-    "pfp": "https://via.placeholder.com/50"
-};
+let publicUser;
 
 // Global functions for running through browser console
 
@@ -77,7 +73,7 @@ async function getAuthToken()
         
         refreshToken = response.refreshToken
 
-        console.log(response)
+        if (dev) console.debug(response)
 
         localStorage['refreshToken'] = refreshToken
 
@@ -86,7 +82,7 @@ async function getAuthToken()
     }
     catch (e)
     {
-        console.log(e, result, authToken);
+        if (dev) console.debug(e);
     }
 }
 
@@ -94,7 +90,7 @@ async function getAuthToken()
 async function chainRefreshToken()
 {
     refreshToken = localStorage['refreshToken']
-    console.log(refreshToken)
+    if (dev) console.debug(refreshToken)
 
     //authToken = (await axios.post(api + 'auth/token/renew', { withCredentials: true }).data);
 
@@ -111,7 +107,7 @@ async function chainRefreshToken()
 
     refreshToken = response.refreshToken
 
-    console.log(response)
+    if (dev) console.debug(response)
 
     localStorage['refreshToken'] = refreshToken
 
@@ -133,7 +129,7 @@ async function getUserUsingToken() {
         }
     })).data;
 
-    console.log(user);
+    if (dev) console.debug(user);
 
     // Stores user in localStorage
     localStorage['user'] = JSON.stringify(user);
@@ -198,7 +194,7 @@ async function logOut() {
     localStorage['authToken'] = "";
     localStorage['refreshToken'] = "";
 
-    checkIfLoggedIn(); // Checks if logged in
+    checkIfLoggedIn().then(() => localStorage.clear()); // Checks if logged in
 }
 
 // Function to log out the user and to make its logged out no matter.
@@ -217,7 +213,7 @@ async function logOutAll() {
     localStorage['authToken'] = "";
     localStorage['refreshToken'] = "";
 
-    checkIfLoggedIn(); // Checks if logged in
+    checkIfLoggedIn().then(() => localStorage.clear()); // Checks if logged in
 }
 
 function openDialog(dialogName) {

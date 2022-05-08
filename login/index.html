@@ -47,17 +47,17 @@
             <h3 id="register">Don't have an account? <a href="/register" onclick="savePreviousPage()">Register here!</a></h3>
         </div>
 
-        <dialog id="BadNewPassword">
+        <dialog id="incorrect-info">
             <div class="popup">
-                <p>The confirm password is not the same as the new password</p>
-                <a class="btn" onclick="closeDialog('BadNewPassword')">Close</a>
+                <p>Username or password is incorrect</p>
+                <a class="btn" onclick="closeDialog('incorrect-info')">Close</a>
             </div>
         </dialog>
 
-        <dialog id="MissingUserInfo">
+        <dialog id="missing-user-info">
             <div class="popup">
-                <p>All input fields need to be filed</p>
-                <a class="btn" onclick="closeDialog('MissingUserInfo')">Close</a>
+                <p>All fields need to be filled</p>
+                <a class="btn" onclick="closeDialog('missing-user-info')">Close</a>
             </div>
         </dialog>
 
