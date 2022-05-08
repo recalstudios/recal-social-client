@@ -45,7 +45,8 @@ $header-height: 15vh;
 $content-height: 85vh;
 
 $chat-list-width: 20vw;
-$chat-window-width: 80vw;
+$chat-window-width: 60vw;
+$chat-users-width: 20vw;
 
 $integer-limit: 2147483647rem;
 
@@ -129,7 +130,9 @@ dialog
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: darken($accent-raisin-black, 3);
+    margin-top: 25px;
+    //background: darken($accent-raisin-black, 3);
+    background: none;
 }
 
 /* Handle */
@@ -213,6 +216,11 @@ code
     border-radius: 3px;
 }
 
+#code
+{
+    margin-top: -25px;
+}
+
 //====================================
 // 3 Reusable
 //====================================
@@ -254,11 +262,9 @@ code
     justify-content: center;
     flex-direction: row;
 
-    // Chatroom list (left) styling
-    #chatroom-list
+    .list
     {
         display: flex;
-        width: $chat-list-width;
         height: $content-height;
         max-height: $content-height;
 
@@ -278,10 +284,8 @@ code
             display: none;
         }
 
-        //background-color: $accent-purple-navy;
-
         // Each individual chatroom btn styling
-        .chatroom
+        .list-card
         {
             display: flex;
 
@@ -316,7 +320,7 @@ code
                 width: 3vw;
             }
 
-            .chatroom-info
+            .list-card-info
             {
                 display: flex;
                 gap: 10px;
@@ -333,6 +337,17 @@ code
         }
     }
 
+    // Chatroom list (left) styling
+    #chatroom-list
+    {
+        width: $chat-list-width;
+    }
+
+    #user-list
+    {
+        width: $chat-users-width;
+    }
+
     // Main chat window of main page (right)
     #chat-window
     {
@@ -346,6 +361,7 @@ code
         flex-direction: column;
 
         border-top-left-radius: 25px; // Rounded tor left corner
+        border-top-right-radius: 25px; // Rounded tor right corner
 
 
         //box-shadow: 0 0 2rem rgba(0, 0, 0, 0.5) inset;
@@ -432,19 +448,28 @@ code
             display: flex;
             flex-grow: 1;
             width: $chat-window-width;
-            height: 13vh;
-            max-height: 13vh;
+            height: 11vh;
+            max-height: 11vh;
 
             align-items: center;
             justify-content: center;
             flex-direction: row;
 
+            label
+            {
+                width: 100%;
+            }
+
             // Text area inside the chat box where the caret(?) appears
             textarea
             {
-                width: 76.5vw;
+                box-sizing: border-box;
 
-                margin: 10px;
+                $margin: 10px;
+
+                width: calc(100% - (#{$margin} * 2));
+
+                margin: $margin;
                 padding: 1vh;
 
                 background-color: $accent-purple-navy;
@@ -520,6 +545,14 @@ input
             cursor: pointer;
         }
     }
+}
+
+#pfpUrl
+{
+    width: 28vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 // 4.3 Profile

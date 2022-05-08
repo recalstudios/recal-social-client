@@ -24,7 +24,7 @@
         <div id="header">
             <div>
                 <h1 id="current-chatroom-name"></h1>
-                <p>Code: <code id="current-chatroom-code"></code></p>
+                <p id="code">Code: <code id="current-chatroom-code"></code></p>
             </div>
             <div id="btn-box">
                 <a class="btn" id="join-chatroom" onclick="openDialog('join-chatroom-dialog')">Join Chatroom</a>
@@ -35,7 +35,7 @@
         </div>
 
         <div id="index-content">
-            <div id="chatroom-list">
+            <div id="chatroom-list" class="list">
 
             </div>
             <div id="chat-window">
@@ -46,6 +46,9 @@
                         <textarea id="sendMessage" placeholder="Type your message here"></textarea>
                     </label>
                 </div>
+            </div>
+            <div id="user-list" class="list">
+                
             </div>
         </div>
 

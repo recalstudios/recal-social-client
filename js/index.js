@@ -68,6 +68,8 @@ async function loadChat()
     const currentRoomUsers = chatroomList.find(r => r.id === parseInt(currentChatroom.replace(/\D/g,''))).users;
     if (dev) console.debug(currentRoomUsers);
 
+    loadUserList(currentRoomUsers)
+
     const chatListElement = document.querySelector("#chat-list");
 
     chatListElement.innerHTML = ''; // Clears previous chat log
@@ -100,8 +102,8 @@ function loadChatrooms() {
     for (const chatroom of chatroomList)
     {
         chatroomBox.innerHTML += `
-                <div id="chatroom-${chatroom.id}" class="chatroom" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
-                    <div class="chatroom-info">
+                <div id="chatroom-${chatroom.id}" class="list-card" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
+                    <div class="list-card-info">
                         <img src="https://via.placeholder.com/50" alt="Placholder">
                         <p>${chatroom.name}</p>
                     </div>
@@ -132,6 +134,9 @@ async function changeChatRoom(chatroomName, chatroomId)
     fetchMessages().then(() => loadChat())
 
     await fetchChatroomDetails()
+
+    $("#current-chatroom-name").text(chatroomDetails.name)
+    $("#current-chatroom-code").text(chatroomDetails.code)
 }
 
 // Renews auth token
@@ -251,6 +256,24 @@ async function fetchChatroomDetails() {
     })).data;
 
     if (dev) console.log(chatroomDetails);
+}
+
+function loadUserList(list) {
+    const userlist = document.querySelector("#user-list");
+
+    userlist.innerHTML = ''
+
+    for (const user of list)
+    {
+        userlist.innerHTML += `
+                <div class="list-card">
+                    <div class="list-card-info">
+                        <img src="${user.pfp}" alt="Placholder">
+                        <p>${user.username}</p>
+                    </div>
+                </div>
+            `;
+    }
 }
 
 sendMessage = $("#sendMessage")
