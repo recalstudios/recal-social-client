@@ -1,6 +1,8 @@
 // Sets the current chatroom from localstorage
 currentChatroom = localStorage['currentChatroom'] || 'chatroom-dummy';
 
+currentChatroomId = localStorage['currentChatroomId']
+
 let chatroom = "chatroom-dummy";
 
 checkIfLoggedIn().then(() => getUserChatrooms().then(() => loadChatrooms()))
@@ -104,7 +106,7 @@ function loadChatrooms() {
         chatroomBox.innerHTML += `
                 <div id="chatroom-${chatroom.id}" class="list-card" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
                     <div class="list-card-info">
-                        <img src="https://via.placeholder.com/50" alt="Placholder">
+                        <img src="${chatroom.image}" alt="Placholder">
                         <p>${chatroom.name}</p>
                     </div>
                     <a class="" onclick="leaveChatroom(${chatroom.id})">x</a>
@@ -128,7 +130,7 @@ async function changeChatRoom(chatroomName, chatroomId)
     currentChatroom = chatroomName
 
     localStorage['currentChatroom'] = currentChatroom
-    localStorage['currentChatroomId'] = chatroomId || "1"
+    localStorage['currentChatroomId'] = chatroomId || currentChatroomId
     $("#sendMessage").val('')
 
     fetchMessages().then(() => loadChat())

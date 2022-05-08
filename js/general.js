@@ -11,7 +11,7 @@ let username, email, passphrase, result;
 let changePasswordResult;
 let theUsername, mail, pfp;
 let user;
-let chatroomList, currentChatroom, chatroomResult, chatroomDetails;
+let chatroomList, currentChatroom, currentChatroomId, chatroomResult, chatroomDetails;
 let Password1, Password2, OldPassword
 let dialog = localStorage['dialog'] || false;
 let messages = [];
@@ -128,6 +128,8 @@ async function getUserUsingToken() {
             Authorization: 'Bearer ' + authToken
         }
     })).data;
+
+    user.password = null
 
     if (dev) console.debug(user);
 

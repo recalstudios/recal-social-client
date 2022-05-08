@@ -45,8 +45,8 @@ $header-height: 15vh;
 $content-height: 85vh;
 
 $chat-list-width: 20vw;
-$chat-window-width: 60vw;
-$chat-users-width: 20vw;
+$chat-window-width: 65vw;
+$chat-users-width: 15vw;
 
 $integer-limit: 2147483647rem;
 
@@ -289,12 +289,15 @@ code
         {
             display: flex;
 
-            max-width: 16vw;
-            min-width: 14vw;
+            box-sizing: border-box;
+
+            $margin: 2vw;
+
+            width: calc(100% - (#{$margin} * 2));
 
 
             margin: 1vw 2vw;
-            padding: 1.5vw 1vw;
+            padding: 2.5vw 1vw;
             height: 3vh;
 
 
@@ -323,12 +326,14 @@ code
             .list-card-info
             {
                 display: flex;
+                align-items: center;
+                justify-content: center;
                 gap: 10px;
                 flex-direction: row !important;
 
                 p
                 {
-                    width: 10vw;
+                    width: 9.5vw;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -382,6 +387,9 @@ code
             // Stuff for scrolling
             overflow-y: scroll;
             scroll-behavior: smooth;
+
+            border-top-left-radius: 25px; // Rounded tor left corner
+            border-top-right-radius: 25px; // Rounded tor right corner
 
             // Each individual chat styling
             .chat
@@ -497,6 +505,14 @@ code
             }
         }
     }
+}
+
+#current-chatroom-name
+{
+    width: 30vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 // 4.2 Login & Register
