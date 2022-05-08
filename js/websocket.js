@@ -29,11 +29,6 @@ ws.onmessage = message =>
                 case "ok":
                     // Authentication was successful
                     console.info("Successfully authenticated to the WebSocket!");
-                    break;
-                case "closed":
-                    // Reopen socket on termination
-                    console.warn("WebSocket dropped connection, attempting reconnect after 5 seconds");
-                    setTimeout(() => ws = new WebSocket(wsUrl), 5000);
             }
             break;
         case "invalid":
@@ -45,6 +40,14 @@ ws.onmessage = message =>
             messages.push(data);
             loadChat().then(() => console.log("Loaded chat"));
     }
+}
+
+// WebSocket termination callback
+ws.onclose = () =>
+{
+    // Reopen socket after timeout
+    console.warn("WebSocket dropped connection, attempting reconnect after 5 seconds");
+    setTimeout(() => ws = new WebSocket(wsUrl), 5000);
 }
 
 // Function for debugging networking code
