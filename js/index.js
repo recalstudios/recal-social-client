@@ -27,7 +27,7 @@ async function fetchMessages()
         data: {
             ChatroomId: localStorage['currentChatroomId'],
             Start: 1,
-            Length: 500
+            Length: 50
         },
         headers: {
             Authorization: 'Bearer ' + authToken
