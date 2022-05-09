@@ -1,53 +1,67 @@
-// Declare and open the WebSocket
-let ws = new WebSocket(wsUrl);
+// Declare the WebSocket
+let ws;
 
 // Global variable for debugging network
 let debuggingNetwork = false;
 
-// Message receive callback
-ws.onmessage = message =>
+// Function for opening the WebSocket
+function openWebsocketConnection()
 {
-    // Parse data as JSON object
-    const data = JSON.parse(message.data);
+    // Open the WebSocket
+    ws = new WebSocket(wsUrl);
 
-    // Log data to console
-    if (debuggingNetwork) console.debug("[Network Debug] Received data from WebSocket: " + JSON.stringify(data));
-
-    // Determine type of object
-    switch (data.type)
+    // Register message receive callback
+    ws.onmessage = message =>
     {
-        case "status":
-            switch (data.data)
-            {
-                case "auth":
-                    // Authenticate the session
-                    ws.send(JSON.stringify({
-                        "type": "auth",
-                        "token": "Bearer " + authToken
-                    }));
-                    break;
-                case "ok":
-                    // Authentication was successful
-                    console.info("Successfully authenticated to the WebSocket!");
-            }
-            break;
-        case "invalid":
-            // We sent invalid data, warn user
-            console.error("WebSocket responded with invalid data from us: " + data.data);
-            break;
-        case "message":
-            // Received message, load it
-            messages.push(data);
-            loadChat().then(() => console.log("Loaded chat"));
-    }
-}
+        // Parse data as JSON object
+        const data = JSON.parse(message.data);
 
-// WebSocket termination callback
-ws.onclose = () =>
-{
-    // Reopen socket after timeout
-    console.warn("WebSocket dropped connection, attempting reconnect after 5 seconds");
-    setTimeout(() => ws = new WebSocket(wsUrl), 5000);
+        // Log data to console
+        if (debuggingNetwork) console.debug("[Network Debug] Received data from WebSocket: " + JSON.stringify(data));
+
+        // Determine type of object
+        switch (data.type)
+        {
+            case "status":
+                switch (data.data)
+                {
+                    case "auth":
+                        // Authenticate the session
+                        ws.send(JSON.stringify({
+                            "type": "auth",
+                            "token": "Bearer " + authToken
+                        }));
+                        break;
+                    case "ok":
+                        // Authentication was successful
+                        console.info("Successfully authenticated to the WebSocket!");
+                }
+                break;
+            case "invalid":
+                // We sent invalid data, warn user
+                console.error("WebSocket responded with invalid data from us: " + data.data);
+                break;
+            case "message":
+                // Received message, load it
+                messages.push(data);
+                loadChat().then(() => console.log("Loaded chat"));
+
+                const newestRoom = chatroomList.filter(e => e.id === data.room);
+                chatroomList = chatroomList.filter(e => e.id !== data.room);
+                chatroomList.unshift(newestRoom[0]);
+
+                // TODO: This is not tested
+                loadChatroomsPart2ElectricBoogaloo();
+        }
+    }
+
+    // WebSocket termination callback
+    ws.onclose = () =>
+    {
+        // Reopen socket after timeout
+        console.warn("WebSocket dropped connection, attempting reconnect after 5 seconds");
+        setTimeout(() => openWebsocketConnection(), 5000);
+    }
 }
 
 // Function for debugging networking code

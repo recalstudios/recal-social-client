@@ -1,11 +1,20 @@
 // Sets the current chatroom from localstorage
-currentChatroom = localStorage['currentChatroom'] || 'chatroom-dummy';
+currentChatroom = localStorage['currentChatroom'];
 
 currentChatroomId = localStorage['currentChatroomId']
 
-let chatroom = "chatroom-dummy";
+let chatroom;
+
+$("#join-chatroom-code").val('')
+$("#join-chatroom-password").val('')
+
+$("#create-chatroom-name").val('')
+$("#create-chatroom-password").val('')
+
+openWebsocketConnection()
 
 checkIfLoggedIn().then(() => getUserChatrooms().then(() => loadChatrooms()))
+
 
 //axios.post('URL', data, {
 //    withCredentials: true
@@ -25,7 +34,7 @@ async function fetchMessages()
         method: 'post',
         url: api + 'chat/room/backlog',
         data: {
-            ChatroomId: localStorage['currentChatroomId'],
+            ChatroomId: parseInt(localStorage['currentChatroomId']),
             Start: 1,
             Length: 50
         },
@@ -85,57 +94,78 @@ async function loadChat()
                         <img src="${currentRoomUsers.find(u => u.id === message.author).pfp}" alt="skootskoot">
                         <p class="bold">${currentRoomUsers.find(u => u.id === message.author).username}</p>
                     </div>
-                    <p class="bold"><i><sub>${message.timestamp}</sub></i></p>
+                    <div class="right-box">
+                         <p class="bold"><i>${message.timestamp}</i></p>
+                         <a onclick="deleteMessage(${message.id})" class="bold delete-X">X</a>
+                    </div>
                 </div>
                 <p class="chat-message">${message.content.text}</p>
             </div>
         `;
     }
-    document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
+
+    chatListElement.innerHTML += `
+        <div id="anker"></div>
+        `
+
+    if (messages.length !== 0) {
+        document.querySelector("#anker").scrollIntoView(); // Scrolls to bottom of page
+    }
 }
 
 function loadChatrooms() {
+    loadChatroomsPart2ElectricBoogaloo()
+
+    //leaveChatroom(${chatroom.id})
+
+    changeChatRoom(currentChatroom, currentChatroomId)
+
+    if (dialog === false) document.querySelector(".chatroom").firstElementChild.click()
+}
+
+// TODO: Opens a dialog box that asks if you really want to leave the group
+
+function loadChatroomsPart2ElectricBoogaloo() {
     const chatroomBox = document.querySelector("#chatroom-list");
 
     chatroomBox.innerHTML = ''
 
-    chatroomBox.innerHTML += `<div id="chatroom-dummy"></div>`
-
     for (const chatroom of chatroomList)
     {
         chatroomBox.innerHTML += `
-                <div id="chatroom-${chatroom.id}" class="list-card chatroom" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
-                    <div class="list-card-info">
-                        <img src="${chatroom.image}" alt="Placholder">
-                        <p>${chatroom.name}</p>
-                    </div>
-                    <a class="" onclick="leaveChatroom(${chatroom.id})">x</a>
+            <div id="chatroom-${chatroom.id}" class="list-card chatroom" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
+                <div class="list-card-info">
+                    <img src="${chatroom.image}" alt="Placholder">
+                    <p>${chatroom.name}</p>
                 </div>
-            `;
+                <a class="bold" onclick="">x</a> 
+            </div>
+        `;
     }
-    changeChatRoom(currentChatroom)
 }
-
-
 
 // Changes chat room and highlight colours
 async function changeChatRoom(chatroomName, chatroomId)
 {
+    // FIXME: These null checks shouldn'tbe here, but littels code is bad
     //oldchatroomname = chatroom || "chatroom-alpha";
-    document.querySelector("#" + chatroom).style.backgroundColor = "#40446e";
-    document.querySelector("#" + chatroomName).style.backgroundColor = "#123";
+    if (chatroom) document.querySelector("#" + chatroom).style.backgroundColor = "#40446e";
+    if (chatroomName) document.querySelector("#" + chatroomName).style.backgroundColor = "#123";
     // document.querySelector("#" + chatroom).classList.add =
+
+
 
     chatroom = chatroomName
     currentChatroom = chatroomName
+    currentChatroomId = chatroomId
 
     localStorage['currentChatroom'] = currentChatroom
-    localStorage['currentChatroomId'] = chatroomId || currentChatroomId
+    localStorage['currentChatroomId'] = chatroomId
     $("#sendMessage").val('')
 
     fetchMessages().then(() => loadChat())
 
-    await fetchChatroomDetails()
+    fetchChatroomDetails()
 
     $("#current-chatroom-name").text(chatroomDetails.name)
     $("#current-chatroom-code").text(chatroomDetails.code)
@@ -200,7 +230,11 @@ async function createChatroom(dialogName) {
 
     await getUserChatrooms().then(() => loadChatrooms())
 
-    //document.querySelector(".chatroom:first-child").click()
+    document.querySelector(".chatroom").firstElementChild.click() // Clicks on newest chatroom
+
+    // Reopen the websocket or sumshit
+    ws.close();
+    openWebsocketConnection();
 }
 
 async function joinChatroom(dialogName) {
@@ -240,11 +274,11 @@ async function leaveChatroom(chatroomid) {
         }
     })).data;
 
-    chatroom = "chatroom-dummy"
-    currentChatroom = "chatroom-dummy"
     localStorage['currentChatroom'] = currentChatroom
 
     await getUserChatrooms().then(() => loadChatrooms())
+
+    document.querySelector(".chatroom").firstElementChild.click()
 }
 
 async function fetchChatroomDetails() {
@@ -258,7 +292,7 @@ async function fetchChatroomDetails() {
             Authorization: 'Bearer ' + authToken
         },
         data: {
-            ChatroomId: localStorage['currentChatroomId']
+            ChatroomId: parseInt(localStorage['currentChatroomId'])
         }
     })).data;
 
@@ -294,7 +328,7 @@ async function editChatroom() {
             Authorization: 'Bearer ' + authToken
         },
         data: {
-            ChatroomId: localStorage['currentChatroomId'],
+            ChatroomId: parseInt(localStorage['currentChatroomId']),
             Name: $("#edit-chatroom-name").val(),
             Pass: $("#edit-chatroom-password").val(),
             Image: $("#edit-chatroom-image").val(),
@@ -306,6 +340,22 @@ async function editChatroom() {
     closeDialog('edit-chatroom-dialog')
 
     getUserChatrooms().then(() => loadChatrooms())
+}
+
+async function deleteMessage(id) {
+    await checkIfAuthTokenExpired()
+
+    // Creates chatroomList with API
+    chatroomResult = (await axios({
+        method: 'post',
+        url: api + 'chat/room/message/delete',
+        headers: {
+            Authorization: 'Bearer ' + authToken
+        },
+        data: {
+            MessageId: id
+        }
+    })).data;
 }
 
 // Add event listener to copy button
@@ -344,7 +394,7 @@ sendMessage.keypress(function (e)
             //if (dev) console.debug(message);
             ws.send(message);
             $("#sendMessage").val('')
-            //getUserChatrooms().then(() => loadChatrooms())
+
         }
         // document.querySelector(".chat:last-child").style.color = red;
     }

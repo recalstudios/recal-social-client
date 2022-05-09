@@ -111,8 +111,8 @@ dialog
     {
         display: flex;
         flex-direction: column;
+        align-items: center;
     }
-
 }
 
 //====================================
@@ -242,7 +242,6 @@ code
 
     //box-shadow: 0 0 1rem rgba(black, 0.6);
 }
-
 
 //====================================
 // 4 Specific Sections
@@ -425,6 +424,7 @@ code
                 {
                     display: flex;
                     justify-content: space-between;
+                    align-items: center;
                 }
 
                 // User pfp
@@ -445,6 +445,12 @@ code
                 {
                     margin: 0;
                     padding: 0;
+                }
+
+                .right-box
+                {
+                    display: flex;
+                    flex-direction: row;
                 }
             }
         }
@@ -504,6 +510,13 @@ code
             }
         }
     }
+}
+
+//delete/exit button
+.delete-X
+{
+    margin: 0 1rem;
+    color: $accent-purple-navy;
 }
 
 #current-chatroom-name

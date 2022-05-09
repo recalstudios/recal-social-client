@@ -53,6 +53,7 @@
             </div>
         </div>
 
+
         <dialog id="cookie-dialog">
             <div class="popup">
                 <h1>Accept cookies</h1>
@@ -68,18 +69,24 @@
                 <br>
                 <label for="join-chatroom-password"></label><input type="password" name="Chatroom Password" placeholder="Insert chatroom password here" id="join-chatroom-password" data-index="2">
                 <br>
-                <a class="btn" onclick="joinChatroom('join-chatroom-dialog')">Accept</a>
+                <div>
+                    <a class="btn" onclick="joinChatroom('join-chatroom-dialog')">Accept</a>
+                    <a class="btn" onclick="closeDialog('join-chatroom-dialog')">Close</a>
+                </div>
             </div>
         </dialog>
 
         <dialog id="create-chatroom-dialog">
             <div class="popup form">
-            <h1>Create chatroom</h1>
-            <label for="create-chatroom-name"></label><input type="text" name="Chatroom Code" placeholder="Insert chatroom name here" id="create-chatroom-name" data-index="1">
-            <br>
-            <label for="create-chatroom-password"></label><input type="password" name="Chatroom Password" placeholder="Insert chatroom password here" id="create-chatroom-password" data-index="2">
-            <br>
-            <a class="btn" onclick="createChatroom('create-chatroom-dialog')">Accept</a>
+                <h1>Create chatroom</h1>
+                <label for="create-chatroom-name"></label><input type="text" name="Chatroom Code" placeholder="Insert chatroom name here" id="create-chatroom-name" data-index="1">
+                <br>
+                <label for="create-chatroom-password"></label><input type="password" name="Chatroom Password" placeholder="Insert chatroom password here" id="create-chatroom-password" data-index="2">
+                <br>
+                <div>
+                    <a class="btn" onclick="createChatroom('create-chatroom-dialog')">Accept</a>
+                    <a class="btn" onclick="closeDialog('create-chatroom-dialog')">Close</a>
+                </div>
             </div>
         </dialog>
 
@@ -92,7 +99,20 @@
                 <br>
                 <label for="edit-chatroom-image"></label><input type="text" name="Chatroom Password" placeholder="Insert chatroom password here" id="edit-chatroom-image" data-index="3">
                 <br>
-                <a class="btn" onclick="editChatroom()">Change</a>
+                <div>
+                    <a class="btn" onclick="editChatroom()">Change</a>
+                    <a class="btn" onclick="closeDialog('edit-chatroom-dialog')">Close</a>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="leave-chatroom">
+            <div class="popup form">
+                <h2>Are You sure that you want to leave this chatroom?</h2>
+                <div>
+                    <a class="btn" onclick="">Leave</a>
+                    <a class="btn" onclick="closeDialog('leave-chatroom')">Back</a>
+                </div>
             </div>
         </dialog>
 

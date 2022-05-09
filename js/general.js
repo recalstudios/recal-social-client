@@ -9,6 +9,7 @@ let dev = false;
 let authToken, refreshToken, message, sendMessage, input, input2, publicUsername;
 let username, email, passphrase, result;
 let changePasswordResult;
+let changeUserResult;
 let theUsername, mail, pfp;
 let user;
 let chatroomList, currentChatroom, currentChatroomId, chatroomResult, chatroomDetails;

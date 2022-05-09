@@ -64,28 +64,29 @@ async function changeUser() {
     } else {
 
         if (pfp.length === 0 || theUsername.length === 0 || mail.length === 0) {
-            openDialog("MissingUserInfo");//error: if one or more fildes ar empty
+            openDialog("MissingUserInfo");// Error: if one or more fields are empty
         } else {
             //trys to change user info
-            changePasswordResult = (await axios({
+            changeUserResult = (await axios({
                 method: 'post',
                 url: api + 'user/update',
                 headers: {
                     Authorization: 'Bearer ' + authToken
                 },
                 data: {
-                    //Pass:
                     Username: theUsername,
                     Email: mail,
                     Pfp: pfp
                 }
             })).data;
 
-            if (changePasswordResult === true) {
+console.log(changeUserResult)
+
+            if (changeUserResult === true) {
                 logOut()
 
             } else {
-                openDialog("AlreadyUsedInfo"); //eror: if username or email is already in use
+                openDialog("AlreadyUsedInfo"); // Error: if username or email is already in use
 
                 }
             }
