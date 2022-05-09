@@ -3,7 +3,9 @@ async function loadProfile() {
 
     await getUserUsingToken();
 
-
+    console.log(user.pfp)
+    console.log(user.username)
+    console.log(user.email)
 
     pfp = user.pfp
     theUsername = user.username
@@ -56,28 +58,40 @@ async function changeUser() {
     theUsername = $("#newUsername").val()
     mail = $("#newEmail").val()
 
-    if (pfp.length === 0 || theUsername.length === 0 || mail.length === 0) {
-        openDialog("MissingUserInfo");
+    if (pfp === user.pfp && theUsername === user.username && mail === user.email) {
+        editUser('none', 'flex')
+
     } else {
 
-        changePasswordResult = (await axios({
-            method: 'post',
-            url: api + 'user/update',
-            headers: {
-                Authorization: 'Bearer ' + authToken
-            },
-            data: {
-                //Pass:
-                Username: theUsername,
-                Email: mail,
-                Pfp: pfp
-            }
-        })).data;
+        if (pfp.length === 0 || theUsername.length === 0 || mail.length === 0) {
+            openDialog("MissingUserInfo");//error: if one or more fildes ar empty
+        } else {
+            //trys to change user info
+            changePasswordResult = (await axios({
+                method: 'post',
+                url: api + 'user/update',
+                headers: {
+                    Authorization: 'Bearer ' + authToken
+                },
+                data: {
+                    //Pass:
+                    Username: theUsername,
+                    Email: mail,
+                    Pfp: pfp
+                }
+            })).data;
 
-        loadProfile();
-        //editUser('none', 'flex')
+            if (changePasswordResult === true) {
+                logOut()
+
+            } else {
+                openDialog("AlreadyUsedInfo"); //eror: if username or email is already in use
+
+                }
+            }
+        }
     }
-}
+
 
 async function changePassword() {
 

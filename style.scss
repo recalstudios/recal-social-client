@@ -294,11 +294,10 @@ code
             $margin: 2vw;
 
             width: calc(100% - (#{$margin} * 2));
-
+            height: 70px;
 
             margin: 1vw 2vw;
-            padding: 2.5vw 1vw;
-            height: 3vh;
+            padding: 1vw 1vw;
 
 
             align-items: center;
@@ -319,8 +318,8 @@ code
             img
             {
                 aspect-ratio: 1;
-                height: auto;
-                width: 3vw;
+                height: 50px;
+                width: auto;
             }
 
             .list-card-info
@@ -509,7 +508,7 @@ code
 
 #current-chatroom-name
 {
-    width: 30vw;
+    max-width: 30vw;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -104,7 +104,7 @@ function loadChatrooms() {
     for (const chatroom of chatroomList)
     {
         chatroomBox.innerHTML += `
-                <div id="chatroom-${chatroom.id}" class="list-card" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
+                <div id="chatroom-${chatroom.id}" class="list-card chatroom" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
                     <div class="list-card-info">
                         <img src="${chatroom.image}" alt="Placholder">
                         <p>${chatroom.name}</p>
@@ -139,6 +139,9 @@ async function changeChatRoom(chatroomName, chatroomId)
 
     $("#current-chatroom-name").text(chatroomDetails.name)
     $("#current-chatroom-code").text(chatroomDetails.code)
+    $("#edit-chatroom-name").val(chatroomDetails.name)
+    $("#edit-chatroom-password").val(chatroomDetails.pass)
+    $("#edit-chatroom-image").val(chatroomDetails.image)
 }
 
 // Renews auth token
@@ -196,6 +199,8 @@ async function createChatroom(dialogName) {
     }
 
     await getUserChatrooms().then(() => loadChatrooms())
+
+    //document.querySelector(".chatroom:first-child").click()
 }
 
 async function joinChatroom(dialogName) {
@@ -278,6 +283,40 @@ function loadUserList(list) {
     }
 }
 
+async function editChatroom() {
+    await checkIfAuthTokenExpired()
+
+    // Leave chatroomList with API
+    const response = (await axios({
+        method: 'post',
+        url: api + 'chat/room/update',
+        headers: {
+            Authorization: 'Bearer ' + authToken
+        },
+        data: {
+            ChatroomId: localStorage['currentChatroomId'],
+            Name: $("#edit-chatroom-name").val(),
+            Pass: $("#edit-chatroom-password").val(),
+            Image: $("#edit-chatroom-image").val(),
+        }
+    })).data;
+
+    if (dev) console.log(response)
+
+    closeDialog('edit-chatroom-dialog')
+
+    getUserChatrooms().then(() => loadChatrooms())
+}
+
+// Add event listener to copy button
+document.querySelectorAll("#current-chatroom-code").forEach(e =>
+{
+    e.addEventListener("click", () =>
+    {
+        navigator.clipboard.writeText(e.innerHTML).then(() => console.log("Copied to clipboard"));
+    });
+});
+
 sendMessage = $("#sendMessage")
 
 // Sends message to ws
@@ -305,6 +344,7 @@ sendMessage.keypress(function (e)
             //if (dev) console.debug(message);
             ws.send(message);
             $("#sendMessage").val('')
+            //getUserChatrooms().then(() => loadChatrooms())
         }
         // document.querySelector(".chat:last-child").style.color = red;
     }

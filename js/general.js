@@ -196,6 +196,8 @@ async function logOut() {
     localStorage['authToken'] = "";
     localStorage['refreshToken'] = "";
 
+    dialog = localStorage['dialog']
+
     checkIfLoggedIn().then(() => localStorage.clear()); // Checks if logged in
 }
 

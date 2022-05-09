@@ -94,8 +94,15 @@
 
         <dialog id="MissingUserInfo">
             <div class="popup">
-                <p>All input fields need to be filed</p>
+                <p>Don't leave any of the fildes blank</p>
                 <a class="btn" onclick="closeDialog('MissingUserInfo')">Close</a>
+            </div>
+        </dialog>
+
+        <dialog id="AlreadyUsedInfo">
+            <div class="popup">
+                <p>The username or email is already in use</p>
+                <a class="btn" onclick="closeDialog('AlreadyUsedInfo')">Close</a>
             </div>
         </dialog>
 
