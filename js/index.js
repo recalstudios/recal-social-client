@@ -86,13 +86,25 @@ async function loadChat()
     chatListElement.innerHTML = ''; // Clears previous chat log
     for (const message of messages)
     {
+        let testpfp
+        try {
+            testpfp = currentRoomUsers.find(u => u.id === message.author).pfp
+        } catch {
+            testpfp = "https://via.placeholder.com/50x50"
+        }
 
+        let testusername
+        try {
+            testusername = currentRoomUsers.find(u => u.id === message.author).username
+        } catch {
+            testusername = 'Unavailable user'
+        }
         chatListElement.innerHTML += `
             <div class="chat">
                 <div class="chat-user">
                     <div>
-                        <img src="${currentRoomUsers.find(u => u.id === message.author).pfp}" alt="skootskoot">
-                        <p class="bold">${currentRoomUsers.find(u => u.id === message.author).username}</p>
+                        <img src="${testpfp}" alt="skootskoot">
+                        <p class="bold">${testusername}</p>
                     </div>
                     <div class="right-box">
                          <p class="bold"><i>${message.timestamp}</i></p>
@@ -104,13 +116,7 @@ async function loadChat()
         `;
     }
 
-    chatListElement.innerHTML += `
-        <div id="anker"></div>
-        `
-
-    if (messages.length !== 0) {
-        document.querySelector("#anker").scrollIntoView(); // Scrolls to bottom of page
-    }
+    document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
 }
 
 function loadChatrooms() {
@@ -120,8 +126,6 @@ function loadChatrooms() {
 
     if (dialog === false) document.querySelector(".chatroom").firstElementChild.click()
 }
-
-// TODO: Opens a dialog box that asks if you really want to leave the group
 
 function loadChatroomsPart2ElectricBoogaloo() {
     const chatroomBox = document.querySelector("#chatroom-list");
@@ -163,7 +167,7 @@ async function changeChatRoom(chatroomName, chatroomId)
 
     fetchMessages().then(() => loadChat())
 
-    fetchChatroomDetails()
+    await fetchChatroomDetails()
 
     $("#current-chatroom-name").text(chatroomDetails.name)
     $("#current-chatroom-code").text(chatroomDetails.code)
@@ -261,8 +265,15 @@ async function joinChatroom(dialogName) {
         }
     })).data;
 
+    //await sendSystemMessage(' joined the chatroom', 'join')
+
     await getUserChatrooms().then(() => loadChatrooms())
+
+    $("#join-chatroom-code").val('')
+    $("#join-chatroom-password").val('')
 }
+
+// TODO: Opens a dialog box that asks if you really want to leave the group
 
 async function leaveChatroom(chatroomid) {
 
@@ -282,7 +293,12 @@ async function leaveChatroom(chatroomid) {
 
     localStorage['currentChatroom'] = currentChatroom
 
+    //await sendSystemMessage(' left the chatroom', 'leave')
+
     await getUserChatrooms().then(() => loadChatrooms())
+
+    // Make sure the click code doesnt throw an error
+    chatroom = undefined;
 
     document.querySelector(".chatroom").firstElementChild.click()
 }
@@ -290,7 +306,7 @@ async function leaveChatroom(chatroomid) {
 async function fetchChatroomDetails() {
     await checkIfAuthTokenExpired()
 
-    // Leave chatroomList with API
+    // Fetches chatroom details from API
     chatroomDetails = (await axios({
         method: 'post',
         url: api + 'chat/room/details',
@@ -326,7 +342,7 @@ function loadUserList(list) {
 async function editChatroom() {
     await checkIfAuthTokenExpired()
 
-    // Leave chatroomList with API
+    // Edit chatroom details with API
     const response = (await axios({
         method: 'post',
         url: api + 'chat/room/update',
@@ -351,7 +367,7 @@ async function editChatroom() {
 async function deleteMessage(id) {
     await checkIfAuthTokenExpired()
 
-    // Creates chatroomList with API
+    // Deletes message with api
     chatroomResult = (await axios({
         method: 'post',
         url: api + 'chat/room/message/delete',
@@ -362,6 +378,32 @@ async function deleteMessage(id) {
             MessageId: id
         }
     })).data;
+
+    message = JSON.stringify({
+        "type": "delete",
+        "room": JSON.parse(localStorage['currentChatroomId']),
+        "id": id
+    });
+    if (dev) console.debug(message);
+    ws.send(message);
+
+    const spliceIndex = messages.indexOf(m => m.id === id);
+    messages.splice(spliceIndex, 1);
+}
+
+
+
+function sendSystemMessage(message, action) {
+    message = JSON.stringify({
+        "type": "system",
+        "room": 1,
+        "action": action,
+        "content": {
+            "text": user.username + message
+        }
+    });
+    if (dev) console.debug(message);
+    ws.send(message);
 }
 
 // Add event listener to copy button

@@ -134,14 +134,11 @@ async function deleteUser() {
         url: api + 'user/delete',
         headers: {
             Authorization: 'Bearer ' + authToken
-        },
-        data: {
-            Token: user.Token
         }
     })).data;
 
-    logOut();
-
+    localStorage.clear();
+    window.location.href = "/login/"
 }
 
 input = document.querySelector("#newPfp")

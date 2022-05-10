@@ -12,9 +12,10 @@ let changePasswordResult;
 let changeUserResult;
 let theUsername, mail, pfp;
 let chatroomName;
-let user;
 let chatroomList, currentChatroom, currentChatroomId, chatroomResult, chatroomDetails;
-let Password1, Password2, OldPassword
+let Password1, Password2, OldPassword;
+let deleteUserResult;
+let user;
 let dialog = localStorage['dialog'] || false;
 let messages = [];
 let publicUser;

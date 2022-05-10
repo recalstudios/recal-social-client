@@ -50,8 +50,37 @@ function openWebsocketConnection()
                 chatroomList = chatroomList.filter(e => e.id !== data.room);
                 chatroomList.unshift(newestRoom[0]);
 
-                // TODO: This is not tested
-                loadChatroomsPart2ElectricBoogaloo();
+                // This is not tested but apparently it works idk
+                loadChatroomsPart2ElectricBoogaloo()
+                document.querySelector("#" + currentChatroom).style.backgroundColor = "#123";
+                break;
+            case "system":
+                // System message
+
+                const lastElement = messages[messages.length - 1];
+                console.log(data)
+
+                const output = {
+                    "id": 0,
+                    "room": data.room,
+                    "author": 0, // FIXME: This is bad, but works for now :)
+                    "content": {
+                        "text": data.content
+                    },
+                    "timestamp": "asdasdfsdf"
+                }
+                messages.push(output);
+                loadChat().then(() => console.log("Loaded chat"));
+
+                // TODO: Do your shit here littel
+                break;
+            case "delete":
+                if (parseInt(localStorage['currentChatroomId']) === data.room)
+                {
+                    const spliceIndex = messages.indexOf(m => m.id === data.id);
+                    messages.splice(spliceIndex, 1);
+                }
+                loadChat();
         }
     }
 

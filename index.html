@@ -12,7 +12,7 @@
 
         <!-- Open graph link preview -->
         <meta property="og:title" content="Recal Social">
-        <meta property="og:image" content="https://little.yessness.com/assets/logos/favicon.png">
+        <meta property="og:image" content="https://recalstudios.net/assets/brand/logo+color.png">
         <meta property="og:image:alt" content="Recal Social Logo">
         <meta property="og:site_name" content="RS">
         <meta property="og:link" content="https://social.recalstudios.net/">
@@ -58,7 +58,8 @@
             <div class="popup">
                 <h1>Accept cookies</h1>
                 <p>We are going to steal your information, and you need to accept it</p>
-                <a class="btn" onclick="closeCookieConsent('cookie-dialog')">Accept</a>
+                <a class="btn" onclick="closeCookieConsent('cookie-dialog')">Accept</a> <br>
+                <a class="btn" href="privacy">Our Privacy Policy</a>
             </div>
         </dialog>
 
@@ -117,7 +118,7 @@
             <div class="popup form">
                 <h2>Are You sure that you want to leave this chatroom?</h2>
                 <div>
-                    <a class="btn" onclick="leaveChatroom(currentChatroomId) && closeDialog('leave-chatroom')">Leave</a>
+                    <a class="btn" onclick="leaveChatroom(parseInt(localStorage['currentChatroomId'])) && closeDialog('leave-chatroom')">Leave</a>
                     <a class="btn" onclick="closeDialog('leave-chatroom')">Back</a>
                 </div>
             </div>
