@@ -90,6 +90,13 @@
             </div>
         </dialog>
 
+        <dialog id="no-chatroom-name">
+            <div class="popup form">
+                <p>The chat room needs a name to be created</p>
+                <a class="btn" onclick="closeDialog('no-chatroom-name')">Close</a>
+            </div>
+        </dialog>
+
         <dialog id="edit-chatroom-dialog">
             <div class="popup form">
                 <h1>Edit chatroom</h1>
@@ -110,7 +117,7 @@
             <div class="popup form">
                 <h2>Are You sure that you want to leave this chatroom?</h2>
                 <div>
-                    <a class="btn" onclick="">Leave</a>
+                    <a class="btn" onclick="leaveChatroom(currentChatroomId) && closeDialog('leave-chatroom')">Leave</a>
                     <a class="btn" onclick="closeDialog('leave-chatroom')">Back</a>
                 </div>
             </div>

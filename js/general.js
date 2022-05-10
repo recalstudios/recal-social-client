@@ -11,6 +11,7 @@ let username, email, passphrase, result;
 let changePasswordResult;
 let changeUserResult;
 let theUsername, mail, pfp;
+let chatroomName;
 let user;
 let chatroomList, currentChatroom, currentChatroomId, chatroomResult, chatroomDetails;
 let Password1, Password2, OldPassword

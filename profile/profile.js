@@ -1,16 +1,19 @@
 // Loads profile
 async function loadProfile() {
 
+    //uses the token to get all the user info
     await getUserUsingToken();
 
-    console.log(user.pfp)
-    console.log(user.username)
-    console.log(user.email)
+    //console.log(user.pfp)
+    //console.log(user.username)
+    //console.log(user.email)
 
+    //stores the user info in variables
     pfp = user.pfp
     theUsername = user.username
     mail = user.email
 
+    //displays the user info where its needed
     document.querySelector("#pfp").src = pfp
     document.querySelector("#pfpUrl").innerHTML = pfp
     document.querySelector("#newPfp").value = pfp
@@ -27,46 +30,37 @@ async function loadProfile() {
 
 loadProfile();
 
-function editUser(one, two) {
 
+function edit(class1, one, class2, two) {
 
-    document.querySelectorAll(".inputUser").forEach(box => {
+    //they either show or hide the classes depending on the variables
+    document.querySelectorAll("." + class1).forEach(box => {
         box.style.display = one;
     });
-    document.querySelectorAll(".information").forEach(box => {
+    document.querySelectorAll("." + class2).forEach(box => {
         box.style.display = two;
     });
 }
-
-function editPassword(one, two) {
-
-
-    document.querySelectorAll(".userinfo").forEach(box => {
-        box.style.display = one;
-    });
-    document.querySelectorAll(".passwordInfo").forEach(box => {
-        box.style.display = two;
-    });
-}
-
 
 async function changeUser() {
 
     await checkIfAuthTokenExpired()
 
+    //stores what is in the text fides
     pfp = $("#newPfp").val()
     theUsername = $("#newUsername").val()
     mail = $("#newEmail").val()
 
+    //checks if the text fields ar the same as the already used info
     if (pfp === user.pfp && theUsername === user.username && mail === user.email) {
-        editUser('none', 'flex')
+        //sends the user back to the profile info
+        edit('inputUser', 'none', 'information', 'flex');
 
     } else {
 
         if (pfp.length === 0 || theUsername.length === 0 || mail.length === 0) {
             openDialog("MissingUserInfo");// Error: if one or more fields are empty
         } else {
-            //trys to change user info
             changeUserResult = (await axios({
                 method: 'post',
                 url: api + 'user/update',
@@ -80,9 +74,8 @@ async function changeUser() {
                 }
             })).data;
 
-console.log(changeUserResult)
-
             if (changeUserResult === true) {
+                //logs out the user so the info will displayed right
                 logOut()
 
             } else {
@@ -98,10 +91,12 @@ async function changePassword() {
 
     await checkIfAuthTokenExpired()
 
+    //stores what is in the text fides
     Password1 = $("#new1Password").val();
     Password2 = $("#new2Password").val();
     OldPassword = $("#oldPassword").val();
 
+    //checks if the confirm password filed is right
     if (Password1 === Password2)
     {
         changePasswordResult = (await axios({
@@ -120,14 +115,33 @@ async function changePassword() {
 
         if (changePasswordResult === true)
         {
-            editPassword('flex', 'none');
+            //sends the user back to the profile info
+            edit('userinfo', 'flex', 'passwordInfo', 'none');
         } else {
-            openDialog("BadOldPassword");
+            openDialog("BadOldPassword"); //error: the old password is wrong
         }
     } else {
         if (dev) console.debug("fuc")
-        openDialog('BadNewPassword');
+        openDialog('BadNewPassword'); //error: the new password and the confirm password is not the same
     }
+}
+
+//tries to delete the user
+async function deleteUser() {
+
+    deleteUserResult = (await axios({
+        method: 'delete',
+        url: api + 'user/delete',
+        headers: {
+            Authorization: 'Bearer ' + authToken
+        },
+        data: {
+            Token: user.Token
+        }
+    })).data;
+
+    logOut();
+
 }
 
 input = document.querySelector("#newPfp")

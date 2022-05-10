@@ -116,8 +116,6 @@ async function loadChat()
 function loadChatrooms() {
     loadChatroomsPart2ElectricBoogaloo()
 
-    //leaveChatroom(${chatroom.id})
-
     changeChatRoom(currentChatroom, currentChatroomId)
 
     if (dialog === false) document.querySelector(".chatroom").firstElementChild.click()
@@ -138,7 +136,7 @@ function loadChatroomsPart2ElectricBoogaloo() {
                     <img src="${chatroom.image}" alt="Placholder">
                     <p>${chatroom.name}</p>
                 </div>
-                <a class="bold" onclick="">x</a> 
+                <a class="bold" onclick="openDialog('leave-chatroom')">x</a> 
             </div>
         `;
     }
@@ -206,35 +204,43 @@ function closeCookieConsent(dialogName) {
 async function createChatroom(dialogName) {
     closeDialog(dialogName)
 
+    chatroomName = $("#create-chatroom-name").val()
+
     await checkIfAuthTokenExpired()
 
-    // Creates chatroomList with API
-    chatroomResult = (await axios({
-        method: 'post',
-        url: api + 'chat/room/create',
-        headers: {
-            Authorization: 'Bearer ' + authToken
-        },
-        data: {
-            Name: $("#create-chatroom-name").val(),
-            Pass: $("#create-chatroom-password").val()
+    //his checks if there is a name for the chat room or not
+    if (chatroomName.length === 0){
+        openDialog('no-chatroom-name') //Error: There is no chatroom name in the text filed
+
+    } else{
+        // Creates chatroomList with API
+        chatroomResult = (await axios({
+            method: 'post',
+            url: api + 'chat/room/create',
+            headers: {
+                Authorization: 'Bearer ' + authToken
+            },
+            data: {
+                Name: chatroomName,
+                Pass: $("#create-chatroom-password").val()
+            }
+        })).data;
+
+        if (dev) console.debug(chatroomResult)
+
+        if (chatroomResult)
+        {
+            if (dev) console.debug('your mom')
         }
-    })).data;
 
-    if (dev) console.debug(chatroomResult)
+        await getUserChatrooms().then(() => loadChatrooms())
 
-    if (chatroomResult)
-    {
-        if (dev) console.debug('your mom')
+        document.querySelector(".chatroom").firstElementChild.click() // Clicks on newest chatroom
+
+        // Reopen the websocket or sumshit
+        ws.close();
+        openWebsocketConnection();
     }
-
-    await getUserChatrooms().then(() => loadChatrooms())
-
-    document.querySelector(".chatroom").firstElementChild.click() // Clicks on newest chatroom
-
-    // Reopen the websocket or sumshit
-    ws.close();
-    openWebsocketConnection();
 }
 
 async function joinChatroom(dialogName) {

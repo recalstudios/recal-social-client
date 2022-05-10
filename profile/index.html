@@ -27,8 +27,8 @@
         <div id="header">
             <a class="btn" href="/">Home</a>
             <div id="btn-box">
-                <a class="btn" onclick="logOut()">Log out</a>
-                <a class="btn" onclick="logOutAll()">Log out all</a>
+                <a class="btn" onclick="openDialog('Logout')">Log out</a>
+                <a class="btn" onclick="openDialog('DeleteUser')">Delete account</a>
             </div>
         </div>
 
@@ -54,8 +54,8 @@
 
                         <a class="btn inputUser change-user-submit" id="updateUser" onclick="changeUser()" >Update profile</a>
                         <div id="edit" class="">
-                            <a class="btn information" onclick="editUser('flex', 'none')">Edit profile</a>
-                            <a class="btn information" onclick="editPassword('none', 'flex')">Change Password</a>
+                            <a class="btn information" onclick="edit('inputUser', 'flex', 'information', 'none')">Edit profile</a>
+                            <a class="btn information" onclick="edit('userinfo', 'none', 'passwordInfo', 'flex')">Change Password</a>
                         </div>
 
                     </div>
@@ -77,6 +77,26 @@
                 </div>
             </div>
         </div>
+
+        <dialog id="DeleteUser">
+            <div class="popup">
+                <p>Are you sure that you want to delete your account?</p>
+                <div>
+                    <a class="btn" onclick="deleteUser()">Delete</a>
+                    <a class="btn" onclick="closeDialog('DeleteUser')">Close</a>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="Logout">
+            <div class="popup">
+                <p>Do you want to log out all instances or just this one?</p>
+                <div>
+                    <a class="btn" onclick="logOut()">Log out</a>
+                    <a class="btn" onclick="logOutAll()">Log out all</a>
+                </div>
+            </div>
+        </dialog>
 
         <dialog id="BadOldPassword">
             <div class="popup">
