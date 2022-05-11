@@ -32,8 +32,7 @@ loadProfile();
 
 
 function edit(class1, one, class2, two) {
-
-    //they either show or hide the classes depending on the variables
+    -    //they either show or hide the classes depending on the variables
     document.querySelectorAll("." + class1).forEach(box => {
         box.style.display = one;
     });

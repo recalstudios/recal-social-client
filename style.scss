@@ -115,6 +115,18 @@ dialog
     }
 }
 
+#privacy-link
+{
+    margin: 1rem 0 0 0;
+    color: $accent-white;
+    text-decoration: underline;
+}
+
+.popup-text
+{
+    max-width: 80ch;
+}
+
 //====================================
 // 2 General Elements
 //====================================
@@ -605,6 +617,7 @@ input
         flex-direction: column;
 
         justify-content: center;
+        text-align: center;
 
         width: 70vw;
         padding: 5rem;

@@ -51,7 +51,7 @@ function openWebsocketConnection()
                 chatroomList.unshift(newestRoom[0]);
 
                 // This is not tested but apparently it works idk
-                loadChatroomsPart2ElectricBoogaloo()
+                loadsMessagesInChatroom()
                 document.querySelector("#" + currentChatroom).style.backgroundColor = "#123";
                 break;
             case "system":
@@ -75,9 +75,10 @@ function openWebsocketConnection()
                 // TODO: Do your shit here littel
                 break;
             case "delete":
+                // Delete message if type is delete
                 if (parseInt(localStorage['currentChatroomId']) === data.room)
                 {
-                    const spliceIndex = messages.indexOf(m => m.id === data.id);
+                    const spliceIndex = messages.findIndex(m => m.id === data.id);
                     messages.splice(spliceIndex, 1);
                 }
                 loadChat();

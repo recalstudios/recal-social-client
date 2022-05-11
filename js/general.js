@@ -47,9 +47,6 @@ function enterProd()
 // Load document sections
 $("#back").load("/assets/left-arrow.svg");
 
-// Declare variables
-localStorage['publicUser'] = JSON.stringify(publicUser)
-
 // Defines api path
 const api = apiUrl;
 //const api = "https://10.80.18.152:7184/";
@@ -72,12 +69,13 @@ async function getAuthToken()
             }
         })).data;
 
+        // Processes the received data from api
         authToken = response.authToken
-        
         refreshToken = response.refreshToken
 
         if (dev) console.debug(response)
 
+        // Stores refresh token in localStorage
         localStorage['refreshToken'] = refreshToken
 
         // Stores auth token in localStorage
@@ -92,6 +90,7 @@ async function getAuthToken()
 // Renews auth token
 async function chainRefreshToken()
 {
+    // Retrieves refresh token from localstorage
     refreshToken = localStorage['refreshToken']
     if (dev) console.debug(refreshToken)
 
@@ -106,19 +105,20 @@ async function chainRefreshToken()
         }
     })).data;
 
+    // Processes the received data from api
     authToken = response.authToken
-
     refreshToken = response.refreshToken
 
     if (dev) console.debug(response)
 
+    // Stores refresh token in localStorage
     localStorage['refreshToken'] = refreshToken
 
     // Stores auth token in localStorage
     localStorage['authToken'] = authToken;
 }
 
-// Gets user from API
+// Gets user from API with token
 async function getUserUsingToken() {
 
     await checkIfAuthTokenExpired() // Checks if auth token is valid
@@ -140,8 +140,9 @@ async function getUserUsingToken() {
     localStorage['user'] = JSON.stringify(user);
 }
 
+// Gets user from API with user id
 async function getUserUsingId(id) {
-    // Gets user from API
+    // Gets user from API with id
     publicUsername = (await axios({
         method: 'post',
         url: api + 'user/user/public',
@@ -180,12 +181,13 @@ async function checkIfLoggedIn() {
 
     // Checks if token is empty or not and changes ui depending on it
     if (authToken.length !== 0) await getUserUsingToken()
-    else window.location.href = "/login/";
+    else window.location.href = "/login/"; // Switches user page
 }
 
 // Function to log out the user and to make its logged out no matter.
 async function logOut() {
-    refreshToken = localStorage['refreshToken'];
+
+    refreshToken = localStorage['refreshToken']; // Gets refresh token from localStorage
 
     // Renews auth token from API
     await axios({
@@ -196,6 +198,7 @@ async function logOut() {
         }
     });
 
+    // Clears localstorage of auth token and refresh token
     localStorage['authToken'] = "";
     localStorage['refreshToken'] = "";
 
@@ -217,16 +220,19 @@ async function logOutAll() {
             }
         })).data ;
 
+    // Clears localstorage of auth token and refresh token
     localStorage['authToken'] = "";
     localStorage['refreshToken'] = "";
 
     checkIfLoggedIn().then(() => localStorage.clear()); // Checks if logged in
 }
 
+// Opens dialog with passed through variable
 function openDialog(dialogName) {
-    document.querySelector("#" + dialogName).showModal();
+    document.querySelector("#" + dialogName).showModal(); // Opens dialog, centers it, and creates shadow behind the dialog box
 }
 
+// Closes dialog with passed through variable
 function closeDialog(dialogName) {
     document.querySelector("#" + dialogName).close();
 }

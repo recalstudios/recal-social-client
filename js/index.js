@@ -5,6 +5,7 @@ currentChatroomId = localStorage['currentChatroomId']
 
 let chatroom;
 
+// Clears fields on load
 $("#join-chatroom-code").val('')
 $("#join-chatroom-password").val('')
 
@@ -13,15 +14,13 @@ $("#create-chatroom-password").val('')
 
 openWebsocketConnection()
 
+// Executes all functions which loads page
 checkIfLoggedIn().then(() => getUserChatrooms().then(() => loadChatrooms()))
 
 
 //axios.post('URL', data, {
 //    withCredentials: true
 //});
-
-// let element = document.getElementById('focus');
-// element.scrollTop = element.offsetHeight
 
 // Fetches messages from test json file
 async function fetchMessages()
@@ -42,34 +41,7 @@ async function fetchMessages()
             Authorization: 'Bearer ' + authToken
         }
     })).data.messages.reverse();
-
-    //Dynamically loads content
-    // fetch("/js/json/chatroom-alpha.json")
-    //     .then(response => response.json())
-    //     .then(data =>
-    //     {
-    //         messages = data
-    //         loadChat()
-    //     });
 }
-
-// // Dynamically loads content
-// fetch("/js/json/testchatrooms.json")
-//     .then(response => response.json())
-//     .then(data =>
-//     {
-//         for (let i = 0; i < data.chatrooms.length; i++)
-//         {
-//             document.querySelector("#chatroom-list").innerHTML += `
-//                 <div id="${data.chatrooms[i].chatroom}" class="chatroom" onclick="changeChatRoom('${data.chatrooms[i].chatroom}')">
-//                     <img src="https://via.placeholder.com/50" alt="Placholder">
-//                     <p>${data.chatrooms[i].chatroom}</p>
-//                 </div>
-//             `;
-//         }
-//
-//         changeChatRoom(currentChatroom);
-//     });
 
 // Loads the chat from the current chat room
 async function loadChat()
@@ -86,29 +58,43 @@ async function loadChat()
     chatListElement.innerHTML = ''; // Clears previous chat log
     for (const message of messages)
     {
-        let testpfp
+
+        // Tries to set messagePfp to an image found in currentRoomUsers and if not sets it to a default value
+        let messagePfp
         try {
-            testpfp = currentRoomUsers.find(u => u.id === message.author).pfp
+            messagePfp = currentRoomUsers.find(u => u.id === message.author).pfp
         } catch {
-            testpfp = "https://via.placeholder.com/50x50"
+            messagePfp = "https://via.placeholder.com/50x50"
         }
 
-        let testusername
+        // Tries to set messageUsername to an image found in currentRoomUsers and if not sets it to a default value
+        let messageUsername
         try {
-            testusername = currentRoomUsers.find(u => u.id === message.author).username
+            messageUsername = currentRoomUsers.find(u => u.id === message.author).username
         } catch {
-            testusername = 'Unavailable user'
+            messageUsername = 'Unavailable user'
         }
+
+        // Checks if the user sendt the current loading message and loads the delete button if true
+        let deleteMessage
+
+        if (user.id === message.author) {
+            deleteMessage = "initial"
+        } else {
+            deleteMessage = "none"
+        }
+
+        // Loads messages in chronological order with all appropriate information
         chatListElement.innerHTML += `
             <div class="chat">
                 <div class="chat-user">
                     <div>
-                        <img src="${testpfp}" alt="skootskoot">
-                        <p class="bold">${testusername}</p>
+                        <img src="${messagePfp}" alt="skootskoot">
+                        <p class="bold">${messageUsername}</p>
                     </div>
                     <div class="right-box">
-                         <p class="bold"><i>${message.timestamp}</i></p>
-                         <a onclick="deleteMessage(${message.id})" class="bold delete-X">X</a>
+                        <a onclick="deleteMessage(${message.id})" class="bold delete-X" style="display: ${deleteMessage}">X</a>
+                        <p class="bold"><i>${message.timestamp}</i></p>
                     </div>
                 </div>
                 <p class="chat-message">${message.content.text}</p>
@@ -119,19 +105,23 @@ async function loadChat()
     document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
 }
 
+
+// Loads chatroom on page
 function loadChatrooms() {
-    loadChatroomsPart2ElectricBoogaloo()
+    loadsMessagesInChatroom()
 
-    changeChatRoom(currentChatroom, currentChatroomId)
+    changeChatRoom(currentChatroom, currentChatroomId) // Highlights the current chatroom
 
-    if (dialog === false) document.querySelector(".chatroom").firstElementChild.click()
+    if (dialog === false) document.querySelector(".chatroom").firstElementChild.click() // Clicks the first chatroom in chatroom list
 }
 
-function loadChatroomsPart2ElectricBoogaloo() {
+// Loads the actual messages on page.
+function loadsMessagesInChatroom() {
     const chatroomBox = document.querySelector("#chatroom-list");
 
-    chatroomBox.innerHTML = ''
+    chatroomBox.innerHTML = '' // Clears chatrooms
 
+    // Loads chatroom in chronological order with all appropriate information
     for (const chatroom of chatroomList)
     {
         chatroomBox.innerHTML += `
@@ -155,19 +145,20 @@ async function changeChatRoom(chatroomName, chatroomId)
     if (chatroomName) document.querySelector("#" + chatroomName).style.backgroundColor = "#123";
     // document.querySelector("#" + chatroom).classList.add =
 
-
-
+    //
     chatroom = chatroomName
     currentChatroom = chatroomName
     currentChatroomId = chatroomId
 
+    // Stores current chatroom with name and id
     localStorage['currentChatroom'] = currentChatroom
     localStorage['currentChatroomId'] = chatroomId
     $("#sendMessage").val('')
 
+    // Reloads messages in chat after api fetch
     fetchMessages().then(() => loadChat())
 
-    await fetchChatroomDetails()
+    await fetchChatroomDetails() // Fetches chatroom detail from API
 
     $("#current-chatroom-name").text(chatroomDetails.name)
     $("#current-chatroom-code").text(chatroomDetails.code)
@@ -176,10 +167,10 @@ async function changeChatRoom(chatroomName, chatroomId)
     $("#edit-chatroom-image").val(chatroomDetails.image)
 }
 
-// Renews auth token
+// Gets user chatroom
 async function getUserChatrooms()
 {
-    await checkIfAuthTokenExpired()
+    await checkIfAuthTokenExpired() // Checks if auth token is expired
 
     // Gets chatroomList from API
     chatroomList = (await axios({
@@ -194,23 +185,26 @@ async function getUserChatrooms()
     localStorage['chatroomList'] = JSON.stringify(chatroomList)
 }
 
+// If dialog is false, it shows the dialog box
 if (!dialog)
 {
     document.querySelector("#cookie-dialog").showModal()
 }
 
-function closeCookieConsent(dialogName) {
+// Closes the cookie consent, and stores if privacy consent has been stored
+function closePrivacyConsent(dialogName) {
     dialog = true;
-    localStorage['dialog'] = dialog
+    localStorage['dialog'] = dialog // Stores dialog state
     closeDialog(dialogName)
 }
 
+// Creates chatroom
 async function createChatroom(dialogName) {
-    closeDialog(dialogName)
+    closeDialog(dialogName) // Closes dialog
 
     chatroomName = $("#create-chatroom-name").val()
 
-    await checkIfAuthTokenExpired()
+    await checkIfAuthTokenExpired() // Checks if auth token is expired
 
     //his checks if there is a name for the chat room or not
     if (chatroomName.length === 0){
@@ -237,18 +231,19 @@ async function createChatroom(dialogName) {
             if (dev) console.debug('your mom')
         }
 
-        await getUserChatrooms().then(() => loadChatrooms())
+        await getUserChatrooms().then(() => loadChatrooms()) // Gets chatrooms and then loads chatroom from api
 
         document.querySelector(".chatroom").firstElementChild.click() // Clicks on newest chatroom
 
         // Reopen the websocket or sumshit
-        ws.close();
-        openWebsocketConnection();
+        ws.close(); // Closes the websocket
+        openWebsocketConnection(); // Reopens the websocket
     }
 }
 
+// Joins chatroom
 async function joinChatroom(dialogName) {
-    closeDialog(dialogName)
+    closeDialog(dialogName) // Closes dialog for joining the chatroom
 
     await checkIfAuthTokenExpired()
 
@@ -267,17 +262,17 @@ async function joinChatroom(dialogName) {
 
     //await sendSystemMessage(' joined the chatroom', 'join')
 
-    await getUserChatrooms().then(() => loadChatrooms())
+    await getUserChatrooms().then(() => loadChatrooms()) // Gets chatrooms and then loads chatroom from api
 
+    // Clears join chatroom fields
     $("#join-chatroom-code").val('')
     $("#join-chatroom-password").val('')
 }
 
-// TODO: Opens a dialog box that asks if you really want to leave the group
-
+// Leaves chatroom
 async function leaveChatroom(chatroomid) {
 
-    await checkIfAuthTokenExpired()
+    await checkIfAuthTokenExpired() // Checks if auth token is expired
 
     // Leave chatroomList with API
     chatroomResult = (await axios({
@@ -291,20 +286,21 @@ async function leaveChatroom(chatroomid) {
         }
     })).data;
 
-    localStorage['currentChatroom'] = currentChatroom
+    localStorage['currentChatroom'] = currentChatroom // Stores chatroom in localstorage
 
     //await sendSystemMessage(' left the chatroom', 'leave')
 
-    await getUserChatrooms().then(() => loadChatrooms())
+    await getUserChatrooms().then(() => loadChatrooms()) // Gets chatrooms and then loads chatroom from api
 
     // Make sure the click code doesnt throw an error
     chatroom = undefined;
 
-    document.querySelector(".chatroom").firstElementChild.click()
+    document.querySelector(".chatroom").firstElementChild.click() // Clicks the first chatroom in the chatroom list
 }
 
+// Fetches chatroom details from api
 async function fetchChatroomDetails() {
-    await checkIfAuthTokenExpired()
+    await checkIfAuthTokenExpired() // Checks if auth token expired
 
     // Fetches chatroom details from API
     chatroomDetails = (await axios({
@@ -321,11 +317,13 @@ async function fetchChatroomDetails() {
     if (dev) console.log(chatroomDetails);
 }
 
+// Loads the user list
 function loadUserList(list) {
-    const userlist = document.querySelector("#user-list");
+    const userlist = document.querySelector("#user-list"); // Sets the user list box to a variable
 
-    userlist.innerHTML = ''
+    userlist.innerHTML = '' // Clears the userlist
 
+    // Loads user list in chronological order with all appropriate information
     for (const user of list)
     {
         userlist.innerHTML += `
@@ -339,8 +337,9 @@ function loadUserList(list) {
     }
 }
 
+// Edits chatroom
 async function editChatroom() {
-    await checkIfAuthTokenExpired()
+    await checkIfAuthTokenExpired() // Checks if auth token is expired
 
     // Edit chatroom details with API
     const response = (await axios({
@@ -359,16 +358,19 @@ async function editChatroom() {
 
     if (dev) console.log(response)
 
-    closeDialog('edit-chatroom-dialog')
+    closeDialog('edit-chatroom-dialog') // Closes the edit chatroom dialog
 
-    getUserChatrooms().then(() => loadChatrooms())
+    getUserChatrooms().then(() => loadChatrooms()) // Gets chatrooms and then loads chatroom from api
 }
 
+// Delete message
 async function deleteMessage(id) {
-    await checkIfAuthTokenExpired()
+    await checkIfAuthTokenExpired() // Checks if auth token expired
+
+    console.log(id)
 
     // Deletes message with api
-    chatroomResult = (await axios({
+    const response = (await axios({
         method: 'post',
         url: api + 'chat/room/message/delete',
         headers: {
@@ -379,20 +381,17 @@ async function deleteMessage(id) {
         }
     })).data;
 
+    // Structure of delete message which sends to ws
     message = JSON.stringify({
         "type": "delete",
         "room": JSON.parse(localStorage['currentChatroomId']),
         "id": id
     });
     if (dev) console.debug(message);
-    ws.send(message);
-
-    const spliceIndex = messages.indexOf(m => m.id === id);
-    messages.splice(spliceIndex, 1);
+    ws.send(message); // Sends delete message to ws
 }
 
-
-
+// Sends system message (for release version, not school release)
 function sendSystemMessage(message, action) {
     message = JSON.stringify({
         "type": "system",
@@ -415,7 +414,7 @@ document.querySelectorAll("#current-chatroom-code").forEach(e =>
     });
 });
 
-sendMessage = $("#sendMessage")
+sendMessage = $("#sendMessage") // Stores #sendmessage textbox in variable
 
 // Sends message to ws
 sendMessage.keypress(function (e)
@@ -423,8 +422,9 @@ sendMessage.keypress(function (e)
     if (e.which === 13 && !e.shiftKey)
     {
         e.preventDefault();
-        $(this).closest("form").submit();
+        $(this).closest("form").submit(); // On enter send message
         if (document.querySelector("#sendMessage").value.length >= 1) {
+            // Structure of content sendt so ws
             message = JSON.stringify({
                 "type": "message",
                 "room": JSON.parse(localStorage['currentChatroomId']),
@@ -440,7 +440,7 @@ sendMessage.keypress(function (e)
                 }
             });
             //if (dev) console.debug(message);
-            ws.send(message);
+            ws.send(message); // Sends content to message
             $("#sendMessage").val('')
 
         }
