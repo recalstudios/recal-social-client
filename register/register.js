@@ -11,7 +11,7 @@ async function createUser() {
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0 || document.querySelector("#confirm-passphrase").value.length === 0) {
         if (dev) console.debug("fill all fields");
 
-        openDialog("missing-user-info")
+        openDialog("missing-user-info")//Error: one or more text fields are empty
 
     } else if ($("#passphrase").val() === $("#confirm-passphrase").val()) { // Checks if passphrase and confirm-passphrase fields are the same
         if (dev) console.debug("valid");
@@ -44,7 +44,7 @@ async function createUser() {
 
                 checkIfLoggedIn().then(() => window.location.href = "/")
             } else {
-                openDialog("email-or-username-is-already-taken")
+                openDialog("email-or-username-is-already-taken")//Error: username or email is already in use
             }
 
         }
@@ -54,7 +54,7 @@ async function createUser() {
             if (dev) console.debug(result)
         }
     } else {
-        openDialog("bad-new-password")
+        openDialog("bad-new-password")//Error: The password and the confirm password is not the same
     }
 
     // Stores token in localstorage

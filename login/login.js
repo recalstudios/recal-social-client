@@ -11,7 +11,7 @@ async function verifyCredentials() {
 
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0) {
 
-        openDialog("missing-user-info")
+        openDialog("missing-user-info")//Error: One or more text fields are empty
 
         // Tries given commands and catches the errors if any occur
 
@@ -23,7 +23,7 @@ async function verifyCredentials() {
         await getAuthToken()
 
         if (!localStorage['authToken']) {
-            openDialog("incorrect-info")
+            openDialog("incorrect-info")//Error: either the username or the email is wrong and does not match
         }
 
         // Gets user from api

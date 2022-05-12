@@ -25,14 +25,14 @@ async function loadProfile() {
     document.querySelector("#newEmail").value = mail
 
     //if (dev) console.debug(user.email, user.username, user.pfp, user)
-
 }
 
 loadProfile();
 
-
+//this is used to open the editing menu foe password and userinfo
 function edit(class1, one, class2, two) {
-    -    //they either show or hide the classes depending on the variables
+
+    //this changes the display value depending on the veritable on all the objects with a specific class depending on the variables
     document.querySelectorAll("." + class1).forEach(box => {
         box.style.display = one;
     });
@@ -41,25 +41,26 @@ function edit(class1, one, class2, two) {
     });
 }
 
+//this uses the text fildes in the change user info menu to change the user info in the database
 async function changeUser() {
 
     await checkIfAuthTokenExpired()
 
-    //stores what is in the text fides
     pfp = $("#newPfp").val()
     theUsername = $("#newUsername").val()
     mail = $("#newEmail").val()
 
     //checks if the text fields ar the same as the already used info
     if (pfp === user.pfp && theUsername === user.username && mail === user.email) {
-        //sends the user back to the profile info
-        edit('inputUser', 'none', 'information', 'flex');
+        edit('inputUser', 'none', 'information', 'flex');//sends the user back to the profile info
 
     } else {
 
         if (pfp.length === 0 || theUsername.length === 0 || mail.length === 0) {
             openDialog("MissingUserInfo");// Error: if one or more fields are empty
         } else {
+
+            //sends a update user info request to the api
             changeUserResult = (await axios({
                 method: 'post',
                 url: api + 'user/update',
@@ -74,7 +75,6 @@ async function changeUser() {
             })).data;
 
             if (changeUserResult === true) {
-                //logs out the user so the info will displayed right
                 logOut()
 
             } else {
@@ -86,18 +86,18 @@ async function changeUser() {
     }
 
 
+//this uses the text fildes in the change password menu to change the password in the database
 async function changePassword() {
 
     await checkIfAuthTokenExpired()
 
-    //stores what is in the text fides
     Password1 = $("#new1Password").val();
     Password2 = $("#new2Password").val();
     OldPassword = $("#oldPassword").val();
 
-    //checks if the confirm password filed is right
     if (Password1 === Password2)
     {
+        //sends a update password info request to the api
         changePasswordResult = (await axios({
             method: 'post',
             url: api + 'auth/update/pass',
@@ -114,8 +114,7 @@ async function changePassword() {
 
         if (changePasswordResult === true)
         {
-            //sends the user back to the profile info
-            edit('userinfo', 'flex', 'passwordInfo', 'none');
+            edit('userinfo', 'flex', 'passwordInfo', 'none');//sends the user back to the profile info
         } else {
             openDialog("BadOldPassword"); //error: the old password is wrong
         }
@@ -136,6 +135,7 @@ async function deleteUser() {
         }
     })).data;
 
+    //deletes the local storage so there is no traces of the deleted account sends the user back to the login page
     localStorage.clear();
     window.location.href = "/login/"
 }
