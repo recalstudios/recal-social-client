@@ -1,4 +1,4 @@
-// soni made this work, without soni this code would be nothing - SOny howni (system operator for northern ireland)
+// soni made this work, without soni this code would be nothing - SOny shown (system operator for northern ireland)
 // https://haha.yessness.com/index.html#
 
 // TODO: Make chat-list resizable
@@ -49,6 +49,8 @@ $chat-window-width: 65vw;
 $chat-users-width: 15vw;
 
 $integer-limit: 2147483647rem;
+
+$button-alt-color: darken($accent-purple-navy, 23);
 
 // 1.2 Fonts
 
@@ -161,7 +163,7 @@ dialog
 
 // General button styling for the entire page
 .btn {
-    display: inline-block; // Fixes collapsing marges issue
+    display: inline-block; // Fixes collapsing margins issue
     color: $accent-light-periwinkle;
     background-color: $accent-purple-navy;
     padding: 10px 45px;
@@ -173,7 +175,7 @@ dialog
     font-size: 24px;
     font-weight: bold;
 
-    // Base btn hober styling
+    // Base btn hover styling
     &:hover
     {
         text-decoration: underline;
@@ -217,6 +219,12 @@ dialog
         font-size: 32px;
         color: #d3d6f0;
     }
+}
+
+// bruh 2 electric grand piano
+.btn-alt
+{
+    background: $button-alt-color;
 }
 
 // 2.x Rest
