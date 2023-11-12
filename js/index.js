@@ -34,7 +34,7 @@ async function fetchMessages()
         url: api + 'chat/room/backlog',
         data: {
             ChatroomId: parseInt(localStorage['currentChatroomId']),
-            Start: 1,
+            Start: 0, // This has to be 0 smh (https://github.com/recalstudios/recal-social-client/issues/25)
             Length: 50
         },
         headers: {
