@@ -1,17 +1,20 @@
-# Innsamlet innformasjon
+# Introduksjon
 
 Vi, som en online chattetjeneste, trenger å samle noe informasjon om brukerne våre. Vår prioritet er ditt personvern, og
-derfor samler vi bare inn nødvendig innformasjon. Vi ønsker at brukerne våre forstår og godtar dette. Under finner du
-informasjon om hva som blir samlet inn og hvilke rettigheter du har som bruker. All informasjonen vi samler inn er i
-interesse av brukeren, og det siste vi ønsker er uførnøyde brukere.
+derfor samler vi bare inn nødvendig informasjon. Vi ønsker at brukerne våre forstår og godtar dette. Dette dokumentet
+inneholder informasjon om hva som blir samlet inn, hvorfor det blir samlet inn, og hvilke rettigheter du har som bruker.
 
-**Innsamlet innformasjon:**
+# Innsamlet informasjon
 
 - E-post
 
 Vi samler inn e-post for identifisering, tilbakestilling av passord, og nyhetsbrev om ønskelig.
 
-Om du har spørsmål angående personvern eller innsamlet innformasjon, kan du gjerne henvende deg til little@yessness.com.
+_NB! Noen av disse funksjonene er ikke enda tilgjengelig, men informasjonen må da samles inn slik at det kan brukes i
+fremtiden._
+
+Om du har spørsmål angående personvern eller innsamlet innformasjon, kan du ta kontakt med
+[soni@recalstudios.net](mailto:soni@recalstudios.net).
 
 # Dine rettigheter
 
