@@ -67,7 +67,7 @@ function openWebsocketConnection()
                     "content": {
                         "text": data.content
                     },
-                    "timestamp": "asdasdfsdf"
+                    "timestamp": "asdasdfsdf" // okay?
                 }
                 messages.push(output);
                 loadChat().then(() => console.log("Loaded chat"));
@@ -81,7 +81,7 @@ function openWebsocketConnection()
                     const spliceIndex = messages.findIndex(m => m.id === data.id);
                     messages.splice(spliceIndex, 1);
                 }
-                loadChat();
+                loadChat().then(() => console.log('Reloaded chat'));
         }
     }
 

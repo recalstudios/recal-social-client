@@ -75,7 +75,7 @@ async function loadChat()
             messageUsername = 'Unavailable user'
         }
 
-        // Checks if the user sendt the current loading message and loads the delete button if true
+        // Checks if the user sent the current loading message and loads the delete button if true
         let deleteMessage
 
         if (user.id === message.author) {
@@ -110,7 +110,7 @@ async function loadChat()
 function loadChatrooms() {
     loadsMessagesInChatroom()
 
-    changeChatRoom(currentChatroom, currentChatroomId) // Highlights the current chatroom
+    changeChatRoom(currentChatroom, currentChatroomId).then(() => console.log("Highlighted current chatroom")) // Highlights the current chatroom
 
     if (dialog === false) document.querySelector(".chatroom").firstElementChild.click() // Clicks the first chatroom in chatroom list
 }
@@ -139,8 +139,8 @@ function loadsMessagesInChatroom() {
 // Changes chat room and highlight colours
 async function changeChatRoom(chatroomName, chatroomId)
 {
-    // FIXME: These null checks shouldn'tbe here, but littels code is bad
-    //oldchatroomname = chatroom || "chatroom-alpha";
+    // FIXME: These null checks shouldn't be here, but littels code is bad
+    // oldchatroomname = chatroom || "chatroom-alpha";
     if (chatroom) document.querySelector("#" + chatroom).style.backgroundColor = "#40446e";
     if (chatroomName) document.querySelector("#" + chatroomName).style.backgroundColor = "#123";
     // document.querySelector("#" + chatroom).classList.add =
@@ -235,7 +235,7 @@ async function createChatroom(dialogName) {
 
         document.querySelector(".chatroom").firstElementChild.click() // Clicks on newest chatroom
 
-        // Reopen the websocket or sumshit
+        // Reopen the websocket
         ws.close(); // Closes the websocket
         openWebsocketConnection(); // Reopens the websocket
     }
@@ -414,7 +414,7 @@ document.querySelectorAll("#current-chatroom-code").forEach(e =>
     });
 });
 
-sendMessage = $("#sendMessage") // Stores #sendmessage textbox in variable
+sendMessage = $("#sendMessage") // Stores #sendmessage text box in variable
 
 // Sends message to ws
 sendMessage.keypress(function (e)
@@ -424,7 +424,7 @@ sendMessage.keypress(function (e)
         e.preventDefault();
         $(this).closest("form").submit(); // On enter send message
         if (document.querySelector("#sendMessage").value.length >= 1) {
-            // Structure of content sendt so ws
+            // Structure of content sent to ws
             message = JSON.stringify({
                 "type": "message",
                 "room": JSON.parse(localStorage['currentChatroomId']),
@@ -433,7 +433,7 @@ sendMessage.keypress(function (e)
                     "attachments": [
                         {
                             "type":"image",
-                            "src":"yorumom"
+                            "src":"yorumom" // uhh, what is this
                         }
                     ],
                     "text": sendMessage.val()

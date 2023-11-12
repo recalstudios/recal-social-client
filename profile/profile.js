@@ -27,7 +27,7 @@ async function loadProfile() {
     //if (dev) console.debug(user.email, user.username, user.pfp, user)
 }
 
-loadProfile();
+loadProfile().then(() => console.log('Loaded profile'));
 
 //this is used to open the editing menu foe password and userinfo
 function edit(class1, one, class2, two) {
@@ -41,7 +41,8 @@ function edit(class1, one, class2, two) {
     });
 }
 
-//this uses the text fildes in the change user info menu to change the user info in the database
+// this uses the text files in the change user info menu to change the user info in the database
+// what is that supposed to mean
 async function changeUser() {
 
     await checkIfAuthTokenExpired()
@@ -75,7 +76,7 @@ async function changeUser() {
             })).data;
 
             if (changeUserResult === true) {
-                logOut()
+                logOut().then(() => console.log('Logged out user'));
 
             } else {
                 openDialog("AlreadyUsedInfo"); // Error: if username or email is already in use
@@ -86,7 +87,8 @@ async function changeUser() {
     }
 
 
-//this uses the text fildes in the change password menu to change the password in the database
+//this uses the text files in the change password menu to change the password in the database
+// what files????????
 async function changePassword() {
 
     await checkIfAuthTokenExpired()
