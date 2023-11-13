@@ -1,32 +1,32 @@
+// Center align itself
+.markdown-body
+{
+    margin: 0 auto;
+}
+
 div
 {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    flex-direction: column;
     margin: 25px;
-    text-align: center;
+    max-width: 70ch;
 }
 
 *
 {
     color: #D3D6F0FF;
-    text-align: center;
 }
 
+// Need to use !important here because the default styling is stupid and overwrites stuff
 a
 {
-    color: #d3d6f0ff;
-    text-decoration: underline;
+    color: #d3d6f0ff !important;
+    text-decoration: underline !important;
 }
 
 h1
 {
-    text-align: center !important;
-}
-
-p
-{
-    width: 100ch;
+    margin: .4em auto !important;
+    padding-bottom: .2em;
+    max-width: 15ch;
+    text-align: center;
+    border-bottom: 1px solid rgba(#d3d6f0ff, .5) !important;
 }

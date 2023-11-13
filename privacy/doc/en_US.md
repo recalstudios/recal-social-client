@@ -16,6 +16,8 @@ us at [soni@recalstudios.net](mailto:soni@recalstudios.net).
 
 # Collected data
 
+We collect the following data:
+
 - Email address
 
 Your email address is used for identification, password resetting, and optional newsletters.
