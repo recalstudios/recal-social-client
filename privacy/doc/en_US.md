@@ -1,9 +1,9 @@
 # Introduction
 
-As an online chat service, Recal Social needs to collect some user data. Our priority is your privacy, and by such we
-only collect information that is necessary for the operation of the service. The users of the service needs to
-understand and consent to this in order to use the service. This document provides information about what data we
-collect, why we collect it, and the rights you have as a user of the service.
+As an online chat service, Recal Social needs to collect some user data. Our priority is your privacy, and by such, we
+only collect information that is necessary for the operation of the service. The users of the service need to understand
+and consent to this to use the service. This document provides information about what data we collect, why we collect
+it, and the rights you have as a user of the service.
 
 All your data is stored in Norway, and is by extension protected by Norwegian laws and the GDPR. You can read the
 relevant laws here:
@@ -37,11 +37,11 @@ You have a right to ask for any of the following:
 - What is the purpose of collecting my data?
 - What data do you currently store about me?
 - Have you handed out my data, or is this going to happen? If so, who are the recipients? If a recipient is outside the
-EU/EEA or an international organisation, what can you guarantee for my privacy?
+EU/EEA or an international organization, what can you guarantee for my privacy?
 - How long do you keep my data? If it is impossible to provide a specific time frame, what decides how long it is being
 stored for?
-- To what degree do I have a right for correction, deletion or delimitation, or protesting against your data processing?
-- Where is my data coming from?
+- To what degree do I have a right to correction, deletion or delimitation, or object to the use of my personal data?
+- Where do we collect your data?
 - Do you make automated individual decisions? If so, what logic lies behind, and what consequences can it have for me?
 
 You can also ask for a copy of all the data we have stored about you, including electronic traces, metadata and what
@@ -61,7 +61,7 @@ There are, however, some exceptions where we can deny insight. The right to have
 - The information is of importance to Norway's foreign policy interests or national defense and security interests. This
 exception only applies if exceptions can also be made from public access to such information according to [Sections 20 and 21 of the Public Information Act](https://lovdata.no/NLE/lov/2006-05-19-16/§20).
 - It is required to keep the information confidential for the sake of prevention, investigation, disclosure or
-prosecution of criminal offences.
+prosecution of criminal offenses.
 - It is inadvisable for you to have insight to the information for reasons of your health or your relationship with
 close relatives.
 - The information is subject to statutory confidentiality.
@@ -75,50 +75,90 @@ to make it impossible or to a serious extent prevent the goals of the processing
 If we deny insight, you must get a written reason without undue delay and normally within one month at the latest. We
 must also give a precise reference to which exemption authority is the reason, i.e. why you are not allowed insight.
 
-### Rett til retting
+### Right for correction
 
-Virksomheter kan noen ganger oppføre feilinformasjon, i slike tilfeller har du rett på at det skal fikse. Du kan ta
-kontakt med virksomheten det er snakk og de er pliktig og fikse det senest i løpet av en måned.
+If any of our data regarding you is incorrect, you have a right for it to be corrected. To use this right, contact us
+and specify the data to be corrected. We are obliged to fix it within one month at the latest.
 
-Det finnes også tilfeller der retting ikke er praktisk mulig, som tilfeller der informasjonen ikke er feil men gir
-uriktig inntrykk. I slike tilfeller kan du kreve at opplysningene blir mer fullstendig.
+There are, however, some cases where correction is not practically possible, for example if the data is correct but
+gives a wrong impression. In such cases, you can demand the information to be more complete.
 
-Du kan lese mer om rett til retting [her](https://www.datatilsynet.no/rettigheter-og-plikter/den-registrertes-rettigheter/rett-til-retting/).
+### Right for deletion
 
-### Rett til sletting
+Your data can be deleted, but only in some specific cases. This is often referred to as the "right to be forgotten".
 
-Lurer du på om dataen din kan bli slettet? Det kan du, men bare i spesifikke tilfeller. Denne retten kalles for
-“retten til å bli glemt”
+You can demand deletion of your data in the following cases:
 
-Om kravet ditt til sletting faller under [disse](https://www.datatilsynet.no/rettigheter-og-plikter/den-registrertes-rettigheter/rett-til-sletting/#:~:text=Dersom%20du%20benytter,sletteplikt%20etter%20loven.)
-tilfellene, har du rett på sletting.
+- If you make use of your right to object to the use of your personal data, and there are no compelling reasons for the
+processing.
+- If you have consented to our usage of your data, and you withdraw your consent.
+- If you are a minor and have used a digital service, such as social media.
+- If it is no longer necessary to keep your information - the purpose of the information has been achieved.
+- If the information has been obtained illegally.
+- If we have an obligation to delete, according to the law.
 
-Det er også mulig og slette et søketreff som kommer opp når noen søker opp navnet ditt i søkemotorer slik som Google.
-Sletting fra søkemotorer kan bare skje etter en godkjent sammensatt vurdering. Du kan lese mer om hvordan du kan gjøre
-dette [her](https://www.datatilsynet.no/personvern-pa-ulike-omrader/internett-og-apper/hvordan-slette-soketreff/).
+We must carry out deletion without an undue delay and normally within one month at the latest.
 
-Det finnes mange unntak der sletting ikke er  mulig, du kan lese mer om disse [her](https://www.datatilsynet.no/rettigheter-og-plikter/den-registrertes-rettigheter/rett-til-sletting/#:~:text=Personopplysningene%20inng%C3%A5r%20i,eller%20forsvare%20rettskrav.).
-Et eksempel på dette er “Personopplysningene inngår i en ytring som er [vernet av ytrings- og informasjonsfriheten](https://www.datatilsynet.no/regelverk-og-verktoy/lover-og-regler/personvern-vs.-ytringsfrihet/)”.
+There are, however, some exceptions to the aforementioned list. The right for deletion does not apply in the following
+cases:
 
-Virksomheten som har samlet inn informasjon om deg har plikt dersom den har utlevert opplysninger. Om du har brukt
-retten til å bli glemt, har de plikt for å formidle videre informasjonen til virksomheter som har informasjonen din.
+- The personal information is included in a statement protected by freedom of speech and information.
+- Storage of the personal information is necessary for archiving in the public interest, scientific or historical
+research purposes or statistical purposes. The exception only applies if deletion seriously prevents the goals from
+being achieved. Furthermore, Article 89 of the Personal Data Protection Regulation states that these types of processing
+of personal data must have measures and guarantees to safeguard the individual's privacy.
+- We have a storage obligation by law (for example, bookkeeping obligation).
+- Storage is necessary for certain types of use within health services (according to Article 9 of the Personal Data
+Protection Regulation).
+- Storage is necessary to establish, enforce or defend legal claims.
 
-### Rett til begrensing
+If we have handed out your data to other businesses, and you use your right for deletion, we have a duty to pass on the
+information to businesses that have your information.
 
-Vil ikke virksomheten slette dataen din? Eller har du lyst og begrense hvordan dataen din blir behandlet? Bruk din rett
-til begrensing. I noen tilfeller er det mulig å bruke retten sin til begrensing. Rett til begrensing går ut på hvordan
-virksomheten behandler personopplysningene. Rett til begrensing vil si at de ikke kan bruke dataen selv om de har den
-lagret.
+### Right for delimitation
 
-I disse tilfellene kan du be om begrensing.
+In some cases, you can request the way we use your personal data to be limited. In that case, your personal data may be
+stored but not used for anything.
 
-Du kan lese mer om tilfellene der virksomheter likevel kan bruke personopplysningene dine her.
+In the following situations, you can demand limitation of the processing of personal data:
 
-Virksomheten skal sørge for at dataen din er begrenset senest senest innen én måned.
+- You believe that the information stored about you is incorrect. While we check the information, the processing may be
+limited for a period of time.
+- You have used your right to object, and the company is in the process of deciding whether to accept your objection.
 
-Du kan lese mer om rett til begrensing [her](https://www.datatilsynet.no/rettigheter-og-plikter/den-registrertes-rettigheter/rett-til-begrensning/).
+You can also use the right for delimitation to prevent your personal data from being deleted. This applies in these
+cases:
 
-### Rett til å protestere
+- Personal data is processed illegally and must be deleted, but you want their use to be limited rather than deleted.
+- We must delete the information because it is no longer necessary for the purpose for which it was collected. You need
+the information to determine, assert or defend a legal claim and therefore want it to be stored.
 
-Føler du at dine personlige opplysninger har blitt behandlet uten ditt samtykke og at du har da mistet kontrollen på
-dine personlige opplysninger? Da  har du rett til å protestere.
+When the processing of personal data is limited, we must store the data, but not use it for anything without your
+consent. There are a few exceptions, including if we need the information to establish, enforce or defend a legal claim
+or to protect another person's rights. It may also be necessary to process the personal data for important public
+interests, but this type of processing will usually be authorized by law.
+
+We must provide for a limitation without undue delay and normally within one month at the latest.
+
+You must always be notified before a limitation is lifted.
+
+### Right to object
+
+If you feel like your personal data has been processed without your consent and that you have lost control over your
+data, you have a right to object.
+
+The right to object does not apply in the following cases:
+
+- The personal information is necessary to carry out an agreement you have with us.
+- We are required by law or regulation to process your personal data. This applies to public enterprises in the vast
+majority of cases.
+- It is necessary for us to process the information in connection with a legal claim, for example a lawsuit or a claim
+for compensation.
+- Personal data is processed for the purposes of research or statistics, and the processing is necessary for us to be
+able to carry out a task in the public interest.
+
+The right to object also does not apply if we can show that weighty reasons precede your objection. In this assessment,
+it may matter how the processing of personal data affects you.
+
+If the purpose of the personal data is direct or customized marketing, you always have the right to object. There are no
+exceptions to this rule, so we must respect your objection.
