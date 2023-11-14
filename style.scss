@@ -630,6 +630,12 @@ code
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    // Make link correct color
+    a
+    {
+        color: $accent-light-periwinkle;
+    }
 }
 
 input
@@ -659,7 +665,7 @@ input
     a
     {
         color: $accent-light-periwinkle;
-        text-decoration: none;
+        //text-decoration: none; // Why was this here in the first place????????????????
 
         &:hover
         {
