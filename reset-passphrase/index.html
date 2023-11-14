@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://social.recalstudios.net/" rel="canonical">
+        <title>Login - Recal Social</title>
+
+        <!-- Open graph link preview -->
+        <meta property="og:title" content="Recal Social">
+        <meta property="og:image" content="https://recalstudios.net/assets/brand/logo+color.png">
+        <meta property="og:image:alt" content="Recal Social Logo">
+        <meta property="og:site_name" content="RS">
+        <meta property="og:link" content="https://social.recalstudios.net/">
+        <meta property="og:url" content="https://social.recalstudios.net/">
+        <meta property="og:description" content="Recal Studios chat app">
+        <meta property="og:type" content="website">
+    </head>
+    <body>
+        <div id="login-content">
+            <h1 id="title">Recal Social</h1>
+            <form id="form" class="form">
+                <h1>Reset your passphrase</h1>
+                <label for="email"></label><input type="text" id="email" name="email" placeholder="Email address" data-index="1"><br>
+                <a id="submit" class="btn" onclick="resetPassphrase()">Reset</a>
+            </form>
+        </div>
+
+        <!-- Error dialog -->
+        <dialog id="missing-user-info">
+            <div class="popup">
+                <p>All fields need to be filled</p>
+                <a class="btn" onclick="closeDialog('missing-user-info')">Close</a>
+            </div>
+        </dialog>
+
+        <!-- Scripts -->
+        <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="/js/general.js"></script>
+        <script src="/js/reset-passphrase.js"></script>
+    </body>
+</html>
