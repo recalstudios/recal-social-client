@@ -18,7 +18,6 @@ let deleteUserResult;
 let user;
 let dialog = localStorage['dialog'] || false;
 let messages = [];
-let publicUser;
 
 // Global functions for running through browser console
 
@@ -50,7 +49,6 @@ $("#back").load("/assets/left-arrow.svg");
 // Defines api path
 const api = apiUrl;
 // const api = apiUrl + "v1/"; // Switch to this after the api update or something
-//const api = "https://10.80.18.152:7184/";
 
 // Gets auth token with credentials
 async function getAuthToken()
@@ -121,7 +119,6 @@ async function chainRefreshToken()
 
 // Gets user from API with token
 async function getUserUsingToken() {
-
     await checkIfAuthTokenExpired() // Checks if auth token is valid
 
     // Gets user from API
@@ -187,7 +184,6 @@ async function checkIfLoggedIn() {
 
 // Function to log out the user and to make its logged out no matter.
 async function logOut() {
-
     refreshToken = localStorage['refreshToken']; // Gets refresh token from localStorage
 
     // Renews auth token from API
@@ -212,14 +208,14 @@ async function logOut() {
 async function logOutAll() {
     refreshToken = localStorage['refreshToken']
 
-        // Renews auth token from API
-        const response = (await axios({
-            method: 'post',
-            url: api + 'auth/token/logout/all',
-            headers: {
-                Authorization: 'Bearer ' + refreshToken
-            }
-        })).data ;
+    // Renews auth token from API
+    const response = (await axios({
+        method: 'post',
+        url: api + 'auth/token/logout/all',
+        headers: {
+            Authorization: 'Bearer ' + refreshToken
+        }
+    })).data ;
 
     // Clears localstorage of auth token and refresh token
     localStorage['authToken'] = "";

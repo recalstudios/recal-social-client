@@ -8,13 +8,10 @@ function reset() {
 // Verifies the credentials provided with the api
 async function verifyCredentials() {
     // Tries given commands and catches the errors if any occur
-
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0) {
-
         openDialog("missing-user-info")//Error: One or more text fields are empty
 
         // Tries given commands and catches the errors if any occur
-
     } else {
         // Gets values of input fields
         username = document.querySelector("#username").value.toString();

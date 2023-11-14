@@ -61,6 +61,7 @@ $button-alt-color: darken($accent-purple-navy, 23);
 a
 {
     user-select: none;
+
     &:hover
     {
         cursor: pointer;
@@ -163,31 +164,36 @@ dialog
 // 2.1.1 Scroll bar
 
 /* width */
-::-webkit-scrollbar {
+::-webkit-scrollbar
+{
     width: 10px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track
+{
     margin-top: 25px;
     //background: darken($accent-raisin-black, 3);
     background: none;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb
+{
     background: $accent-cornflower-blue;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover
+{
     background: $accent-white;
 }
 
 // 2.1.2 Buttons
 
 // General button styling for the entire page
-.btn {
+.btn
+{
     display: inline-block; // Fixes collapsing margins issue
     color: $accent-light-periwinkle;
     background-color: $accent-purple-navy;
@@ -401,7 +407,8 @@ code
         scrollbar-width: none;  /* Firefox */
 
         /* Hide scrollbar for Chrome, Safari and Opera */
-        &::-webkit-scrollbar {
+        &::-webkit-scrollbar
+        {
             display: none;
         }
 
@@ -420,11 +427,9 @@ code
             margin: 1vw 2vw;
             padding: 1vw 1vw;
 
-
             align-items: center;
             justify-content: space-between;
             flex-direction: row;
-
 
             background-color: $accent-purple-navy;
 
@@ -487,7 +492,6 @@ code
 
         border-top-left-radius: 25px; // Rounded tor left corner
         border-top-right-radius: 25px; // Rounded tor right corner
-
 
         //box-shadow: 0 0 2rem rgba(0, 0, 0, 0.5) inset;
         background-color: darken($accent-raisin-black, 3);
@@ -558,9 +562,6 @@ code
 
                     height: 3rem; // Why the fuck was this set to max before??????????????????
                     width: auto;
-                    //height: 75.7px;
-                    //
-                    //width: 75.7px;
                 }
 
                 .chat-message
@@ -685,7 +686,6 @@ code
 
 input
 {
-
     padding: 15px;
     margin: 10px;
     text-align: center;
@@ -741,7 +741,6 @@ input
 
     #profile-box
     {
-
         background: $accent-purple-navy;
         border-radius: 50px 50px 0 0;
 
@@ -811,7 +810,6 @@ input
             {
                 display: none;
             }
-
         }
     }
 }

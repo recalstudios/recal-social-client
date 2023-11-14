@@ -7,25 +7,22 @@ function reset() {
 
 // Verifies the credentials provided with the api
 async function createUser() {
-
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0 || document.querySelector("#confirm-passphrase").value.length === 0) {
         if (dev) console.debug("fill all fields");
 
-        openDialog("missing-user-info")//Error: one or more text fields are empty
+        openDialog("missing-user-info") // Error: one or more text fields are empty
 
     } else if ($("#passphrase").val() === $("#confirm-passphrase").val()) { // Checks if passphrase and confirm-passphrase fields are the same
         if (dev) console.debug("valid");
 
         // Tries given commands and catches the errors if any occur
         try {
-
             if (dev) console.debug("axios request");
 
             // Grabs all values from necessary fields
             username = document.querySelector("#username").value.toString();
             email = document.querySelector("#email").value.toString();
             passphrase = document.querySelector("#passphrase").value.toString();
-
 
             if (dev) console.debug(username, email, passphrase)
 
@@ -39,6 +36,7 @@ async function createUser() {
                     Pass: passphrase
                 }
             })).data;
+
             if (result) {
                 await getAuthToken()
 
@@ -46,7 +44,6 @@ async function createUser() {
             } else {
                 openDialog("email-or-username-is-already-taken")//Error: username or email is already in use
             }
-
         }
         catch(e) {
             console.error();

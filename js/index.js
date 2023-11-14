@@ -1,6 +1,5 @@
 // Sets the current chatroom from localstorage
 currentChatroom = localStorage['currentChatroom'];
-
 currentChatroomId = localStorage['currentChatroomId']
 
 let chatroom;
@@ -16,7 +15,6 @@ openWebsocketConnection()
 
 // Executes all functions which loads page
 checkIfLoggedIn().then(() => getUserChatrooms().then(() => loadChatrooms()))
-
 
 //axios.post('URL', data, {
 //    withCredentials: true
@@ -58,9 +56,9 @@ async function loadChat()
     chatListElement.innerHTML = ''; // Clears previous chat log
     for (const message of messages)
     {
-
         // Tries to set messagePfp to an image found in currentRoomUsers and if not sets it to a default value
         let messagePfp
+
         try {
             messagePfp = currentRoomUsers.find(u => u.id === message.author).pfp
         } catch {
@@ -69,6 +67,7 @@ async function loadChat()
 
         // Tries to set messageUsername to an image found in currentRoomUsers and if not sets it to a default value
         let messageUsername
+
         try {
             messageUsername = currentRoomUsers.find(u => u.id === message.author).username
         } catch {
@@ -105,13 +104,13 @@ async function loadChat()
     document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
 }
 
-
 // Loads chatroom on page
 function loadChatrooms() {
     loadsMessagesInChatroom()
 
     changeChatRoom(currentChatroom, currentChatroomId).then(() => console.log("Highlighted current chatroom")) // Highlights the current chatroom
 
+    // I don't know why it's checking for exactly 'false', but it might actually be needed if it can't be any other falsy value
     if (dialog === false) document.querySelector(".chatroom").firstElementChild.click() // Clicks the first chatroom in chatroom list
 }
 
@@ -145,7 +144,6 @@ async function changeChatRoom(chatroomName, chatroomId)
     if (chatroomName) document.querySelector("#" + chatroomName).style.backgroundColor = "#123";
     // document.querySelector("#" + chatroom).classList.add =
 
-    //
     chatroom = chatroomName
     currentChatroom = chatroomName
     currentChatroomId = chatroomId
@@ -206,11 +204,10 @@ async function createChatroom(dialogName) {
 
     await checkIfAuthTokenExpired() // Checks if auth token is expired
 
-    //his checks if there is a name for the chat room or not
+    // This checks if there is a name for the chat room or not
     if (chatroomName.length === 0){
         openDialog('no-chatroom-name') //Error: There is no chatroom name in the text filed
-
-    } else{
+    } else {
         // Creates chatroomList with API
         chatroomResult = (await axios({
             method: 'post',
@@ -226,10 +223,7 @@ async function createChatroom(dialogName) {
 
         if (dev) console.debug(chatroomResult)
 
-        if (chatroomResult)
-        {
-            if (dev) console.debug('your mom')
-        }
+        if (chatroomResult && dev) console.debug('your mom') // ?
 
         await getUserChatrooms().then(() => loadChatrooms()) // Gets chatrooms and then loads chatroom from api
 
@@ -271,7 +265,6 @@ async function joinChatroom(dialogName) {
 
 // Leaves chatroom
 async function leaveChatroom(chatroomid) {
-
     await checkIfAuthTokenExpired() // Checks if auth token is expired
 
     // Leave chatroomList with API
@@ -442,7 +435,6 @@ sendMessage.keypress(function (e)
             //if (dev) console.debug(message);
             ws.send(message); // Sends content to message
             $("#sendMessage").val('')
-
         }
         // document.querySelector(".chat:last-child").style.color = red;
     }
