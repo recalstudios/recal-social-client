@@ -344,13 +344,13 @@ code
         right: 2vw;
         top: 11vh;
         padding: 15px;
-        background-color: $accent-purple-navy;
+        background-color: lighten($accent-raisin-black, 5);
         flex-direction: column;
         align-items: end;
         gap: .5rem;
         border-radius: 15px;
         font-size: 24px;
-        font-weight: bold;
+        font-weight: 600;
 
         &.show
         {
@@ -438,7 +438,7 @@ code
             // Uses nth child to make top chatroom have less margin than the others
             &:nth-child(1)
             {
-                margin: 2vw 2vw 1vw 2vw;
+                margin: 0 2vw 1vw 2vw;
             }
 
             img
@@ -455,6 +455,11 @@ code
                 justify-content: center;
                 gap: 10px;
                 flex-direction: row !important;
+
+                img
+                {
+                    border-radius: 15px;
+                }
 
                 p
                 {
@@ -611,7 +616,7 @@ code
                 background-color: $accent-purple-navy;
                 color: $accent-white;
 
-                border-radius: 5px;
+                border-radius: 1rem;
                 border: 0;
 
                 border: none;

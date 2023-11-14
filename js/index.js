@@ -124,7 +124,7 @@ function loadsMessagesInChatroom() {
     for (const chatroom of chatroomList)
     {
         chatroomBox.innerHTML += `
-            <div id="chatroom-${chatroom.id}" class="list-card chatroom" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
+            <div id="chatroom-${chatroom.id}" class="list-card chatroom clickable" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
                 <div class="list-card-info">
                     <img src="${chatroom.image}" alt="Placholder">
                     <p>${chatroom.name}</p>
