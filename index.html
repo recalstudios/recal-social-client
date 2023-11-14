@@ -23,15 +23,20 @@
     <body>
         <div id="header">
             <div>
-                <h1 id="current-chatroom-name"></h1>
+                <div class="flex">
+                    <h1 id="current-chatroom-name"></h1>
+                    <span class="material-symbols-outlined clickable" onclick="openDialog('edit-chatroom-dialog')">edit_square</span>
+                </div>
                 <p id="code">Code: <code id="current-chatroom-code"></code></p>
             </div>
             <div id="btn-box">
-                <a class="btn" id="edit-chatroom" onclick="openDialog('edit-chatroom-dialog')">Edit Chatroom</a>
-                <a class="btn" id="join-chatroom" onclick="openDialog('join-chatroom-dialog')">Join Chatroom</a>
-                <a class="btn" id="make-chatroom" onclick="openDialog('create-chatroom-dialog')">Make Chatroom</a>
-                <a class="btn" id="profile-btn" href="/profile/">Profile</a>
-                <a class="btn" id="logout-btn" onclick="logOut()">Log Out</a>
+                <span id="btn-more-actions" class="material-symbols-outlined clickable dropbtn" onclick="show('#btn-dropdown')">more_horiz</span>
+                <div id="btn-dropdown" class="dropdown-content">
+                    <a id="join-chatroom" onclick="openDialog('join-chatroom-dialog')">Join chatroom</a>
+                    <a id="make-chatroom" onclick="openDialog('create-chatroom-dialog')">Create chatroom</a>
+                    <a id="profile-btn" href="/profile/">Profile</a>
+                    <a id="logout-btn" onclick="logOut()">Log out</a>
+                </div>
             </div>
         </div>
 

@@ -237,6 +237,26 @@ function closeDialog(dialogName) {
     document.querySelector("#" + dialogName).close();
 }
 
+// Shows a dropdown menu with the specified selector
+function show(selector)
+{
+    document.querySelector(selector).classList.toggle("show");
+}
+
+// Close open dropdowns if the user clicks outside of it
+window.onclick = event =>
+{
+    if (!event.target.matches('.dropbtn'))
+    {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++)
+        {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) openDropdown.classList.remove('show');
+        }
+    }
+}
+
 // If enter go to next text field
 $('.form').on('keydown', 'input', function (event) {
     if (event.which === 13) {
