@@ -141,6 +141,11 @@ dialog
     user-select: none;
 }
 
+.hidden
+{
+    display: none !important;
+}
+
 // 1.5 Material Symbols styling
 
 .material-symbols-outlined
@@ -622,7 +627,7 @@ code
     font-weight: 600;
 }
 
-#form
+#form, #new-passphrase-form
 {
     display:grid;
     place-items:center;
@@ -630,6 +635,11 @@ code
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    label
+    {
+        text-align: center;
+    }
 
     // Make link correct color
     a

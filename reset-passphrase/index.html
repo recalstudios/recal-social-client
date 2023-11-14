@@ -22,18 +22,40 @@
     <body>
         <div id="login-content">
             <h1 id="title">Recal Social</h1>
-            <form id="form" class="form">
+
+            <!-- Enter email dialog -->
+            <form id="form" class="form hidden">
                 <h1>Reset your passphrase</h1>
-                <label for="email"></label><input type="text" id="email" name="email" placeholder="Email address" data-index="1"><br>
+                <label for="email">Enter the email address tied to your account<br>to reset your passphrase.</label>
+                <input type="text" id="email" name="email" placeholder="Email address" data-index="1">
+                <br>
                 <a id="submit" class="btn" onclick="resetPassphrase()">Reset</a>
+            </form>
+
+            <!-- Enter new passphrase form -->
+            <form id="new-passphrase-form" class="form hidden">
+                <h1>Choose your new passphrase</h1>
+                <label for="passphrase"></label><input type="password" id="passphrase" name="passphrase" placeholder="Passphrase" data-index="1"><br>
+                <label for="confirm-passphrase"></label><input type="password" id="confirm-passphrase" name="confirm-passphrase" placeholder="Confirm passphrase" data-index="2"><br>
+                <p>The new passphrase will not be saved before you click the button below</p>
+                <a id="submit-new-passphrase" class="btn" onclick="confirmNewPassphrase()">Confirm</a>
+
             </form>
         </div>
 
-        <!-- Error dialog -->
+        <!-- Missing info error dialog -->
         <dialog id="missing-user-info">
             <div class="popup">
                 <p>All fields need to be filled</p>
                 <a class="btn" onclick="closeDialog('missing-user-info')">Close</a>
+            </div>
+        </dialog>
+
+        <!-- Passphrases don't match error dialog -->
+        <dialog id="passphrases-must-match">
+            <div class="popup">
+                <p>Passphrases do not match</p>
+                <a class="btn" onclick="closeDialog('passphrases-must-match')">Close</a>
             </div>
         </dialog>
 
