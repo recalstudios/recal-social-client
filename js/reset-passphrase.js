@@ -17,7 +17,7 @@ async function resetPassphrase()
         // Send data to API
         axios({
             method: 'post',
-            url: api + 'user/reset-passphrase',
+            url: api + 'user/request-passphrase-reset',
             data: {
                 email: email
             }
@@ -40,10 +40,10 @@ async function confirmNewPassphrase()
             // Send data to API
             axios({
                 method: 'post',
-                url: api + 'user/set-passphrase',
+                url: api + 'user/reset-passphrase',
                 data: {
                     resetToken: resetToken,
-                    passphrase: passphrase
+                    newPassphrase: passphrase
                 }
             });
         }
