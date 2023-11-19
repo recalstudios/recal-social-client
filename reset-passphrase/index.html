@@ -39,23 +39,52 @@
                 <label for="confirm-passphrase"></label><input type="password" id="confirm-passphrase" name="confirm-passphrase" placeholder="Confirm passphrase" data-index="2"><br>
                 <p>The new passphrase will not be saved before you click the button below</p>
                 <a id="submit-new-passphrase" class="btn" onclick="confirmNewPassphrase()">Confirm</a>
-
             </form>
         </div>
+
+        <!-- Dialogs for the email address part -->
 
         <!-- Missing info error dialog -->
         <dialog id="missing-user-info">
             <div class="popup">
-                <p>All fields need to be filled</p>
+                <p>You need to provide an email address</p>
                 <a class="btn" onclick="closeDialog('missing-user-info')">Close</a>
             </div>
         </dialog>
+
+        <!-- Success dialog -->
+        <dialog id="email-success">
+            <div class="popup">
+                <p>Success!</p>
+                <p>If this email address is tied to an account, you will receive an email containing information on how
+                    to reset your passphrase.</p>
+                <a class="btn" onclick="closeDialog('email-success')">Close</a>
+            </div>
+        </dialog>
+
+        <!-- Dialogs for the passphrase reset part -->
 
         <!-- Passphrases don't match error dialog -->
         <dialog id="passphrases-must-match">
             <div class="popup">
                 <p>Passphrases do not match</p>
                 <a class="btn" onclick="closeDialog('passphrases-must-match')">Close</a>
+            </div>
+        </dialog>
+
+        <!-- Invalid reset token error dialog -->
+        <dialog id="invalid-reset-token">
+            <div class="popup">
+                <p>The reset link is invalid. Try reopening the website or requesting a new passphrase reset.</p>
+                <a class="btn" onclick="closeDialog('invalid-reset-token')">Close</a>
+            </div>
+        </dialog>
+
+        <!-- Success dialog -->
+        <dialog id="success">
+            <div class="popup">
+                <p>Your passphrase has successfully been reset</p>
+                <a class="btn" onclick="window.location.href = '/'">Close</a> <!-- Redirect to front page on dialog close if the passphrase has successfully been reset -->
             </div>
         </dialog>
 

@@ -22,12 +22,15 @@ async function resetPassphrase()
                 email: email
             }
         });
+
+        // Show dialog
+        openDialog("email-success");
     }
 }
 
 async function confirmNewPassphrase()
 {
-    if (document.querySelector("#passphrase").value.length === 0 || document.querySelector("#confirm-passphrase").value.length === 0) openDialog("missing-user-info");
+    if (document.querySelector("#passphrase").value.length === 0 || document.querySelector("#confirm-passphrase").value.length === 0) openDialog("passphrases-must-match");
     else
     {
         // Get values
@@ -38,14 +41,18 @@ async function confirmNewPassphrase()
         else
         {
             // Send data to API
-            axios({
+            const success = (await axios({
                 method: 'post',
                 url: api + 'user/reset-passphrase',
                 data: {
                     resetToken: resetToken,
                     newPassphrase: passphrase
                 }
-            });
+            })).data;
+
+            // Show success or error based on the result
+            if (success) openDialog("success");
+            else openDialog("invalid-reset-token");
         }
     }
 }
