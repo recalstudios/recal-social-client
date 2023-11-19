@@ -22,6 +22,7 @@ let messages = [];
 // Global functions for running through browser console
 
 // Function for enabling development mode, this will show more details in the console
+// noinspection JSUnusedGlobalSymbols
 function enterDev()
 {
     console.info("Entering development mode");
@@ -32,6 +33,7 @@ function enterDev()
 }
 
 // Function for enabling production mode, this will disable development mode and provide a smoother experience
+// noinspection JSUnusedGlobalSymbols
 function enterProd()
 {
     console.info("Enabling production mode");
