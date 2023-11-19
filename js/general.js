@@ -49,8 +49,7 @@ function enterProd()
 $("#back").load("/assets/left-arrow.svg");
 
 // Defines api path
-const api = apiUrl;
-// const api = apiUrl + "v1/"; // Switch to this after the api update or something
+const api = apiUrl + "v1/";
 
 // Gets auth token with credentials
 async function getAuthToken()
