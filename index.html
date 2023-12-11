@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Metadata -->
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="/style.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- SEO -->
         <link href="https://social.recalstudios.net/" rel="canonical">
         <title>Recal Social</title>
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Open graph link preview -->
         <meta property="og:title" content="Recal Social">
@@ -21,6 +24,7 @@
         <meta property="og:type" content="website">
     </head>
     <body>
+        <!-- Header -->
         <div id="header">
             <div>
                 <div class="flex">
@@ -40,23 +44,30 @@
             </div>
         </div>
 
+        <!-- Page content (chat list, chat window, user list) -->
         <div id="index-content">
+            <!-- Chatroom list -->
             <div id="chatroom-list" class="list"></div>
 
+            <!-- Chat window -->
             <div id="chat-window">
+                <!-- Chat messages -->
                 <div id="chat-list" tabindex="-1"></div>
 
+                <!-- Text box for sending messages -->
                 <div id="chat-box">
                     <label>
+                        <!-- TODO: Copy Discord by replacing placeholder with "Message <room name>" -->
                         <textarea id="sendMessage" placeholder="Type your message here"></textarea>
                     </label>
                 </div>
             </div>
 
+            <!-- User list -->
             <div id="user-list" class="list"></div>
         </div>
 
-        <!--We are going to steal your information, and you need to accept it-->
+        <!-- Dialog for accepting our privacy policy (why is this called cookie-dialog????????????) -->
         <dialog id="cookie-dialog">
             <div class="popup">
                 <h1>Accept privacy consent</h1>
@@ -66,6 +77,7 @@
             </div>
         </dialog>
 
+        <!-- Dialog for joining a chatroom -->
         <dialog id="join-chatroom-dialog">
             <div class="popup form">
                 <h1>Join chatroom</h1>
@@ -82,6 +94,7 @@
             </div>
         </dialog>
 
+        <!-- Dialog for creating a chatroom -->
         <dialog id="create-chatroom-dialog">
             <div class="popup form">
                 <h1>Create chatroom</h1>
@@ -98,6 +111,7 @@
             </div>
         </dialog>
 
+        <!-- Created chatroom has no name error dialog -->
         <dialog id="no-chatroom-name">
             <div class="popup form">
                 <p>The chat room needs a name to be created</p>
@@ -105,6 +119,7 @@
             </div>
         </dialog>
 
+        <!-- Dialog for editing a chatroom -->
         <dialog id="edit-chatroom-dialog">
             <div class="popup form">
                 <h1>Edit chatroom</h1>
@@ -124,6 +139,7 @@
             </div>
         </dialog>
 
+        <!-- Dialog for leaving a chatroom -->
         <dialog id="leave-chatroom">
             <div class="popup form">
                 <h2>Do you want to leave this chatroom?</h2>
@@ -134,8 +150,11 @@
             </div>
         </dialog>
 
+        <!-- External scripts -->
         <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+        <!-- Functional scripts -->
         <script type="text/javascript" src="/js/general.js"></script>
         <script type="text/javascript" src="/js/websocket.js"></script>
         <script type="text/javascript" src="/js/index.js"></script>

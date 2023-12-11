@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Metadata -->
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="/style.css"> <!-- Tells HTML where the CSS is located -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!-- Stylesheets -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/style.css">
+
+        <!-- SEO -->
         <link href="https://social.recalstudios.net/" rel="canonical">
         <title>Register - Recal Social</title>
 
@@ -31,8 +35,12 @@
             </a>
         </div>-->
 
+        <!-- Page content -->
         <div id="login-content">
+            <!-- Title/header -->
             <h1 id="title">Recal Social</h1>
+
+            <!-- Register form -->
             <form id="form" class="form">
                 <h1>Register a new account</h1>
                 <label for="email"></label><input type="text" id="email" name="email" placeholder="Email" data-index="1"><br>
@@ -42,9 +50,13 @@
                 <p id="result"></p>
                 <a id="submit" class="btn" onclick="createUser()">Submit</a>
             </form>
+
+            <!-- Footer -->
+            <!-- FIXME: WHY is this a HEADING??? should be a div or something idk -->
             <h3 id="register">Already have an account? <a href="/login">Log in here!</a> <br>Check out our privacy policy <a href="/privacy">here!</a></h3>
         </div>
 
+        <!-- Passphrases do not match error dialog -->
         <dialog id="bad-new-password">
             <div class="popup">
                 <p>Passwords do not match</p>
@@ -52,6 +64,7 @@
             </div>
         </dialog>
 
+        <!-- One or more fields are missing information error dialog -->
         <dialog id="missing-user-info">
             <div class="popup">
                 <p>All fields need to be filled</p>
@@ -59,6 +72,7 @@
             </div>
         </dialog>
 
+        <!-- Username or email is already in use error dialog -->
         <dialog id="email-or-username-is-already-taken">
             <div class="popup">
                 <p>Email or username is already taken</p>
@@ -66,8 +80,11 @@
             </div>
         </dialog>
 
+        <!-- External scripts -->
         <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+        <!-- Functional scripts -->
         <script src="/js/general.js"></script>
         <script src="/js/register.js"></script>
     </body>

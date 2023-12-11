@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Metadata -->
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="/style.css"> <!-- Tells HTML where the CSS is located -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="/style.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+        <!-- SEO -->
         <link href="https://social.recalstudios.net/" rel="canonical">
         <title>Login - Recal Social</title>
 
@@ -31,8 +35,12 @@
             </a>
         </div>-->
 
+        <!-- Page content -->
         <div id="login-content">
+            <!-- Title/header -->
             <h1 id="title">Recal Social</h1>
+
+            <!-- Login form -->
             <form id="form" class="form">
                 <h1>Log In to your account</h1>
                 <label for="username"></label><input type="text" id="username" name="username" placeholder="Username" data-index="1"><br>
@@ -42,9 +50,12 @@
                 <a id="submit" class="btn" onclick="verifyCredentials()">Log in</a>
             </form>
 
+            <!-- Footer -->
+            <!-- FIXME: WHY is this a HEADING??? should be a div or something idk -->
             <h3 id="register">Don't have an account? <a href="/register">Register here</a>!<br>Check out our privacy policy <a href="/privacy">here</a>!</h3>
         </div>
 
+        <!-- Incorrect username or passphrase error dialog -->
         <dialog id="incorrect-info">
             <div class="popup">
                 <p>Username or password is incorrect</p>
@@ -52,6 +63,7 @@
             </div>
         </dialog>
 
+        <!-- Username or passphrase not entered error dialog -->
         <dialog id="missing-user-info">
             <div class="popup">
                 <p>All fields need to be filled</p>
@@ -59,8 +71,11 @@
             </div>
         </dialog>
 
+        <!-- External scripts -->
         <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+        <!-- Functional scripts -->
         <script src="/js/general.js"></script>
         <script src="/js/login.js"></script>
     </body>

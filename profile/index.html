@@ -2,11 +2,15 @@
 
 <html lang="en">
     <head>
+        <!-- Metadata -->
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="/style.css"> <!-- Tells HTML where the CSS is located -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="/style.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- SEO -->
         <link href="https://social.recalstudios.net/" rel="canonical">
         <title>Settings - Recal Social</title>
 
@@ -21,6 +25,7 @@
         <meta property="og:type" content="website">
     </head>
     <body>
+        <!-- Header -->
         <div id="header">
             <a class="btn" href="/">Home</a>
             <div id="btn-box">
@@ -29,53 +34,79 @@
             </div>
         </div>
 
+        <!-- Page content -->
         <div id="profile-content">
+            <!-- Profile container -->
             <div id="profile-box">
+                <!-- Profile information -->
                 <div id="profile">
+                    <!-- Profile picture -->
                     <img id="pfp" src="https://via.placeholder.com/200x200" alt="smh">
+
+                    <!-- User information -->
                     <div class="userinfo form">
+                        <!-- Username -->
                         <p class="userinfo italic darken-text small-margin-bottom">Username:</p>
                         <h2 id="username" class="information "></h2>
+
+                        <!-- Input field for editing username -->
                         <label for="newUsername"></label>
                         <input name="newUsername" placeholder="New username" id="newUsername" class="inputUser" data-index="1">
 
+                        <!-- Email address -->
                         <p class="userinfo italic darken-text small-margin-bottom">Email:</p>
                         <h2 id="email" class="information"></h2>
+
+                        <!-- Input field for editing email address -->
                         <label for="newEmail"></label>
                         <input name="newEmail" placeholder="New email" id="newEmail" class="inputUser" data-index="2">
 
+                        <!-- URL to profile picture -->
                         <p class="userinfo italic darken-text small-margin-bottom">Profile Pfp:</p>
                         <h2 id="pfpUrl" class="information "></h2>
+
+                        <!-- Input field for editing profile picture URL -->
                         <label for="newPfp"></label>
                         <input name="profilePicture" placeholder="Paste picture link here" id="newPfp" class="inputUser" data-index="3">
 
+                        <!-- Save changes button -->
                         <a class="btn inputUser change-user-submit" id="updateUser" onclick="changeUser()" >Update profile</a>
+
+                        <!-- Profile edit buttons -->
                         <div id="edit" class="">
                             <a class="btn information" onclick="edit('inputUser', 'flex', 'information', 'none')">Edit profile</a>
                             <a class="btn information" onclick="edit('userinfo', 'none', 'passwordInfo', 'flex')">Change Password</a>
                         </div>
                     </div>
 
+                    <!-- Form for resetting passphrase -->
                     <div class="passwordInfo form" id="passwordBox">
+                        <!-- Current passphrase input -->
                         <p class="italic darken-text small-margin-bottom ">Old Password</p>
                         <label for="oldPassword"></label>
                         <input name="oldPassword" placeholder="Password" id="oldPassword" class="passwordInfo" type="password" data-index="1">
 
+                        <!-- New passphrase input -->
                         <p class="italic darken-text small-margin-bottom ">New Password:</p>
                         <label for="new1Password"></label>
                         <input name="new1Password" placeholder="New Password" id="new1Password" class="passwordInfo" type="password" data-index="2">
 
+                        <!-- Repeat new passphrase input -->
                         <p class="italic darken-text small-margin-bottom ">Confirm Password:</p>
                         <label for="new2Password"></label>
                         <input name="new2Password" placeholder="Password" id="new2Password" class="passwordInfo" type="password" data-index="3">
 
+                        <!-- Save new passphrase button -->
                         <a class="btn change-password-submit submit" onclick="changePassword()">Update Password</a>
                     </div>
                 </div>
+
+                <!-- Privacy policy -->
                 <a id="privacy-link" href="/privacy/" target="_blank" >Our Privacy Policy</a>
             </div>
         </div>
 
+        <!-- Account deletion confirmation dialog -->
         <dialog id="DeleteUser">
             <div class="popup">
                 <p>Are you sure that you want to delete your account?</p>
@@ -86,6 +117,7 @@
             </div>
         </dialog>
 
+        <!-- Logout dialog -->
         <dialog id="Logout">
             <div class="popup">
                 <p>Do you want to log out all instances or just this one?</p>
@@ -96,6 +128,7 @@
             </div>
         </dialog>
 
+        <!-- Incorrect current passphrase error dialog (when changing passphrase) -->
         <dialog id="BadOldPassword">
             <div class="popup">
                 <p>The old password is written wrong</p>
@@ -103,6 +136,7 @@
             </div>
         </dialog>
 
+        <!-- Passphrases do not match error dialog (when changing passphrase) -->
         <dialog id="BadNewPassword">
             <div class="popup">
                 <p>The confirm password is not the same as the new password</p>
@@ -110,6 +144,7 @@
             </div>
         </dialog>
 
+        <!-- Missing information error dialog (when editing account info) -->
         <dialog id="MissingUserInfo">
             <div class="popup">
                 <p>Don't leave any of the fields blank</p>
@@ -117,6 +152,7 @@
             </div>
         </dialog>
 
+        <!-- Username or email already in use error dialog (when editing account info) -->
         <dialog id="AlreadyUsedInfo">
             <div class="popup">
                 <p>The username or email is already in use</p>
@@ -124,8 +160,11 @@
             </div>
         </dialog>
 
+        <!-- External scripts -->
         <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+        <!-- Functional scripts -->
         <script src="/js/general.js"></script>
         <script src="/js/profile.js"></script>
     </body>
