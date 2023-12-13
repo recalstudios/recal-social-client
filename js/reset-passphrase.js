@@ -6,12 +6,14 @@ const resetToken = urlParams.get('resetToken');
 if (resetToken) document.querySelector("#new-passphrase-form").classList.remove("hidden");
 else document.querySelector("#form").classList.remove("hidden");
 
+// Function for requesting a passphrase reset from the API
 async function resetPassphrase()
 {
-    if (document.querySelector("#email").value.length === 0) openDialog("missing-user-info");
+    // Check if the email field is empty
+    if (document.querySelector("#email").value.length === 0) openDialog("missing-user-info"); // Show error: the email field is empty
     else
     {
-        // Gets values of email field
+        // Get values of email field
         const email = document.querySelector("#email").value.toString();
 
         // Send data to API
@@ -23,13 +25,15 @@ async function resetPassphrase()
             }
         });
 
-        // Show dialog
+        // Show success dialog
         openDialog("email-success");
     }
 }
 
+// Function to set a new passphrase with a reset token provided by the API
 async function confirmNewPassphrase()
 {
+    // Check if the passphrase fields have values
     if (document.querySelector("#passphrase").value.length === 0 || document.querySelector("#confirm-passphrase").value.length === 0) openDialog("passphrases-must-match");
     else
     {
@@ -37,6 +41,7 @@ async function confirmNewPassphrase()
         const passphrase = document.querySelector("#passphrase").value.toString();
         const passphraseConfirm = document.querySelector("#confirm-passphrase").value.toString();
 
+        // Check if the passphrases match
         if (passphrase !== passphraseConfirm) openDialog("passphrases-must-match");
         else
         {

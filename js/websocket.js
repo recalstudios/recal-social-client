@@ -46,17 +46,20 @@ function openWebsocketConnection()
                 messages.push(data);
                 loadChat().then(() => console.log("Loaded chat"));
 
+                // Move the chatroom to the top of the list (because there's a new message)
                 const newestRoom = chatroomList.filter(e => e.id === data.room);
                 chatroomList = chatroomList.filter(e => e.id !== data.room);
                 chatroomList.unshift(newestRoom[0]);
 
                 // This is not tested but apparently it works idk
+                // I also have no idea what it is supposed to do or why it is here
                 loadsMessagesInChatroom()
                 document.querySelector("#" + currentChatroom).style.backgroundColor = "#123";
                 break;
             case "system":
                 // System message
 
+                // This seems unused?
                 const lastElement = messages[messages.length - 1];
                 console.log(data)
 
@@ -76,11 +79,15 @@ function openWebsocketConnection()
                 break;
             case "delete":
                 // Delete message if type is delete
+                // Check if the deleted message is in the active chatroom
                 if (parseInt(localStorage['currentChatroomId']) === data.room)
                 {
+                    // Find the message and delete it
                     const spliceIndex = messages.findIndex(m => m.id === data.id);
                     messages.splice(spliceIndex, 1);
                 }
+
+                // Reload the chat
                 loadChat().then(() => console.log('Reloaded chat'));
         }
     }

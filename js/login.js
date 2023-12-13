@@ -1,3 +1,4 @@
+// Reset login results
 reset()
 
 // Function to reset login results
@@ -7,29 +8,28 @@ function reset() {
 
 // Verifies the credentials provided with the api
 async function verifyCredentials() {
-    // Tries given commands and catches the errors if any occur
+    // Check if the username and passphrase fields actually have content
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0) {
         openDialog("missing-user-info")//Error: One or more text fields are empty
-
-        // Tries given commands and catches the errors if any occur
     } else {
-        // Gets values of input fields
+        // Get values of input fields
         username = document.querySelector("#username").value.toString();
         passphrase = document.querySelector("#passphrase").value.toString();
 
+        // Get auth token
         await getAuthToken()
 
-        if (!localStorage['authToken']) {
-            openDialog("incorrect-info")//Error: either the username or the email is wrong and does not match
-        }
+        //Error: either the username or the email is wrong and does not match
+        if (!localStorage['authToken']) openDialog("incorrect-info")
 
-        // Gets user from api
+        // Get user from api
         await getUserUsingToken().then(() => changePage());
     }
 }
 
+// Changes user page to the specified page
+// WHY does this function exist this is utterly useless
 function changePage() {
-    // Changes user page to the specified page
     window.location.href = '/';
 }
 
