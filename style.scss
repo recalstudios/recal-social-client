@@ -94,11 +94,13 @@ body
     color: darken($accent-light-periwinkle, 20);
 }
 
+// Used on profile page for subheadings (e.g. username, pfp url)
 .small-margin-bottom
 {
     margin-bottom: -10px !important;
 }
 
+// Popups (errors, confirmations, success messages)
 dialog
 {
     justify-content: center;
@@ -117,6 +119,7 @@ dialog
     }
 }
 
+// Link to privacy policy, shown on the profile page and in the cookie consent popup on first login
 #privacy-link
 {
     margin: 1rem 0 0 0;
@@ -124,6 +127,7 @@ dialog
     text-decoration: underline;
 }
 
+// Text in the cookie consent popup
 .popup-text
 {
     max-width: 80ch;
@@ -163,13 +167,13 @@ dialog
 
 // 2.1.1 Scroll bar
 
-/* width */
+// Width
 ::-webkit-scrollbar
 {
     width: 10px;
 }
 
-/* Track */
+// Track
 ::-webkit-scrollbar-track
 {
     margin-top: 25px;
@@ -177,13 +181,13 @@ dialog
     background: none;
 }
 
-/* Handle */
+// Handle
 ::-webkit-scrollbar-thumb
 {
     background: $accent-cornflower-blue;
 }
 
-/* Handle on hover */
+// Handle on hover
 ::-webkit-scrollbar-thumb:hover
 {
     background: $accent-white;
@@ -253,6 +257,7 @@ dialog
 }
 
 // bruh 2 electric grand piano
+// Button used for closing/cancelling dialogs
 .btn-alt
 {
     background: $button-alt-color;
@@ -260,6 +265,7 @@ dialog
 
 // 2.x Rest
 
+// Current chatroom code
 code
 {
     background: lighten($accent-raisin-black, 5);
@@ -267,6 +273,7 @@ code
     border-radius: 3px;
 }
 
+// Text before room code
 #code
 {
     margin-top: -25px;
@@ -389,6 +396,7 @@ code
     justify-content: center;
     flex-direction: row;
 
+    // Lists (chatroom list and user list)
     .list
     {
         display: flex;
@@ -448,6 +456,7 @@ code
                 width: auto;
             }
 
+            // Some form of inner wrapper i think?
             .list-card-info
             {
                 display: flex;
@@ -478,6 +487,7 @@ code
         width: $chat-list-width;
     }
 
+    // User list (right) styling
     #user-list
     {
         width: $chat-users-width;
@@ -495,8 +505,9 @@ code
         justify-content: center;
         flex-direction: column;
 
-        border-top-left-radius: 25px; // Rounded tor left corner
-        border-top-right-radius: 25px; // Rounded tor right corner
+        // Rounded top corners
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
 
         //box-shadow: 0 0 2rem rgba(0, 0, 0, 0.5) inset;
         background-color: darken($accent-raisin-black, 3);
@@ -575,6 +586,7 @@ code
                     padding: 0;
                 }
 
+                // Container for date and delete button on messages
                 .right-box
                 {
                     display: flex;
@@ -583,7 +595,7 @@ code
             }
         }
 
-        // Box where you write the message
+        // Input field where you write the message
         #chat-box
         {
             display: flex;
@@ -627,7 +639,7 @@ code
                 -moz-box-shadow: none;
                 box-shadow: none;
 
-                resize: none; /*remove the resize handle on the bottom right*/
+                resize: none; // remove the resize handle on the bottom right
 
                 font-family: "Poppins", sans-serif;
 
@@ -647,6 +659,7 @@ code
     color: $accent-purple-navy;
 }
 
+// Name of the current chatroom displayed in header
 #current-chatroom-name
 {
     max-width: 50vw;
@@ -816,7 +829,7 @@ input
 
             .passwordInfo
             {
-                display: none;
+                display: none; // i dont think we need this maybe
             }
         }
     }
