@@ -7,6 +7,7 @@
 
         <!-- Stylesheets -->
         <link rel="stylesheet" type="text/css" href="/style.css">
+        <link rel="stylesheet" href="style/chat.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <!-- SEO -->
@@ -44,28 +45,25 @@
             </div>
         </div>
 
-        <!-- Page content (chat list, chat window, user list) -->
-        <div id="index-content">
-            <!-- Chatroom list -->
-            <div id="chatroom-list" class="list"></div>
+        <!-- Chatroom list -->
+        <div id="chatroom-list" class="list"></div>
 
-            <!-- Chat window -->
-            <div id="chat-window">
-                <!-- Chat messages -->
-                <div id="chat-list" tabindex="-1"></div>
+        <!-- Chat window -->
+        <div id="chat-window">
+            <!-- Chat messages -->
+            <div id="chat-list" tabindex="-1"></div>
 
-                <!-- Text box for sending messages -->
-                <div id="chat-box">
-                    <label>
-                        <!-- TODO: Copy Discord by replacing placeholder with "Message <room name>" -->
-                        <textarea id="sendMessage" placeholder="Type your message here"></textarea>
-                    </label>
-                </div>
-            </div>
-
-            <!-- User list -->
-            <div id="user-list" class="list"></div>
+            <!-- Text box for sending messages -->
+            <label id="chat-box">
+                <!-- TODO: Copy Discord by replacing placeholder with "Message <room name>" -->
+                <textarea id="sendMessage" placeholder="Type your message here"></textarea>
+            </label>
         </div>
+
+        <!-- User list -->
+        <div id="user-list" class="list"></div>
+
+        <!------------------------------------------------------------------------------------------------------------->
 
         <!-- Dialog for accepting our privacy policy (why is this called cookie-dialog????????????) -->
         <dialog id="cookie-dialog">

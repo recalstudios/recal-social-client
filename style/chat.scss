@@ -1,0 +1,190 @@
+body
+{
+  // Create a 3x2 grid for the entire page
+  display: grid;
+  grid-template-columns: 20rem 1fr 15rem;
+  grid-template-rows: 10rem 1fr;
+
+  // Set the page height to always exactly fit the viewport
+  height: 100vh;
+}
+
+#header
+{
+  // Let the header take all the horizontal space
+  grid-column: 1/4;
+}
+
+// TODO: Make a global border radius size and scale off of that
+
+$accent-purple-navy: #40446e; // Tertiary
+$accent-raisin-black: #212227; // Primary
+$accent-white: #ffffff;
+$accent-light-periwinkle: #d3d6f0; // Secondary
+
+// Lists (chatroom list and user list)
+.list
+{
+  // Spacing between list items (also used for horizontal padding)
+  $list-spacing: 1rem;
+
+  display: flex;
+  gap: $list-spacing;
+  flex-direction: column;
+
+  padding: 0 $list-spacing;
+
+  // Make lists scrollable
+  overflow-y: scroll;
+
+  // Each individual item (card) in the list
+  .list-card
+  {
+    // Card padding and border radius (in px). Stored as a variable to calculate proportional border radius's
+    $card-padding: 15px;
+    $card-border-radius: 10px;
+
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    // Fill parent horizontally
+    width: 100%;
+    padding: $card-padding;
+    box-sizing: border-box; // This includes the padding in the width measurement (I think, at least it seems so)
+
+    background-color: $accent-purple-navy;
+    border-radius: $card-border-radius + $card-padding;
+
+    img
+    {
+      // Force square images
+      height: 50px;
+      aspect-ratio: 1;
+
+      border-radius: $card-border-radius;
+    }
+
+    p
+    {
+      // Remove margin because it broke the overall size of the thing and it really doesn't need a margin
+      margin: 0;
+
+      // Limit text to its intended max size
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    a
+    {
+      // Place at the end of the card
+      margin-left: auto;
+
+      // Set the vertical size to align properly
+      line-height: 1em;
+    }
+  }
+}
+
+// Main chat window of main page
+#chat-window
+{
+  display: flex;
+  flex-direction: column;
+
+  // I don't know why we need this, but it stops the chat from expanding the grid for no reason
+  overflow: scroll;
+
+  // Rounded top corners
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+
+  // TODO: Split this into a variable
+  background-color: darken($accent-raisin-black, 3);
+
+  // Actual list of chat messages inside main chat window
+  #chat-list
+  {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    overflow: scroll;
+    scroll-behavior: smooth;
+
+    padding: 10px;
+
+    // Inside each individual chat there is the message, username and pfp
+
+    // Each message user
+    .chat-user
+    {
+      display: flex;
+      justify-content: space-between;
+
+      div
+      {
+        display: flex;
+        align-items: center;
+      }
+
+      // User pfp
+      img
+      {
+        border-radius: 15px;
+        margin-right: 10px;
+        aspect-ratio: 1;
+
+        height: 3rem;
+      }
+
+      .chat-message
+      {
+        margin: 0;
+      }
+    }
+
+    // Each message text
+    .chat-message
+    {
+      margin: 0;
+    }
+  }
+
+  // Input field where you write the message
+  #chat-box textarea
+  {
+    box-sizing: border-box;
+
+    $margin: 10px;
+
+    width: calc(100% - (#{$margin} * 2));
+
+    margin: $margin;
+    padding: 1vh;
+
+    background-color: $accent-purple-navy;
+    color: $accent-white;
+
+    border-radius: 1rem;
+    border: 0;
+
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none; // remove the resize handle on the bottom right
+
+    font-family: "Poppins", sans-serif;
+
+    &::placeholder
+    {
+      color: $accent-light-periwinkle;
+    }
+  }
+}

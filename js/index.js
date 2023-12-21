@@ -126,10 +126,8 @@ function loadsMessagesInChatroom() {
     {
         chatroomBox.innerHTML += `
             <div id="chatroom-${chatroom.id}" class="list-card chatroom clickable" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
-                <div class="list-card-info">
-                    <img src="${chatroom.image}" alt="Placholder">
-                    <p>${chatroom.name}</p>
-                </div>
+                <img src="${chatroom.image}" alt="Placholder">
+                <p>${chatroom.name}</p>
                 <a class="bold" onclick="openDialog('leave-chatroom')">x</a> 
             </div>
         `;
@@ -347,10 +345,8 @@ function loadUserList(list) {
     {
         userlist.innerHTML += `
                 <div class="list-card">
-                    <div class="list-card-info">
-                        <img src="${user.pfp}" alt="Placholder">
-                        <p>${user.username}</p>
-                    </div>
+                    <img src="${user.pfp}" alt="Placholder">
+                    <p>${user.username}</p>
                 </div>
             `;
     }
