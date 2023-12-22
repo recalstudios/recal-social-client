@@ -210,7 +210,7 @@ function loadsMessagesInChatroom() {
             <div id="chatroom-${chatroom.id}" class="list-card chatroom clickable" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
                 <img src="${chatroom.image}" alt="Placholder">
                 <p>${chatroom.name}</p>
-                <a class="bold" onclick="openDialog('leave-chatroom')">x</a> 
+                <span class="material-symbols-outlined leave-chatroom-button" onclick="openDialog('leave-chatroom')">close</span>
             </div>
         `;
     }

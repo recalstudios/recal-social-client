@@ -90,13 +90,15 @@ body
       text-overflow: ellipsis;
     }
 
-    a
+    // The leave button
+    .leave-chatroom-button
     {
       // Place at the end of the card
       margin-left: auto;
 
-      // Set the vertical size to align properly
-      line-height: 1em;
+      padding: globals.$padding-small;
+      background: globals.$color-profile-background-light;
+      border-radius: globals.$border-radius-small;
     }
   }
 }
