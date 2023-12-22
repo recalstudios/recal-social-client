@@ -208,7 +208,8 @@ function loadsMessagesInChatroom() {
     {
         chatroomBox.innerHTML += `
             <div id="chatroom-${chatroom.id}" class="list-card chatroom clickable" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
-                <img src="${chatroom.image}" alt="Placholder">
+                <!-- 'onerror' attribute loads a new image if the original src doesn't exist (instead of showing alt text). WebStorm says 'onerror' is obsolete, but it still works I guess -->
+                <img src="${chatroom.image}" alt="Chatroom image" onerror="this.src='https://via.placeholder.com/50x50';">
                 <p>${chatroom.name}</p>
                 <span class="material-symbols-outlined leave-chatroom-button" onclick="openDialog('leave-chatroom')">close</span>
             </div>
