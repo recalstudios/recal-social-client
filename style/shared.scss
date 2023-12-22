@@ -1,8 +1,6 @@
 // soni made this work, without soni this code would be nothing - SOny shown (system operator for northern ireland)
 // https://haha.yessness.com/index.html#
 
-// TODO: Make chat-list resizable
-
 /* STYLESHEET TABLE OF CONTENTS
     1 Setup
         1.1 Variables
@@ -19,11 +17,8 @@
     3 Reusable sections
         3.1 Header
     4 Specific sections
-        4.1 Home page
-            4.1.1 Introduction section
-        4.2 Login & Register
-            4.2.1 Projects list
-        4.3 Profile
+        4.1 Login & Register
+        4.2 Profile
     5 Useless elements
  */
 
@@ -33,22 +28,7 @@
 
 // 1.1 Variables
 
-$accent-raisin-black: #212227; // Primary
-$accent-purple-navy: #40446e; // Tertiary
-$accent-cornflower-blue: #8892ec;
-$accent-light-periwinkle: #d3d6f0; // Secondary
-$accent-white: #ffffff;
-
-$header-height: 15vh;
-$content-height: 85vh;
-
-$chat-list-width: 20vw;
-$chat-window-width: 65vw;
-$chat-users-width: 15vw;
-
-$integer-limit: 2147483647rem;
-
-$button-alt-color: darken($accent-purple-navy, 23);
+@use 'globals';
 
 // 1.2 Fonts
 
@@ -71,8 +51,8 @@ a
 // Base styling of body
 body
 {
-    background-color: $accent-raisin-black;
-    color: $accent-light-periwinkle;
+    background-color: globals.$accent-raisin-black;
+    color: globals.$accent-light-periwinkle;
     font-family: 'Poppins', sans-serif;
     margin: 0;
 }
@@ -91,7 +71,7 @@ body
 
 .darken-text
 {
-    color: darken($accent-light-periwinkle, 20);
+    color: globals.$darker-text;
 }
 
 // Used on profile page for subheadings (e.g. username, pfp url)
@@ -105,9 +85,9 @@ dialog
 {
     justify-content: center;
     justify-items: center;
-    background: $accent-raisin-black;
-    color: $accent-white;
-    border: solid $accent-purple-navy 4px;
+    background: globals.$accent-raisin-black;
+    color: globals.$accent-white;
+    border: solid globals.$accent-purple-navy 4px;
     border-radius: 1rem;
     min-width: 50ch;
 
@@ -123,7 +103,7 @@ dialog
 #privacy-link
 {
     margin: 1rem 0 0 0;
-    color: $accent-white;
+    color: globals.$accent-white;
     text-decoration: underline;
 }
 
@@ -177,20 +157,19 @@ dialog
 ::-webkit-scrollbar-track
 {
     margin-top: 25px;
-    //background: darken($accent-raisin-black, 3);
     background: none;
 }
 
 // Handle
 ::-webkit-scrollbar-thumb
 {
-    background: $accent-cornflower-blue;
+    background: globals.$accent-cornflower-blue;
 }
 
 // Handle on hover
 ::-webkit-scrollbar-thumb:hover
 {
-    background: $accent-white;
+    background: globals.$accent-white;
 }
 
 // 2.1.2 Buttons
@@ -199,8 +178,8 @@ dialog
 .btn
 {
     display: inline-block; // Fixes collapsing margins issue
-    color: $accent-light-periwinkle;
-    background-color: $accent-purple-navy;
+    color: globals.$accent-light-periwinkle;
+    background-color: globals.$accent-purple-navy;
     padding: 10px 45px;
     min-width: 5vw;
     border-radius: 15px;
@@ -248,6 +227,7 @@ dialog
     }
 
     // Material icon styling
+    // I don't know where this is used, we should figure that out
     .material-icons-round
     {
         margin: 24px 0;
@@ -260,7 +240,7 @@ dialog
 // Button used for closing/cancelling dialogs
 .btn-alt
 {
-    background: $button-alt-color;
+    background: globals.$button-alt-color;
 }
 
 // 2.x Rest
@@ -268,7 +248,7 @@ dialog
 // Current chatroom code
 code
 {
-    background: lighten($accent-raisin-black, 5);
+    background: globals.$color-background-lighter;
     padding: 0.2rem;
     border-radius: 3px;
 }
@@ -311,8 +291,8 @@ code
             left: 50%;
             width: max-content;
             padding: .3rem .5rem;
-            color: $accent-light-periwinkle;
-            background-color: $accent-purple-navy;
+            color: globals.$accent-light-periwinkle;
+            background-color: globals.$accent-purple-navy;
             border-radius: .3rem;
             pointer-events: none;
             opacity: 0;
@@ -337,7 +317,7 @@ code
     #btn-more-actions
     {
         padding: 10px;
-        background-color: $accent-purple-navy;
+        background-color: globals.$accent-purple-navy;
         border-radius: 15px;
     }
 
@@ -349,7 +329,7 @@ code
         right: 2vw;
         top: 11vh;
         padding: 15px;
-        background-color: lighten($accent-raisin-black, 5);
+        background-color: globals.$color-background-lighter;
         flex-direction: column;
         align-items: end;
         gap: .5rem;
@@ -365,7 +345,7 @@ code
         // Elements inside dropdown
         *
         {
-            color: $accent-light-periwinkle;
+            color: globals.$accent-light-periwinkle;
             text-decoration: none;
 
             &:hover
@@ -380,26 +360,14 @@ code
 // 4 Specific Sections
 //====================================
 
-// 4.1 Home
-// TODO: Move this into chat.scss
-
-// Name of the current chatroom displayed in header
-#current-chatroom-name
-{
-    max-width: 50vw;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-// 4.2 Login & Register
+// 4.1 Login & Register
 
 #title
 {
     margin: 3rem auto;
     width: max-content;
     color: transparent;
-    background: linear-gradient(to right, $accent-purple-navy, $accent-cornflower-blue);
+    background: linear-gradient(to right, globals.$accent-purple-navy, globals.$accent-cornflower-blue);
 
     background-clip: text;
     -webkit-background-clip: text;
@@ -425,7 +393,7 @@ code
     // Make link correct color
     a
     {
-        color: $accent-light-periwinkle;
+        color: globals.$accent-light-periwinkle;
     }
 }
 
@@ -436,12 +404,7 @@ input
     text-align: center;
     font-size: 25px ;
     border-radius: 15px;
-    color: #1A1A1D;
-
-    &:active
-    {
-        color: #1A1A1D;
-    }
+    color: globals.$chat-background-color;
 }
 
 #register
@@ -454,8 +417,7 @@ input
 
     a
     {
-        color: $accent-light-periwinkle;
-        //text-decoration: none; // Why was this here in the first place????????????????
+        color: globals.$accent-light-periwinkle;
 
         &:hover
         {
@@ -472,7 +434,7 @@ input
     text-overflow: ellipsis;
 }
 
-// 4.3 Profile
+// 4.2 Profile
 
 #profile-content
 {
@@ -482,11 +444,11 @@ input
     margin: auto auto 0;
     width: 50vw;
 
-    height: $content-height;
+    height: 85vh;
 
     #profile-box
     {
-        background: $accent-purple-navy;
+        background: globals.$accent-purple-navy;
         border-radius: 50px 50px 0 0;
 
         display: flex;
@@ -509,8 +471,8 @@ input
             gap: 25px;
             height: 40vh;
             padding: 25px;
-            background: lighten($accent-purple-navy, 15) ;
-            color: papayawhip;
+            background: globals.$color-profile-background-light;
+            color: globals.$accent-white;
 
             border-radius: 25px;
             border-collapse: collapse;
@@ -520,7 +482,7 @@ input
             {
                 aspect-ratio: 1/1;
                 height: 20rem;
-                border-radius: $integer-limit;
+                border-radius: 2147483647rem;
             }
 
             div

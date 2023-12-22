@@ -1,0 +1,23 @@
+/* STYLESHEET TABLE OF CONTENTS
+  1 Colors
+    1.1 Theme colors
+    1.2 Other colors
+  2 Sizing
+ */
+
+// 1.1 Theme colors
+$accent-raisin-black: #212227; // Primary
+$accent-purple-navy: #40446e; // Tertiary
+$accent-cornflower-blue: #8892ec;
+$accent-light-periwinkle: #d3d6f0; // Secondary
+$accent-white: #ffffff;
+
+// 1.2 Other colors
+$button-alt-color: darken($accent-purple-navy, 23);
+$color-profile-background-light: lighten($accent-purple-navy, 15);
+$chat-background-color: darken($accent-raisin-black, 3);
+$color-background-lighter: lighten($accent-raisin-black, 5);
+$darker-text: darken($accent-light-periwinkle, 20);
+
+// 2 Sizing
+$padding-standard: 1rem;

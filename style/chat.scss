@@ -1,3 +1,17 @@
+/* STYLESHEET TABLE OF CONTENTS
+  1 General styling
+    1.1 Imports
+    1.2 Body styling
+  2 Section styling
+    2.1 Header
+    2.2 Lists (chatroom list and user list)
+    2.3 Main chat window
+ */
+
+// 1.1 Imports
+@use 'globals';
+
+// 1.2 Body styling
 body
 {
   // Create a 3x2 grid for the entire page
@@ -9,24 +23,30 @@ body
   height: 100vh;
 }
 
+// 2.1 Header
 #header
 {
   // Let the header take all the horizontal space
   grid-column: 1/4;
+
+  // Name of the current chatroom displayed in header
+  #current-chatroom-name
+  {
+    // Limit the room name to half the page, in case it is a very long name
+    max-width: 50vw;
+
+    // Properly cut off name if it is too long
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
-// TODO: Make a global border radius size and scale off of that
-
-$accent-purple-navy: #40446e; // Tertiary
-$accent-raisin-black: #212227; // Primary
-$accent-white: #ffffff;
-$accent-light-periwinkle: #d3d6f0; // Secondary
-
-// Lists (chatroom list and user list)
+// 2.2 Lists (chatroom list and user list)
 .list
 {
   // Spacing between list items (also used for horizontal padding)
-  $list-spacing: 1rem;
+  $list-spacing: globals.$padding-standard;
 
   display: flex;
   gap: $list-spacing;
@@ -41,20 +61,18 @@ $accent-light-periwinkle: #d3d6f0; // Secondary
   .list-card
   {
     // Card padding and border radius (in px). Stored as a variable to calculate proportional border radius's
-    $card-padding: 15px;
+    $card-padding: globals.$padding-standard;
     $card-border-radius: 10px;
 
     display: flex;
-    gap: 1rem;
+    gap: globals.$padding-standard;
     align-items: center;
 
-    // Fill parent horizontally
-    width: 100%;
     padding: $card-padding;
     box-sizing: border-box; // This includes the padding in the width measurement (I think, at least it seems so)
 
-    background-color: $accent-purple-navy;
-    border-radius: $card-border-radius + $card-padding;
+    background-color: globals.$accent-purple-navy;
+    border-radius: calc($card-border-radius + $card-padding);
 
     img
     {
@@ -87,7 +105,7 @@ $accent-light-periwinkle: #d3d6f0; // Secondary
   }
 }
 
-// Main chat window of main page
+// 2.3 Main chat window
 #chat-window
 {
   display: flex;
@@ -100,8 +118,7 @@ $accent-light-periwinkle: #d3d6f0; // Secondary
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
 
-  // TODO: Split this into a variable
-  background-color: darken($accent-raisin-black, 3);
+  background-color: globals.$chat-background-color;
 
   // Actual list of chat messages inside main chat window
   #chat-list
@@ -113,35 +130,31 @@ $accent-light-periwinkle: #d3d6f0; // Secondary
     overflow: scroll;
     scroll-behavior: smooth;
 
-    padding: 10px;
+    padding: globals.$padding-standard;
 
     // Inside each individual chat there is the message, username and pfp
 
-    // Each message user
+    // Message "header", contains user info and date
     .chat-user
     {
       display: flex;
       justify-content: space-between;
 
+      // Sections inside the message "header" (left and right section)
       div
       {
         display: flex;
         align-items: center;
+        gap: globals.$padding-standard
       }
 
       // User pfp
       img
       {
         border-radius: 15px;
-        margin-right: 10px;
         aspect-ratio: 1;
 
         height: 3rem;
-      }
-
-      .chat-message
-      {
-        margin: 0;
       }
     }
 
@@ -155,20 +168,19 @@ $accent-light-periwinkle: #d3d6f0; // Secondary
   // Input field where you write the message
   #chat-box textarea
   {
+    // Store margin in its own variable to account for width calculation
+    $margin: globals.$padding-standard;
+
     box-sizing: border-box;
 
-    $margin: 10px;
-
     width: calc(100% - (#{$margin} * 2));
-
     margin: $margin;
-    padding: 1vh;
+    padding: globals.$padding-standard;
 
-    background-color: $accent-purple-navy;
-    color: $accent-white;
+    background-color: globals.$accent-purple-navy;
+    color: globals.$accent-white;
 
     border-radius: 1rem;
-    border: 0;
 
     border: none;
     overflow: auto;
@@ -178,13 +190,14 @@ $accent-light-periwinkle: #d3d6f0; // Secondary
     -moz-box-shadow: none;
     box-shadow: none;
 
-    resize: none; // remove the resize handle on the bottom right
+    // Remove the resize handle on the bottom right
+    resize: none;
 
     font-family: "Poppins", sans-serif;
 
     &::placeholder
     {
-      color: $accent-light-periwinkle;
+      color: globals.$accent-light-periwinkle;
     }
   }
 }
