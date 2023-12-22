@@ -2,47 +2,63 @@
 const apiUrl = "https://api.social.recalstudios.net/"
 const wsUrl = "wss://ws.social.recalstudios.net/";
 
-// Variable declarations
+/**
+ * Whether the application is in *development mode*. If this is set to true, the application logs various debug
+ * information to the console.
+ *
+ * @type {boolean}
+ *
+ * @author Soni
+ *
+ * @see Function for enabling development mode: {@link enterDev}
+ * @see Function for disabling development mode: {@link enterProd}
+ */
+let dev = false;
+
+/**
+ * Messages for the selected chatroom.
+ *
+ * @type {*[]}
+ *
+ * @author Little
+ *
+ * @see Function for fetching messages: {@link fetchMessages}
+ */
+let messages = [];
+
+/**
+ * A global list containing the chatrooms the user is a member of.
+ *
+ * @type {*[]}
+ *
+ * @author Little
+ *
+ * @see Function for fetching the chatroom list from the API: {@link getUserChatrooms}
+ */
+let chatroomList;
+
+/**
+ * A global variable containing details about the currently selected chatroom.
+ *
+ * @author Little
+ *
+ * @see Function for fetching chatroom details from the API: {@link fetchChatroomDetails}
+ */
+let chatroomDetails;
+
+// Other variable declarations
 // I really should document all of these variables, but I really don't want to
-let dev = false; // Whether the application is in "developer mode", if true lets the user see debug information in the console
 let authToken, refreshToken, message, sendMessage, input, input2, publicUsername;
 let username, email, passphrase, result;
 let changePasswordResult;
 let changeUserResult;
 let theUsername, mail, pfp;
 let chatroomName;
-let chatroomList, currentChatroom, currentChatroomId, chatroomResult, chatroomDetails;
+let currentChatroom, currentChatroomId, chatroomResult;
 let Password1, Password2, OldPassword;
 let deleteUserResult;
 let user;
 let dialog = localStorage['dialog'] || false;
-let messages = [];
-
-// ---------------------------------------------------------------------------------------------------------------------
-
-// Global functions for running through browser console
-
-// Function for enabling development mode, this will show more details in the console
-// noinspection JSUnusedGlobalSymbols
-function enterDev()
-{
-    console.info("Entering development mode");
-    dev = true;
-
-    // Put other stuff that should also be run on dev mode here
-    toggleNetworkDebug(true);
-}
-
-// Function for enabling production mode, this will disable development mode and provide a smoother experience
-// noinspection JSUnusedGlobalSymbols
-function enterProd()
-{
-    console.info("Enabling production mode");
-    dev = false;
-
-    // Put other stuff that should also be run on prod mode here
-    toggleNetworkDebug(false);
-}
 
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -50,9 +66,57 @@ function enterProd()
 $("#back").load("/assets/left-arrow.svg");
 
 // Define the API path
+/**
+ * The prefix to use for all routes when accessing the API. This includes the URL as declared in {@link apiUrl} and the
+ * API version.
+ *
+ * @type {string}
+ *
+ * @author Soni
+ *
+ * @see The URL for the API: {@link apiUrl}
+ */
 const api = apiUrl + "v1/";
 
-// Get auth token with credentials
+// Close open dropdowns if the user clicks outside it
+window.onclick = event =>
+{
+    // Check if the click target does not match dropdown
+    if (!event.target.matches('.dropbtn'))
+    {
+        // Close all dropdowns
+        // This might be better as a foreach?
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++)
+        {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) openDropdown.classList.remove('show');
+        }
+    }
+}
+
+// Go to the next input field if the user presses the enter key
+$('.form').on('keydown', 'input', function (event) {
+    // Check if the pressed key is the enter key
+    if (event.which === 13) {
+        event.preventDefault();
+        let $this = $(event.target);
+        let index = parseFloat($this.attr('data-index'));
+        $('[data-index="' + (index + 1).toString() + '"]').focus();
+    }
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Function for getting the auth token. This function uses the globally defined variables {@link username} and
+ * {@link passphrase} to get the credentials, and use those credentials to query the API for the auth token. The auth
+ * token and refresh token are then stored in localStorage.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ */
 async function getAuthToken()
 {
     // username = document.querySelector("#username").value.toString();
@@ -88,7 +152,14 @@ async function getAuthToken()
     }
 }
 
-// Renew auth token
+/**
+ * Function for renewing the auth token. This uses the refresh token to get a new auth token and a new refresh token and
+ * stores them in localStorage.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ */
 async function chainRefreshToken()
 {
     // Retrieve refresh token from localstorage
@@ -118,7 +189,15 @@ async function chainRefreshToken()
     localStorage['authToken'] = authToken;
 }
 
-// Get user from API with token
+/**
+ * This function gets user information from the API using the token, and stores the information in localStorage as JSON.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see Function for checking if the auth token has expired: {@link checkIfAuthTokenExpired}
+ */
 async function getUserUsingToken() {
     // Check if auth token is valid
     await checkIfAuthTokenExpired()
@@ -143,6 +222,7 @@ async function getUserUsingToken() {
 
 // Get user from API with user id
 // This function might never be used?
+// I'll skip documenting it for now in case it should just go (which it probably should)
 async function getUserUsingId(id) {
     // Get user from API with id
     publicUsername = (await axios({
@@ -156,7 +236,15 @@ async function getUserUsingId(id) {
     return publicUsername.username;
 }
 
-// Check if the auth token is expired
+/**
+ * This function checks if the auth token in localStorage is valid. If it isn't, it requests a new one.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see Function for getting a new token: {@link chainRefreshToken}
+ */
 async function checkIfAuthTokenExpired()
 {
     // Get auth token from localstorage
@@ -177,7 +265,17 @@ async function checkIfAuthTokenExpired()
     authToken = localStorage['authToken'] // Gets auth token from localStorage
 }
 
-// Function to check if a user is logged in or not
+/**
+ * This function checks whether a user is logged in. If a user is logged in, it gets the user information. If not, it
+ * redirects to the login page.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Soni
+ * @author Little
+ *
+ * @see Function for getting user information: {@link getUserUsingToken}
+ */
 async function checkIfLoggedIn() {
     // Check localstorage for token and name and puts them into variables
     authToken = localStorage['authToken'] || '';
@@ -187,11 +285,19 @@ async function checkIfLoggedIn() {
     else window.location.href = "/login/"; // Switches user page
 }
 
-// Function to log out the user and to make its logged out no matter.
+/**
+ * This function logs out the user and clears localStorage.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see Function to check if the logout was successful: {@link checkIfLoggedIn}
+ */
 async function logOut() {
     refreshToken = localStorage['refreshToken']; // Gets refresh token from localStorage
 
-    // Renews auth token from API
+    // Requests logout from the API
     await axios({
         method: 'post',
         url: api + 'auth/token/logout',
@@ -209,7 +315,16 @@ async function logOut() {
     checkIfLoggedIn().then(() => localStorage.clear()); // Checks if logged in
 }
 
-// Function to log out the user and to make its logged out no matter.
+/**
+ * This function logs out the user and invalidates all tokens, effectively logging out the user from every authenticated
+ * session.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see Function used for checking if the logout was successful: {@link checkIfLoggedIn}
+ */
 async function logOutAll() {
     // Get refresh token from localstorage
     refreshToken = localStorage['refreshToken']
@@ -230,46 +345,91 @@ async function logOutAll() {
     checkIfLoggedIn().then(() => localStorage.clear()); // Checks if logged in
 }
 
-// Opens dialog with passed through variable
+/**
+ * This function displays the dialog with the provided id.
+ *
+ * @param {string} dialogName - The id of the dialog to be displayed
+ *
+ * @author Soni
+ *
+ * @see Function used for showing the dialog: {@link showModal}
+ * @see Function for hiding dialogs: {@link closeDialog}
+ */
 function openDialog(dialogName) {
-    document.querySelector("#" + dialogName).showModal(); // Opens dialog, centers it, and creates shadow behind the dialog box
+    // Open dialog, center it, and create shadow behind the dialog box
+    document.querySelector("#" + dialogName).showModal();
 }
 
-// Closes dialog with passed through variable
+/**
+ * This function closes (hides) the dialog with the provided id.
+ *
+ * @param {string} dialogName - The id of the dialog to be closed
+ *
+ * @author Soni
+ *
+ * @see Function used for closing the dialog: {@link HTMLDialogElement.close|close}
+ * @see Function for showing dialogs: {@link openDialog}
+ */
 function closeDialog(dialogName) {
     document.querySelector("#" + dialogName).close();
 }
 
-// Shows a dropdown menu with the specified selector
+/**
+ * This function shows a dropdown menu with the specified selector by toggling the <code>show</code> class.
+ *
+ * @param {string} selector - The selector on which to toggle the <code>show</code> class
+ *
+ * @author Soni
+ */
 function show(selector)
 {
     document.querySelector(selector).classList.toggle("show");
 }
 
-// Close open dropdowns if the user clicks outside it
-window.onclick = event =>
+// ---------------------------------------------------------------------------------------------------------------------
+
+// Global functions for running through browser console
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * This function enables *development mode*, a mode that displays more debug information in the browser console. Whether
+ * development mode is enabled is declared in the {@link dev} variable.
+ *
+ * @returns {boolean} Whether development mode is enabled (should always be true)
+ *
+ * @author Soni
+ *
+ * @see The function for entering production mode: {@link enterProd}
+ */
+function enterDev()
 {
-    // Check if the click target does not match dropdown
-    if (!event.target.matches('.dropbtn'))
-    {
-        // Close all dropdowns
-        // This might be better as a foreach?
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++)
-        {
-            const openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) openDropdown.classList.remove('show');
-        }
-    }
+    console.info("Entering development mode");
+    dev = true;
+
+    // Put other stuff that should also be run on dev mode here
+    toggleNetworkDebug(true);
+
+    return dev;
 }
 
-// Go to the next input field if the user presses the enter key
-$('.form').on('keydown', 'input', function (event) {
-    // Check if the pressed key is the enter key
-    if (event.which === 13) {
-        event.preventDefault();
-        let $this = $(event.target);
-        let index = parseFloat($this.attr('data-index'));
-        $('[data-index="' + (index + 1).toString() + '"]').focus();
-    }
-});
+// Function for enabling production mode, this will disable development mode and provide a smoother experience
+// noinspection JSUnusedGlobalSymbols
+/**
+ * This function enters *production mode*. This disables development mode.
+ *
+ * @returns {boolean} Whether development is enabled (should always be false)
+ *
+ * @author Soni
+ *
+ * @see The function for entering development mode: {@link enterDev}
+ */
+function enterProd()
+{
+    console.info("Enabling production mode");
+    dev = false;
+
+    // Put other stuff that should also be run on prod mode here
+    toggleNetworkDebug(false);
+
+    return dev;
+}

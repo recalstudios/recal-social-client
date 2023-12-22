@@ -1,4 +1,42 @@
-// Loads profile
+// Load the user profile
+loadProfile().then(() => console.log('Loaded profile'));
+
+input = document.querySelector("#newPfp")
+input2 = document.querySelector("#new2Password")
+
+// Execute a function when the user releases a key on the keyboard
+input.addEventListener("keydown", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.querySelector('.change-user-submit').click();
+    }
+});
+
+// Execute a function when the user releases a key on the keyboard
+input2.addEventListener("keydown", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.querySelector('.change-password-submit').click();
+    }
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * This function loads the user profile, stores it globally and displays it in relevant elements.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function for getting the user information: {@link getUserUsingToken}
+ */
 async function loadProfile() {
     // Use the token to get all the user info
     await getUserUsingToken();
@@ -22,13 +60,19 @@ async function loadProfile() {
     //if (dev) console.debug(user.email, user.username, user.pfp, user)
 }
 
-// Load the user profile
-loadProfile().then(() => console.log('Loaded profile'));
-
-// this is used to open the editing menu for passphrase and userinfo
-// Sets 'class1' display to 'one' and 'class2' display to 'two'
 // This is garbage why would anyone ever write code like this
 // TODO: Realistically we should move completely away from this approach and just apply a simple class that makes things visible and such
+/**
+ * This function displays the "editing menu" for passphrase and user info by setting display values. It sets any element
+ * with specified class1 to the value of one and any element with specified class2 to the value of two.
+ *
+ * @param {string} class1 - The first class name
+ * @param {string} one - The value to set "display" to for class1
+ * @param {string} class2 - The second class name
+ * @param {string} two - The value to set "display" to for class2
+ *
+ * @author MRcat77
+ */
 function edit(class1, one, class2, two) {
     // Change the display value depending on the veritable on all the objects with a specific class depending on the variables
     // veritable? do you mean variable?
@@ -40,8 +84,20 @@ function edit(class1, one, class2, two) {
     });
 }
 
-// this uses the text files in the change user info menu to change the user info in the database
-// what is that supposed to mean
+/**
+ * This function updates user information with new data provided by the user edit page. It reads data directly from the
+ * input fields on the profile page. If anything goes wrong, it shows an error. If the change was successful, it logs
+ * out the user (I don't know why).
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function for checking if the auth token is valid: {@link checkIfAuthTokenExpired}
+ * @see The function for hiding the edit fields: {@link edit}
+ * @see The function for opening error dialogs: {@link openDialog}
+ * @see The function for logging out the user: {@link logOut}
+ */
 async function changeUser() {
     // Check if auth token is expired
     await checkIfAuthTokenExpired()
@@ -87,6 +143,17 @@ async function changeUser() {
 
 //this uses the text files in the change password menu to change the password in the database
 // what files????????
+/**
+ * This function updates the user passphrase. It collects the data directly from the passphrase edit fields on the
+ * profile page. If anything goes wrong, it displays an error dialog.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function for checking if the auth token is valid: {@link checkIfAuthTokenExpired}
+ * @see The function for displaying error messages: {@link openDialog}
+ */
 async function changePassword() {
     // Check if auth token has expired
     await checkIfAuthTokenExpired()
@@ -127,7 +194,14 @@ async function changePassword() {
     }
 }
 
-//tries to delete the user
+// FIXME: This can probably theoretically be run via rce/some other thing directly from the console, so we should rework this for better security
+/**
+ * This function deletes the user account, clears localStorage and sends the user to the login page.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author MRcat77
+ */
 async function deleteUser() {
     // Request the API to delete the user
     deleteUserResult = (await axios({
@@ -142,29 +216,3 @@ async function deleteUser() {
     localStorage.clear();
     window.location.href = "/login/" // send the user back to the login page
 }
-
-// FIXME: Everything below here should probably be moved just to stay organised again
-input = document.querySelector("#newPfp")
-input2 = document.querySelector("#new2Password")
-
-// Execute a function when the user releases a key on the keyboard
-input.addEventListener("keydown", function(event) {
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-        // Cancel the default action, if needed
-        event.preventDefault();
-        // Trigger the button element with a click
-        document.querySelector('.change-user-submit').click();
-    }
-});
-
-// Execute a function when the user releases a key on the keyboard
-input2.addEventListener("keydown", function(event) {
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-        // Cancel the default action, if needed
-        event.preventDefault();
-        // Trigger the button element with a click
-        document.querySelector('.change-password-submit').click();
-    }
-});

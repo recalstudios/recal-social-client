@@ -1,10 +1,27 @@
 // Declare the WebSocket
 let ws;
 
-// Global variable for debugging network
+/**
+ * Global variable for storing whether network debugging is active.
+ *
+ * @type {boolean}
+ *
+ * @author Soni
+ *
+ * @see The function for toggling network debug: {@link toggleNetworkDebug}
+ */
 let debuggingNetwork = false;
 
-// Function for opening the WebSocket
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * This function opens the websocket connection. It also declares how the WebSocket should react to certain received
+ * data.
+ *
+ * @author Little
+ *
+ * @see A JavaScript WebSocket: {@link WebSocket}
+ */
 function openWebsocketConnection()
 {
     // Open the WebSocket
@@ -101,8 +118,17 @@ function openWebsocketConnection()
     }
 }
 
-// Function for debugging networking code
-// This function is meant for being run in the browser console
+/**
+ * This function helps debug networking code by printing more networking information to the console. It is meant for
+ * being run in the browser console.
+ *
+ * @param {boolean} state - An optional parameter to specify whether the debugging should be enabled or disabled,
+ * instead of toggling.
+ *
+ * @author Soni
+ *
+ * @see The global variable that stores whether network debugging is active: {@link debuggingNetwork}
+ */
 function toggleNetworkDebug(state = !debuggingNetwork)
 {
     debuggingNetwork = state;

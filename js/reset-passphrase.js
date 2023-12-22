@@ -6,7 +6,18 @@ const resetToken = urlParams.get('resetToken');
 if (resetToken) document.querySelector("#new-passphrase-form").classList.remove("hidden");
 else document.querySelector("#form").classList.remove("hidden");
 
-// Function for requesting a passphrase reset from the API
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * This function requests a passphrase reset from the API. It collects the required data directly from the DOM, and
+ * displays any error or success messages to the user.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Soni
+ *
+ * @see The function for displaying the result: {@link openDialog}
+ */
 async function resetPassphrase()
 {
     // Check if the email field is empty
@@ -30,7 +41,16 @@ async function resetPassphrase()
     }
 }
 
-// Function to set a new passphrase with a reset token provided by the API
+/**
+ * This function sets a new passphrase with a reset token provided by the API. It collects the new passphrase values
+ * from the DOM, and displays any error or success messages to the user.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Soni
+ *
+ * @see The function for displaying the result: {@link openDialog}
+ */
 async function confirmNewPassphrase()
 {
     // Check if the passphrase fields have values

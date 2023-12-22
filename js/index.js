@@ -11,17 +11,75 @@ $("#join-chatroom-password").val('')
 $("#create-chatroom-name").val('')
 $("#create-chatroom-password").val('')
 
+// Connect to the WebSocket
 openWebsocketConnection()
 
 // Execute all functions that load the page
 checkIfLoggedIn().then(() => getUserChatrooms().then(() => loadChatrooms()))
 
-//axios.post('URL', data, {
-//    withCredentials: true
-//});
+// If dialog is false, show cookie dialog
+if (!dialog) document.querySelector("#cookie-dialog").showModal()
 
-// Fetches messages from test json file
-// Don't know what "file" is supposed to mean
+// Add event listener to copy button
+document.querySelectorAll("#current-chatroom-code").forEach(e =>
+{
+    e.addEventListener("click", () =>
+    {
+        navigator.clipboard.writeText(e.innerHTML).then(() => console.log("Copied to clipboard"));
+    });
+});
+
+// Stores #sendmessage text box in variable
+sendMessage = $("#sendMessage")
+
+// Send message to ws
+// This runs when a key is pressed in the send chat message field
+sendMessage.keypress(function (e)
+{
+    // Check that the key is enter and shift is not held (i think)
+    if (e.which === 13 && !e.shiftKey)
+    {
+        e.preventDefault();
+        $(this).closest("form").submit(); // On enter send message
+
+        // Check that the message has content
+        if (document.querySelector("#sendMessage").value.length >= 1) {
+            // Structure of content sent to ws
+            message = JSON.stringify({
+                "type": "message",
+                "room": JSON.parse(localStorage['currentChatroomId']),
+                "author": JSON.parse(user.id),
+                "content": {
+                    "attachments": [
+                        {
+                            "type":"image",
+                            "src":"yorumom" // uhh, what is this
+                        }
+                    ],
+                    "text": sendMessage.val()
+                }
+            });
+            //if (dev) console.debug(message);
+            ws.send(message); // Sends content to message
+            $("#sendMessage").val('')
+        }
+        // document.querySelector(".chat:last-child").style.color = red;
+    }
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * This function fetches messages for the currently selected chatroom, and stores them in the global variable
+ * {@link messages}.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see Function for checking if the auth token has expired: {@link checkIfAuthTokenExpired}
+ * @see Globally stored messages: {@link messages}
+ */
 async function fetchMessages()
 {
     // Check if the auth token has expired
@@ -45,14 +103,25 @@ async function fetchMessages()
     })).data.messages.reverse();
 }
 
-// Load the chat from the current chat room
+/**
+ * This function fully loads the chatroom into the DOM. This includes loading messages and users.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see Function to load user list: {@link loadUserList}
+ */
 async function loadChat()
 {
-    // Do some fuckery which isn't really needed, but little is dumb as fuck, so we're going to have it here for now
+    // Get the users in the current chatroom. This seems to be a bad way of doing it, but this is how little wrote the code so it'll stay for now
     // We can remove it later when little decides to write good code (probably never)
     const currentRoomUsers = chatroomList.find(r => r.id === parseInt(currentChatroom.replace(/\D/g,''))).users;
-    if (dev) console.debug(currentRoomUsers); // Log users in the room if dev mode is enabled
 
+    // Log users in the room if dev mode is enabled
+    if (dev) console.debug(currentRoomUsers);
+
+    // Load the users into the DOM
     loadUserList(currentRoomUsers)
 
     // Get the chat list and clear it
@@ -104,7 +173,14 @@ async function loadChat()
     document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
 }
 
-// Loads chatroom on page
+/**
+ * This function is responsible for loading the chatroom list and selecting the topmost chatroom.
+ *
+ * @author Little
+ *
+ * @see Function for actually loading the chatroom list: {@link loadsMessagesInChatroom}
+ * @see Function for changing the chatroom: {@link changeChatRoom}
+ */
 function loadChatrooms() {
     loadsMessagesInChatroom()
 
@@ -115,7 +191,13 @@ function loadChatrooms() {
     if (dialog === false) document.querySelector(".chatroom").firstElementChild.click() // Clicks the first chatroom in chatroom list
 }
 
-// Loads the actual messages on the page
+/**
+ * Despite its name, this function loads the chatroom list from the global variable {@link chatroomList}.
+ *
+ * @author Little
+ *
+ * @see The global list of chatrooms: {@link chatroomList}
+ */
 function loadsMessagesInChatroom() {
     // Get and clear the chat rooms
     const chatroomBox = document.querySelector("#chatroom-list");
@@ -134,7 +216,20 @@ function loadsMessagesInChatroom() {
     }
 }
 
-// Changes chat room and highlight colors
+/**
+ * This function sets the selected chatroom to the one specified, and fetches the details and messages of the newly
+ * selected chatroom.
+ *
+ * @param {string} chatroomName - The name of the chatroom to change to
+ * @param {number} chatroomId - The ID of the chatroom to change to
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function for fetching the chatroom messages: {@link fetchMessages}
+ * @see The function for loading the DOM: {@link loadChat}
+ * @see The function for fetching the chatroom details: {@link fetchChatroomDetails}
+ */
 async function changeChatRoom(chatroomName, chatroomId)
 {
     // FIXME: These null checks shouldn't be here, but littels code is bad
@@ -170,7 +265,15 @@ async function changeChatRoom(chatroomName, chatroomId)
     $("#edit-chatroom-image").val(chatroomDetails.image)
 }
 
-// Gets user chatroom
+/**
+ * This function fetches the chatroom list from the API, and stores it in localStorage as JSON.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function for making sure the auth token is valid: {@link checkIfAuthTokenExpired}
+ */
 async function getUserChatrooms()
 {
     // Check if auth token is expired
@@ -192,18 +295,39 @@ async function getUserChatrooms()
     localStorage['chatroomList'] = JSON.stringify(chatroomList)
 }
 
-// If dialog is false, it shows the dialog box
-// FIXME: This should probably be placed somewhere else in the code to make it more readable
-if (!dialog) document.querySelector("#cookie-dialog").showModal()
-
-// Close the cookie consent, and store if privacy consent has been stored
+/**
+ * This function closes the privacy consent dialog, and stores to localStorage that the dialog has been seen and closed.
+ *
+ * @param {string} dialogName - The id of the privacy consent dialog
+ *
+ * @author Little
+ *
+ * @see The function used for closing the dialog: {@link closeDialog}
+ */
 function closePrivacyConsent(dialogName) {
     dialog = true;
     localStorage['dialog'] = dialog // Stores dialog state
     closeDialog(dialogName)
 }
 
-// Create chatroom
+/**
+ * This function requests the API to create a chatroom. The name and password of the chatroom is collected from the DOM
+ * using jQuery. If there are any problems, it displays the error. If the creation is successful, it fetches the new
+ * chatroom list, loads the new chatroom, selects it and reconnects to the websocket.
+ *
+ * @param {string} dialogName - The ID of the dialog to close (this should be the create chatroom dialog)
+ * @returns {Promise<void>}
+ *
+ * @author MRcat77
+ * @author Little
+ *
+ * @see The function to close the dialog: {@link closeDialog}
+ * @see The function to check if the auth token is valid: {@link checkIfAuthTokenExpired}
+ * @see The function to open error dialogs: {@link openDialog}
+ * @see The function to fetch the new chatroom list: {@link getUserChatrooms}
+ * @see The function to load the new chatroom list: {@link loadChatrooms}
+ * @see The function to reconnect to the websocket: {@link openWebsocketConnection}
+ */
 async function createChatroom(dialogName) {
     // Close dialog
     closeDialog(dialogName)
@@ -247,7 +371,20 @@ async function createChatroom(dialogName) {
     }
 }
 
-// Join chatroom
+/**
+ * This function requests the API to join a new chatroom. The join code and password are collected from the DOM using
+ * jQuery. Then, refresh the chatroom list.
+ *
+ * @param {string} dialogName - The ID of the dialog to close (This should be the join dialog)
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function for closing the dialog: {@link closeDialog}
+ * @see The function for checking if the auth token is valid: {@link checkIfAuthTokenExpired}
+ * @see The function for getting the new chatroom list: {@link getUserChatrooms}
+ * @see The function for loading the new chatroom list into the DOM: {@link loadChatrooms}
+ */
 async function joinChatroom(dialogName) {
     // Close dialog for joining the chatroom
     closeDialog(dialogName)
@@ -278,7 +415,19 @@ async function joinChatroom(dialogName) {
     $("#join-chatroom-password").val('')
 }
 
-// Leave chatroom
+/**
+ * This function queries the API to leave a chatroom. It then reloads the chatroom list, and selects the topmost
+ * chatroom.
+ *
+ * @param {number} chatroomid - The ID of the chatroom to leave
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function to check if the auth token is valid: {@link checkIfAuthTokenExpired}
+ * @see The function to fetch the chatroom list from the API: {@link getUserChatrooms}
+ * @see The function to load the chatroom list into the DOM: {@link loadChatrooms}
+ */
 async function leaveChatroom(chatroomid) {
     // Check if auth token is expired
     await checkIfAuthTokenExpired()
@@ -296,6 +445,7 @@ async function leaveChatroom(chatroomid) {
     })).data;
 
     // Stores chatroom in localstorage
+    // Maybe this is wrong? The variables seem unrelated
     localStorage['currentChatroom'] = currentChatroom
 
     //await sendSystemMessage(' left the chatroom', 'leave')
@@ -311,7 +461,17 @@ async function leaveChatroom(chatroomid) {
     document.querySelector(".chatroom").firstElementChild.click()
 }
 
-// Fetch chatroom details from api
+/**
+ * This function gets the details of the currently selected chatroom from the API and stores it in the global variable
+ * {@link chatroomDetails}.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function for checking if the auth token is valid: {@link checkIfAuthTokenExpired}
+ * @see The global variable containing the chatroom details: {@link chatroomDetails}
+ */
 async function fetchChatroomDetails() {
     // Check if auth token expired
     await checkIfAuthTokenExpired()
@@ -332,7 +492,13 @@ async function fetchChatroomDetails() {
     if (dev) console.log(chatroomDetails);
 }
 
-// Load the user list
+/**
+ * This function loads the specified list into the DOM as the user list.
+ *
+ * @param list - The user list to load
+ *
+ * @author Little
+ */
 function loadUserList(list) {
     // Set the user list box to a variable
     const userlist = document.querySelector("#user-list");
@@ -352,7 +518,19 @@ function loadUserList(list) {
     }
 }
 
-// Edit chatroom
+/**
+ * This function collects values from the edit chatroom dialog and queries the API to edit the current chatroom with the
+ * collected information. It then reloads the chatroom list.
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function to check if the auth token is valid: {@link checkIfAuthTokenExpired}
+ * @see The function for closing the dialog: {@link closeDialog}
+ * @see The function to fetch the new chatroom list from the API: {@link getUserChatrooms}
+ * @see The function to load the chatroom list into the DOM: {@link loadChatrooms}
+ */
 async function editChatroom() {
     // Check if auth token is expired
     await checkIfAuthTokenExpired()
@@ -382,7 +560,16 @@ async function editChatroom() {
     getUserChatrooms().then(() => loadChatrooms())
 }
 
-// Delete message
+/**
+ * This function deletes a message from the chat.
+ *
+ * @param {number} id - The ID of the message to delete
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function to check if the auth token is valid: {@link checkIfAuthTokenExpired}
+ */
 async function deleteMessage(id) {
     // Check if auth token expired
     await checkIfAuthTokenExpired()
@@ -416,6 +603,7 @@ async function deleteMessage(id) {
 }
 
 // Send a system message (for the full release version, not school release)
+// I will not document this as of now, it will most likely get deleted
 function sendSystemMessage(message, action) {
     message = JSON.stringify({
         "type": "system",
@@ -430,52 +618,3 @@ function sendSystemMessage(message, action) {
     if (dev) console.debug(message); // Debug if dev is enabled
     ws.send(message);
 }
-
-// Add event listener to copy button
-// FIXME: Place this somewhere else to improve code readability
-document.querySelectorAll("#current-chatroom-code").forEach(e =>
-{
-    e.addEventListener("click", () =>
-    {
-        navigator.clipboard.writeText(e.innerHTML).then(() => console.log("Copied to clipboard"));
-    });
-});
-
-// Stores #sendmessage text box in variable
-// FIXME: This too
-sendMessage = $("#sendMessage")
-
-// Send message to ws
-// This runs when a key is pressed in the send chat message field
-sendMessage.keypress(function (e)
-{
-    // Check that the key is enter and shift is not held (i think)
-    if (e.which === 13 && !e.shiftKey)
-    {
-        e.preventDefault();
-        $(this).closest("form").submit(); // On enter send message
-
-        // Check that the message has content
-        if (document.querySelector("#sendMessage").value.length >= 1) {
-            // Structure of content sent to ws
-            message = JSON.stringify({
-                "type": "message",
-                "room": JSON.parse(localStorage['currentChatroomId']),
-                "author": JSON.parse(user.id),
-                "content": {
-                    "attachments": [
-                        {
-                            "type":"image",
-                            "src":"yorumom" // uhh, what is this
-                        }
-                    ],
-                    "text": sendMessage.val()
-                }
-            });
-            //if (dev) console.debug(message);
-            ws.send(message); // Sends content to message
-            $("#sendMessage").val('')
-        }
-        // document.querySelector(".chat:last-child").style.color = red;
-    }
-});

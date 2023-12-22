@@ -1,12 +1,44 @@
 // Reset login results
 reset()
 
-// Function to reset login results
+// Get the input field
+input = document.querySelector("#passphrase")
+
+// Execute a function when the user releases a key on the keyboard
+input.addEventListener("keydown", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.querySelector('#submit').click();
+    }
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * This function resets the login result.
+ *
+ * @author Little
+ */
 function reset() {
     document.querySelector("#result").innerHTML = "";
 }
 
-// Verifies the credentials provided with the api
+/**
+ * This function verifies the provided credentials with the API. If any errors occur, it shows the error. If it is
+ * successful, it redirects to the main page (chat page).
+ *
+ * @returns {Promise<void>}
+ *
+ * @author Little
+ *
+ * @see The function for showing error messages: {@link openDialog}
+ * @see The function for getting the auth token: {@link getAuthToken}
+ * @see The function for getting user information: {@link getUserUsingToken}
+ * @see The function for redirecting: {@link changePage}
+ */
 async function verifyCredentials() {
     // Check if the username and passphrase fields actually have content
     if (document.querySelector("#username").value.length === 0 || document.querySelector("#passphrase").value.length === 0) {
@@ -27,22 +59,13 @@ async function verifyCredentials() {
     }
 }
 
-// Changes user page to the specified page
-// WHY does this function exist this is utterly useless
+/**
+ * This function redirects the user to the main page (chat page).
+ *
+ * @author Little
+ * @deprecated
+ */
 function changePage() {
+    // WHY does this function exist this is utterly useless
     window.location.href = '/';
 }
-
-// Get the input field
-input = document.querySelector("#passphrase")
-
-// Execute a function when the user releases a key on the keyboard
-input.addEventListener("keydown", function(event) {
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-        // Cancel the default action, if needed
-        event.preventDefault();
-        // Trigger the button element with a click
-        document.querySelector('#submit').click();
-    }
-});
