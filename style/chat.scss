@@ -164,38 +164,44 @@ body
   }
 
   // Input field where you write the message
-  #chat-box textarea
+  #chat-box
   {
-    // Store margin in its own variable to account for width calculation
-    $margin: globals.$padding-standard;
+    // Always position self at the bottom
+    margin-top: auto;
 
-    box-sizing: border-box;
-
-    width: calc(100% - (#{$margin} * 2));
-    margin: $margin;
-    padding: globals.$padding-standard;
-
-    background-color: globals.$accent-purple-navy;
-    color: globals.$accent-white;
-
-    border-radius: globals.$border-radius-small;
-
-    border: none;
-    overflow: auto;
-    outline: none;
-
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-
-    // Remove the resize handle on the bottom right
-    resize: none;
-
-    font-family: "Poppins", sans-serif;
-
-    &::placeholder
+    textarea
     {
-      color: globals.$accent-light-periwinkle;
+      // Store margin in its own variable to account for width calculation
+      $margin: globals.$padding-standard;
+
+      box-sizing: border-box;
+
+      width: calc(100% - (#{$margin} * 2));
+      margin: $margin;
+      padding: globals.$padding-standard;
+
+      background-color: globals.$accent-purple-navy;
+      color: globals.$accent-white;
+
+      border-radius: globals.$border-radius-small;
+
+      border: none;
+      overflow: auto;
+      outline: none;
+
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+
+      // Remove the resize handle on the bottom right
+      resize: none;
+
+      font-family: "Poppins", sans-serif;
+
+      &::placeholder
+      {
+        color: globals.$accent-light-periwinkle;
+      }
     }
   }
 }
