@@ -88,7 +88,7 @@ dialog
     background: globals.$accent-raisin-black;
     color: globals.$accent-white;
     border: solid globals.$accent-purple-navy 4px;
-    border-radius: 1rem;
+    border-radius: globals.$border-radius-large;
     min-width: 50ch;
 
     .popup
@@ -182,7 +182,7 @@ dialog
     background-color: globals.$accent-purple-navy;
     padding: 10px 45px;
     min-width: 5vw;
-    border-radius: 15px;
+    border-radius: globals.$border-radius-small;
     text-decoration: none;
     justify-content: center;
     text-align: center;
@@ -318,7 +318,7 @@ code
     {
         padding: 10px;
         background-color: globals.$accent-purple-navy;
-        border-radius: 15px;
+        border-radius: globals.$border-radius-small;
     }
 
     // Button dropdown
@@ -333,7 +333,7 @@ code
         flex-direction: column;
         align-items: end;
         gap: .5rem;
-        border-radius: 15px;
+        border-radius: globals.$border-radius-small;
         font-size: 24px;
         font-weight: 600;
 
@@ -403,7 +403,7 @@ input
     margin: 10px;
     text-align: center;
     font-size: 25px ;
-    border-radius: 15px;
+    border-radius: globals.$border-radius-small;
     color: globals.$chat-background-color;
 }
 
@@ -449,7 +449,8 @@ input
     #profile-box
     {
         background: globals.$accent-purple-navy;
-        border-radius: 50px 50px 0 0;
+        border-top-left-radius: globals.$border-radius-large;
+        border-top-right-radius: globals.$border-radius-large;
 
         display: flex;
         flex-direction: column;
@@ -474,7 +475,7 @@ input
             background: globals.$color-profile-background-light;
             color: globals.$accent-white;
 
-            border-radius: 25px;
+            border-radius: globals.$border-radius-large;
             border-collapse: collapse;
             text-align: left;
 
@@ -482,7 +483,7 @@ input
             {
                 aspect-ratio: 1/1;
                 height: 20rem;
-                border-radius: 2147483647rem;
+                border-radius: 50%;
             }
 
             div

@@ -3,6 +3,7 @@
     1.1 Theme colors
     1.2 Other colors
   2 Sizing
+  3 Corners
  */
 
 // 1.1 Theme colors
@@ -21,3 +22,7 @@ $darker-text: darken($accent-light-periwinkle, 20);
 
 // 2 Sizing
 $padding-standard: 1rem;
+
+// 3 Corners
+$border-radius-small: .8rem;
+$border-radius-large: calc($border-radius-small + $padding-standard);
