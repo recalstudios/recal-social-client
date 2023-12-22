@@ -21,9 +21,11 @@ $color-background-lighter: lighten($accent-raisin-black, 5);
 $darker-text: darken($accent-light-periwinkle, 20);
 
 // 2 Sizing
+$padding-large: 5rem;
 $padding-standard: 1rem;
 $padding-small: .2rem;
 
 // 3 Corners
 $border-radius-small: .8rem;
 $border-radius-large: calc($border-radius-small + $padding-standard);
+$border-radius-x-large: calc($border-radius-small + $padding-large);

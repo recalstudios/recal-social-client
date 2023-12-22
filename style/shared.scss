@@ -18,7 +18,6 @@
         3.1 Header
     4 Specific sections
         4.1 Login & Register
-        4.2 Profile
     5 Useless elements
  */
 
@@ -432,92 +431,4 @@ input
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-// 4.2 Profile
-
-#profile-content
-{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: auto auto 0;
-    width: 50vw;
-
-    height: 85vh;
-
-    #profile-box
-    {
-        background: globals.$accent-purple-navy;
-        border-top-left-radius: globals.$border-radius-large;
-        border-top-right-radius: globals.$border-radius-large;
-
-        display: flex;
-        flex-direction: column;
-
-        justify-content: center;
-        text-align: center;
-
-        width: 70vw;
-        padding: 5rem;
-
-        #profile
-        {
-
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-
-            width: 50vw;
-            gap: 25px;
-            height: 40vh;
-            padding: 25px;
-            background: globals.$color-profile-background-light;
-            color: globals.$accent-white;
-
-            border-radius: globals.$border-radius-large;
-            border-collapse: collapse;
-            text-align: left;
-
-            img
-            {
-                aspect-ratio: 1/1;
-                height: 20rem;
-                border-radius: 50%;
-            }
-
-            div
-            {
-                display: flex;
-                flex-direction: column;
-            }
-
-            div *
-            {
-                margin: 5px;
-            }
-
-            input
-            {
-                display: none;
-            }
-
-            #updateUser
-            {
-                display: none;
-            }
-
-            #edit
-            {
-                justify-content: space-between;
-                display: flex;
-                flex-direction: row;
-            }
-
-            .passwordInfo
-            {
-                display: none; // i dont think we need this maybe
-            }
-        }
-    }
 }
