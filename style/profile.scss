@@ -1,5 +1,14 @@
+/* TABLE OF CONTENTS
+  1 General styling
+    1.1 Imports
+    1.2 Body
+  2 Page styling
+ */
+
+// 1.1 Imports
 @use 'globals';
 
+// 1.2 Body
 body
 {
   display: flex;
@@ -7,6 +16,7 @@ body
   height: 100vh;
 }
 
+// 2 Page styling
 #profile-content
 {
   // Center align content inside
