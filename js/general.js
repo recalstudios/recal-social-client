@@ -60,12 +60,6 @@ let deleteUserResult;
 let user;
 let dialog = localStorage['dialog'] || false;
 
-// ---------------------------------------------------------------------------------------------------------------------
-
-// Load document sections
-$("#back").load("/assets/left-arrow.svg");
-
-// Define the API path
 /**
  * The prefix to use for all routes when accessing the API. This includes the URL as declared in {@link apiUrl} and the
  * API version.
@@ -77,6 +71,8 @@ $("#back").load("/assets/left-arrow.svg");
  * @see The URL for the API: {@link apiUrl}
  */
 const api = apiUrl + "v1/";
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 // Close open dropdowns if the user clicks outside it
 window.onclick = event =>
