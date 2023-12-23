@@ -511,11 +511,11 @@ function loadUserList(list) {
     for (const user of list)
     {
         userlist.innerHTML += `
-                <div class="list-card">
-                    <img src="${user.pfp}" alt="Placholder">
-                    <p>${user.username}</p>
-                </div>
-            `;
+            <div class="list-card">
+                <img src="${user.pfp}" alt="${user.username}">
+                <p>${user.username}</p>
+            </div>
+        `;
     }
 }
 

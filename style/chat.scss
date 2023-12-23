@@ -77,6 +77,9 @@ body
       aspect-ratio: 1;
 
       border-radius: globals.$border-radius-small;
+
+      // Don't let the user select images. See https://github.com/recalstudios/recal-social-client/issues/27
+      user-select: none;
     }
 
     p
