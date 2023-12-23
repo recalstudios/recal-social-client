@@ -136,7 +136,7 @@ async function loadChat()
         try {
             messagePfp = currentRoomUsers.find(u => u.id === message.author).pfp
         } catch {
-            messagePfp = "https://via.placeholder.com/50x50"
+            messagePfp = "/assets/default-icon.png";
         }
 
         // Tries to set messageUsername to an image found in currentRoomUsers and if not sets it to a default value
@@ -209,7 +209,7 @@ function loadsMessagesInChatroom() {
         chatroomBox.innerHTML += `
             <div id="chatroom-${chatroom.id}" class="list-card chatroom clickable" onclick="changeChatRoom('chatroom-${chatroom.id}', ${chatroom.id})">
                 <!-- 'onerror' attribute loads a new image if the original src doesn't exist (instead of showing alt text). WebStorm says 'onerror' is obsolete, but it still works I guess -->
-                <img src="${chatroom.image}" alt="Chatroom image" onerror="this.src='https://via.placeholder.com/50x50';">
+                <img src="${chatroom.image}" alt="Chatroom image" onerror="this.src='/assets/default-icon.png';">
                 <p>${chatroom.name}</p>
                 <span class="material-symbols-outlined leave-chatroom-button" onclick="openDialog('leave-chatroom')">close</span>
             </div>
