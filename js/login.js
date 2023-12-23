@@ -37,7 +37,6 @@ function reset() {
  * @see The function for showing error messages: {@link openDialog}
  * @see The function for getting the auth token: {@link getAuthToken}
  * @see The function for getting user information: {@link getUserUsingToken}
- * @see The function for redirecting: {@link changePage}
  */
 async function verifyCredentials() {
     // Check if the username and passphrase fields actually have content
@@ -55,17 +54,6 @@ async function verifyCredentials() {
         if (!localStorage['authToken']) openDialog("incorrect-info")
 
         // Get user from api
-        await getUserUsingToken().then(() => changePage());
+        await getUserUsingToken().then(() => window.location.href = '/');
     }
-}
-
-/**
- * This function redirects the user to the main page (chat page).
- *
- * @author Little
- * @deprecated
- */
-function changePage() {
-    // WHY does this function exist this is utterly useless
-    window.location.href = '/';
 }

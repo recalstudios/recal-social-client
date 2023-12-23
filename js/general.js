@@ -48,7 +48,7 @@ let chatroomDetails;
 
 // Other variable declarations
 // I really should document all of these variables, but I really don't want to
-let authToken, refreshToken, message, sendMessage, input, input2, publicUsername;
+let authToken, refreshToken, message, sendMessage, input, input2;
 let username, email, passphrase, result;
 let changePasswordResult;
 let changeUserResult;
@@ -220,22 +220,6 @@ async function getUserUsingToken() {
     localStorage['user'] = JSON.stringify(user);
 }
 
-// Get user from API with user id
-// This function might never be used?
-// I'll skip documenting it for now in case it should just go (which it probably should)
-async function getUserUsingId(id) {
-    // Get user from API with id
-    publicUsername = (await axios({
-        method: 'post',
-        url: api + 'user/user/public',
-        data: {
-            UserId: id
-        }
-    })).data;
-
-    return publicUsername.username;
-}
-
 /**
  * This function checks if the auth token in localStorage is valid. If it isn't, it requests a new one.
  *
@@ -330,13 +314,13 @@ async function logOutAll() {
     refreshToken = localStorage['refreshToken']
 
     // Renews auth token from API
-    const response = (await axios({
+    await axios({
         method: 'post',
         url: api + 'auth/token/logout/all',
         headers: {
             Authorization: 'Bearer ' + refreshToken
         }
-    })).data ;
+    });
 
     // Clears localstorage of auth token and refresh token
     localStorage['authToken'] = "";

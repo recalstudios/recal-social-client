@@ -75,9 +75,6 @@ function openWebsocketConnection()
                 break;
             case "system":
                 // System message
-
-                // This seems unused?
-                const lastElement = messages[messages.length - 1];
                 console.log(data)
 
                 const output = {

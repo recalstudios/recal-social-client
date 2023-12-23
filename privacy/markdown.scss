@@ -1,4 +1,5 @@
 // Center align itself
+// WebStorm says this is unused, but that is incorrect. Suppressing for the statement does not seem to stop it from reporting the "error".
 .markdown-body
 {
     margin: 0 auto;

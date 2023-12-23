@@ -4,12 +4,17 @@ currentChatroomId = localStorage['currentChatroomId']
 
 let chatroom;
 
-// Clear fields on load
-$("#join-chatroom-code").val('')
-$("#join-chatroom-password").val('')
+// Declare fields
+const joinChatroomCodeField = $("#join-chatroom-code");
+const joinChatroomPasswordField = $("#join-chatroom-password");
+const createChatroomNameField = $("#create-chatroom-name");
+const createChatroomPasswordField = $("#create-chatroom-password");
 
-$("#create-chatroom-name").val('')
-$("#create-chatroom-password").val('')
+// Clear fields on load
+joinChatroomCodeField.val('')
+joinChatroomPasswordField.val('')
+createChatroomNameField.val('')
+createChatroomPasswordField.val('')
 
 // Connect to the WebSocket
 openWebsocketConnection()
@@ -61,7 +66,7 @@ sendMessage.keypress(function (e)
             });
             //if (dev) console.debug(message);
             ws.send(message); // Sends content to message
-            $("#sendMessage").val('')
+            sendMessage.val('')
         }
         // document.querySelector(".chat:last-child").style.color = red;
     }
@@ -250,7 +255,7 @@ async function changeChatRoom(chatroomName, chatroomId)
     localStorage['currentChatroomId'] = chatroomId
 
     // Empty the message input box thing
-    $("#sendMessage").val('')
+    sendMessage.val('')
 
     // Reload messages in chat after api fetch
     fetchMessages().then(() => loadChat())
@@ -334,7 +339,7 @@ async function createChatroom(dialogName) {
     closeDialog(dialogName)
 
     // Store the new chatroom name
-    chatroomName = $("#create-chatroom-name").val()
+    chatroomName = createChatroomNameField.val()
 
     // Check if auth token is expired
     await checkIfAuthTokenExpired()
@@ -352,7 +357,7 @@ async function createChatroom(dialogName) {
             },
             data: {
                 Name: chatroomName,
-                Pass: $("#create-chatroom-password").val()
+                Pass: createChatroomPasswordField.val()
             }
         })).data;
 
@@ -401,19 +406,17 @@ async function joinChatroom(dialogName) {
             Authorization: 'Bearer ' + authToken
         },
         data: {
-            Code: $("#join-chatroom-code").val(),
-            Pass: $("#join-chatroom-password").val()
+            Code: joinChatroomCodeField.val(),
+            Pass: joinChatroomPasswordField.val()
         }
     })).data;
-
-    //await sendSystemMessage(' joined the chatroom', 'join')
 
     // Get chatrooms and load chatroom from api
     await getUserChatrooms().then(() => loadChatrooms())
 
     // Clear join chatroom fields
-    $("#join-chatroom-code").val('')
-    $("#join-chatroom-password").val('')
+    joinChatroomCodeField.val('')
+    joinChatroomPasswordField.val('')
 }
 
 /**
@@ -448,8 +451,6 @@ async function leaveChatroom(chatroomid) {
     // Stores chatroom in localstorage
     // Maybe this is wrong? The variables seem unrelated
     localStorage['currentChatroom'] = currentChatroom
-
-    //await sendSystemMessage(' left the chatroom', 'leave')
 
     // Get chatrooms and load chatroom from api
     await getUserChatrooms().then(() => loadChatrooms())
@@ -580,7 +581,7 @@ async function deleteMessage(id) {
 
     // Delete message with api
     // response isn't used here, this can probably be refactored
-    const response = (await axios({
+    await axios({
         method: 'post',
         url: api + 'chat/room/message/delete',
         headers: {
@@ -589,7 +590,7 @@ async function deleteMessage(id) {
         data: {
             MessageId: id
         }
-    })).data;
+    });
 
     // Structure of delete message which sends to ws
     message = JSON.stringify({
@@ -601,21 +602,4 @@ async function deleteMessage(id) {
     // Log the message if dev mode is enabled
     if (dev) console.debug(message);
     ws.send(message); // Sends delete message to ws
-}
-
-// Send a system message (for the full release version, not school release)
-// I will not document this as of now, it will most likely get deleted
-function sendSystemMessage(message, action) {
-    message = JSON.stringify({
-        "type": "system",
-        "room": 1,
-        "action": action,
-        "content": {
-            "text": user.username + message
-        }
-    });
-
-    // Send the message to the websocket
-    if (dev) console.debug(message); // Debug if dev is enabled
-    ws.send(message);
 }

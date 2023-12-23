@@ -219,15 +219,6 @@ dialog
             }
         }
     }
-
-    // Material icon styling
-    // I don't know where this is used, we should figure that out
-    .material-icons-round
-    {
-        margin: 24px 0;
-        font-size: 32px;
-        color: #d3d6f0;
-    }
 }
 
 // bruh 2 electric grand piano
@@ -326,6 +317,8 @@ code
         font-size: 24px;
         font-weight: 600;
 
+        // This class gets toggled through JS
+        // WebStorm says this is unused, but that is incorrect. Suppressing for the statement does not seem to stop it from reporting the "error".
         &.show
         {
             display: flex;
