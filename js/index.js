@@ -257,14 +257,11 @@ async function changeChatRoom(chatroomName, chatroomId)
     localStorage['currentChatroom'] = currentChatroom
     localStorage['currentChatroomId'] = chatroomId
 
-    // Empty the message input box thing
-    sendMessage.val('')
-
     // Reload messages in chat after api fetch
     fetchMessages().then(() => loadChat())
 
     // Fetch chatroom detail from API
-    await fetchChatroomDetails()
+    await fetchChatroomDetails();
 
     // Set UI information
     $("#current-chatroom-name").text(chatroomDetails.name)
@@ -272,6 +269,10 @@ async function changeChatRoom(chatroomName, chatroomId)
     $("#edit-chatroom-name").val(chatroomDetails.name)
     $("#edit-chatroom-password").val(chatroomDetails.pass)
     $("#edit-chatroom-image").val(chatroomDetails.image)
+
+    // Reset the message input field
+    sendMessage.attr('placeholder', `Message ${chatroomDetails.name}`);
+    sendMessage.val('');
 }
 
 /**
