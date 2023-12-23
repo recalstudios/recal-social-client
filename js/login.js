@@ -1,6 +1,3 @@
-// Reset login results
-reset()
-
 // Get the input field
 input = document.querySelector("#passphrase")
 
@@ -16,16 +13,6 @@ input.addEventListener("keydown", function(event) {
 });
 
 // ---------------------------------------------------------------------------------------------------------------------
-
-/**
- * This function resets the login result.
- *
- * @author Little
- */
-function reset() {
-    // TODO: Check if this is used
-    document.querySelector("#result").innerHTML = "";
-}
 
 /**
  * This function verifies the provided credentials with the API. If any errors occur, it shows the error. If it is

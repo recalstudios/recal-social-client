@@ -1,6 +1,3 @@
-// Reset login results on load
-reset()
-
 // Get the input field
 input = document.querySelector("#confirm-passphrase")
 
@@ -16,15 +13,6 @@ input.addEventListener("keydown", function(event) {
 });
 
 // ---------------------------------------------------------------------------------------------------------------------
-
-/**
- * This function resets the login result display.
- *
- * @author Little
- */
-function reset() {
-    document.querySelector("#result").innerHTML = "";
-}
 
 /**
  * This function queries the API to create a new user account. It collects the user data directly from the DOM, and
