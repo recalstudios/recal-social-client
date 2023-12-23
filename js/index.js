@@ -2,8 +2,6 @@
 currentChatroom = localStorage['currentChatroom'];
 currentChatroomId = localStorage['currentChatroomId']
 
-let chatroom;
-
 // Declare fields
 const joinChatroomCodeField = $("#join-chatroom-code");
 const joinChatroomPasswordField = $("#join-chatroom-password");
@@ -175,7 +173,13 @@ async function loadChat()
         `;
     }
 
-    document.querySelector(".chat:last-child").scrollIntoView(); // Scrolls to bottom of page
+    // Check if the chat room has any messages
+    if (chatListElement.innerHTML.length > 0)
+    {
+        // Scroll to the latest chat message
+        document.querySelector(".chat:last-child").scrollIntoView();
+    }
+
 }
 
 /**
@@ -238,15 +242,14 @@ function loadChatroomList() {
  */
 async function changeChatRoom(chatroomName, chatroomId)
 {
-    // FIXME: These null checks shouldn't be here, but littels code is bad
-    // I don't know how to fix it tho because i dont remember how the code works lmao this is why we should comment better
-    // oldchatroomname = chatroom || "chatroom-alpha";
-    if (chatroom) document.querySelector("#" + chatroom).style.backgroundColor = "#40446e";
-    if (chatroomName) document.querySelector("#" + chatroomName).style.backgroundColor = "#123";
-    // document.querySelector("#" + chatroom).classList.add =
+    // Remove class from last selected room
+    // This is a loop (forEach) to prevent errors - this way, the code never tries to run if there are no elements matching the selector
+    document.querySelectorAll(".selected-chatroom").forEach(e => e.classList.remove("selected-chatroom"));
+
+    // Add class to currently selected room
+    document.querySelector("#" + chatroomName).classList.add("selected-chatroom");
 
     // Store data globally
-    chatroom = chatroomName
     currentChatroom = chatroomName
     currentChatroomId = chatroomId
 
@@ -454,10 +457,6 @@ async function leaveChatroom(chatroomid) {
 
     // Get chatrooms and load chatroom from api
     await getUserChatrooms().then(() => selectTopmostChatroom())
-
-    // Make sure the click code doesn't throw an error
-    // How in the everloving fuck does this work (or rather doesnt work)
-    chatroom = undefined;
 
     // Click the first chatroom in the chatroom list
     document.querySelector(".chatroom").firstElementChild.click()
