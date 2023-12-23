@@ -101,12 +101,5 @@ async function createUser() {
         openDialog("bad-new-password") //Error: The password and the confirm password is not the same
     }
 
-    // Stores token in localstorage
-    // localStorage['authToken'] = token; // only strings
-
-    // if (token.length === 0) {
-    //
-    // }
-
     await getUserUsingToken();
 }

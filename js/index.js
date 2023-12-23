@@ -20,7 +20,7 @@ createChatroomPasswordField.val('')
 openWebsocketConnection()
 
 // Execute all functions that load the page
-checkIfLoggedIn().then(() => getUserChatrooms().then(() => loadChatrooms()))
+checkIfLoggedIn().then(() => getUserChatrooms().then(() => selectTopmostChatroom()))
 
 // If dialog is false, show cookie dialog
 if (!dialog) document.querySelector("#cookie-dialog").showModal()
@@ -183,11 +183,11 @@ async function loadChat()
  *
  * @author Little
  *
- * @see Function for actually loading the chatroom list: {@link loadsMessagesInChatroom}
+ * @see Function for actually loading the chatroom list: {@link loadChatroomList}
  * @see Function for changing the chatroom: {@link changeChatRoom}
  */
-function loadChatrooms() {
-    loadsMessagesInChatroom()
+function selectTopmostChatroom() {
+    loadChatroomList();
 
     // Highlight the current chatroom
     changeChatRoom(currentChatroom, currentChatroomId).then(() => console.log("Highlighted current chatroom"))
@@ -197,13 +197,13 @@ function loadChatrooms() {
 }
 
 /**
- * Despite its name, this function loads the chatroom list from the global variable {@link chatroomList}.
+ * This function loads the chatroom list from the global variable {@link chatroomList}.
  *
  * @author Little
  *
  * @see The global list of chatrooms: {@link chatroomList}
  */
-function loadsMessagesInChatroom() {
+function loadChatroomList() {
     // Get and clear the chat rooms
     const chatroomBox = document.querySelector("#chatroom-list");
     chatroomBox.innerHTML = ''
@@ -331,7 +331,7 @@ function closePrivacyConsent(dialogName) {
  * @see The function to check if the auth token is valid: {@link checkIfAuthTokenExpired}
  * @see The function to open error dialogs: {@link openDialog}
  * @see The function to fetch the new chatroom list: {@link getUserChatrooms}
- * @see The function to load the new chatroom list: {@link loadChatrooms}
+ * @see The function to load the new chatroom list: {@link selectTopmostChatroom}
  * @see The function to reconnect to the websocket: {@link openWebsocketConnection}
  */
 async function createChatroom(dialogName) {
@@ -366,7 +366,7 @@ async function createChatroom(dialogName) {
         if (chatroomResult && dev) console.debug('your mom') // ?
 
         // Get chatrooms and load chatroom from api
-        await getUserChatrooms().then(() => loadChatrooms())
+        await getUserChatrooms().then(() => selectTopmostChatroom())
 
         // Click on newest chatroom
         document.querySelector(".chatroom").firstElementChild.click()
@@ -389,7 +389,7 @@ async function createChatroom(dialogName) {
  * @see The function for closing the dialog: {@link closeDialog}
  * @see The function for checking if the auth token is valid: {@link checkIfAuthTokenExpired}
  * @see The function for getting the new chatroom list: {@link getUserChatrooms}
- * @see The function for loading the new chatroom list into the DOM: {@link loadChatrooms}
+ * @see The function for loading the new chatroom list into the DOM: {@link selectTopmostChatroom}
  */
 async function joinChatroom(dialogName) {
     // Close dialog for joining the chatroom
@@ -412,7 +412,7 @@ async function joinChatroom(dialogName) {
     })).data;
 
     // Get chatrooms and load chatroom from api
-    await getUserChatrooms().then(() => loadChatrooms())
+    await getUserChatrooms().then(() => selectTopmostChatroom())
 
     // Clear join chatroom fields
     joinChatroomCodeField.val('')
@@ -430,7 +430,7 @@ async function joinChatroom(dialogName) {
  *
  * @see The function to check if the auth token is valid: {@link checkIfAuthTokenExpired}
  * @see The function to fetch the chatroom list from the API: {@link getUserChatrooms}
- * @see The function to load the chatroom list into the DOM: {@link loadChatrooms}
+ * @see The function to load the chatroom list into the DOM: {@link selectTopmostChatroom}
  */
 async function leaveChatroom(chatroomid) {
     // Check if auth token is expired
@@ -453,7 +453,7 @@ async function leaveChatroom(chatroomid) {
     localStorage['currentChatroom'] = currentChatroom
 
     // Get chatrooms and load chatroom from api
-    await getUserChatrooms().then(() => loadChatrooms())
+    await getUserChatrooms().then(() => selectTopmostChatroom())
 
     // Make sure the click code doesn't throw an error
     // How in the everloving fuck does this work (or rather doesnt work)
@@ -531,7 +531,7 @@ function loadUserList(list) {
  * @see The function to check if the auth token is valid: {@link checkIfAuthTokenExpired}
  * @see The function for closing the dialog: {@link closeDialog}
  * @see The function to fetch the new chatroom list from the API: {@link getUserChatrooms}
- * @see The function to load the chatroom list into the DOM: {@link loadChatrooms}
+ * @see The function to load the chatroom list into the DOM: {@link selectTopmostChatroom}
  */
 async function editChatroom() {
     // Check if auth token is expired
@@ -559,7 +559,7 @@ async function editChatroom() {
     closeDialog('edit-chatroom-dialog')
 
     // Get chatrooms and load chatroom from api
-    getUserChatrooms().then(() => loadChatrooms())
+    getUserChatrooms().then(() => selectTopmostChatroom())
 }
 
 /**

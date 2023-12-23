@@ -98,7 +98,7 @@ function edit(class1, one, class2, two) {
  * @see The function for opening error dialogs: {@link openDialog}
  * @see The function for logging out the user: {@link logOut}
  */
-async function changeUser() {
+async function updateUserInformation() {
     // Check if auth token is expired
     await checkIfAuthTokenExpired()
 
@@ -141,8 +141,6 @@ async function changeUser() {
     }
 }
 
-//this uses the text files in the change password menu to change the password in the database
-// what files????????
 /**
  * This function updates the user passphrase. It collects the data directly from the passphrase edit fields on the
  * profile page. If anything goes wrong, it displays an error dialog.
@@ -154,7 +152,7 @@ async function changeUser() {
  * @see The function for checking if the auth token is valid: {@link checkIfAuthTokenExpired}
  * @see The function for displaying error messages: {@link openDialog}
  */
-async function changePassword() {
+async function updatePassphrase() {
     // Check if auth token has expired
     await checkIfAuthTokenExpired()
 

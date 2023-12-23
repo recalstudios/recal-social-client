@@ -70,7 +70,7 @@ function openWebsocketConnection()
 
                 // This is not tested but apparently it works idk
                 // I also have no idea what it is supposed to do or why it is here
-                loadsMessagesInChatroom()
+                loadChatroomList()
                 document.querySelector("#" + currentChatroom).style.backgroundColor = "#123";
                 break;
             case "system":

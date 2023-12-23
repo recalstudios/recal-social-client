@@ -23,6 +23,7 @@ input.addEventListener("keydown", function(event) {
  * @author Little
  */
 function reset() {
+    // TODO: Check if this is used
     document.querySelector("#result").innerHTML = "";
 }
 
