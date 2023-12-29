@@ -81,19 +81,16 @@
                 <!-- Form for resetting passphrase -->
                 <div class="passwordInfo form" id="passwordBox">
                     <!-- Current passphrase input -->
-                    <p class="italic darken-text small-margin-bottom ">Old Password</p>
-                    <label for="oldPassword"></label>
-                    <input name="oldPassword" placeholder="Password" id="oldPassword" class="passwordInfo" type="password" data-index="1">
+                    <label for="old-passphrase" class="italic darken-text">Current passphrase</label>
+                    <input placeholder="Current passphrase" id="old-passphrase" type="password" data-index="1">
 
                     <!-- New passphrase input -->
-                    <p class="italic darken-text small-margin-bottom ">New Password:</p>
-                    <label for="new1Password"></label>
-                    <input name="new1Password" placeholder="New Password" id="new1Password" class="passwordInfo" type="password" data-index="2">
+                    <label for="new-passphrase" class="italic darken-text">New passphrase</label>
+                    <input placeholder="New passphrase" id="new-passphrase" type="password" data-index="2">
 
                     <!-- Repeat new passphrase input -->
-                    <p class="italic darken-text small-margin-bottom ">Confirm Password:</p>
-                    <label for="new2Password"></label>
-                    <input name="new2Password" placeholder="Password" id="new2Password" class="passwordInfo" type="password" data-index="3">
+                    <label for="repeat-new-passphrase" class="italic darken-text">Repeat new passphrase</label>
+                    <input placeholder="Repeat new passphrase" id="repeat-new-passphrase" type="password" data-index="3">
 
                     <!-- Save new passphrase button -->
                     <a class="btn change-password-submit submit" onclick="updatePassphrase()">Update Password</a>

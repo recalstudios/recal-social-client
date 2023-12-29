@@ -67,7 +67,8 @@ body
       margin: 5px;
     }
 
-    input
+    // Hide profile edit input fields
+    .userinfo input
     {
       display: none;
     }
@@ -84,9 +85,10 @@ body
       flex-direction: row;
     }
 
+    // Hide passphrase edit fields
     .passwordInfo
     {
-      display: none; // i dont think we need this maybe
+      display: none;
     }
   }
 }

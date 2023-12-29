@@ -2,7 +2,7 @@
 loadProfile().then(() => console.log('Loaded profile'));
 
 input = document.querySelector("#newPfp")
-input2 = document.querySelector("#new2Password")
+input2 = document.querySelector("#repeat-new-passphrase")
 
 // Execute a function when the user releases a key on the keyboard
 input.addEventListener("keydown", function(event) {
@@ -157,9 +157,9 @@ async function updatePassphrase() {
     await checkIfAuthTokenExpired()
 
     // Globally store passphrase values
-    Password1 = $("#new1Password").val();
-    Password2 = $("#new2Password").val();
-    OldPassword = $("#oldPassword").val();
+    Password1 = $("#new-passphrase").val();
+    Password2 = $("#repeat-new-passphrase").val();
+    OldPassword = $("#old-passphrase").val();
 
     // Check if the passphrases match
     if (Password1 === Password2)
