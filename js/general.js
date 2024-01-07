@@ -160,29 +160,45 @@ async function chainRefreshToken()
 {
     // Retrieve refresh token from localstorage
     refreshToken = localStorage['refreshToken']
-    if (dev) console.debug(refreshToken) // Log if dev mode is enabled (THIS IS VERY INSECURE WE SHOULD NOT DO THIS)
 
-    //authToken = (await axios.post(api + 'auth/token/renew', { withCredentials: true }).data);
+    // This code runs on page load (after many function calls it ends up here).
+    // Sometimes (I don't know the cause for sure yet), the token renew request below fails.
+    // It seems to happen if you have been logged in before but haven't visited the page in some time, but I cannot confirm this.
+    // Anyway, when this happens, the entire page kinda breaks and leaves you on a blank chat page,
+    // instead of running the statement that redirects the user to the front page, as it is supposed to do.
+    // For now, I'll just always redirect to '/login' if this specific request fails (by wrapping the rest of this function in a try-catch).
+    // THIS IS A VERY BAD WAY OF DOING THIS, BUT I REALLY DO NOT WANT TO DEBUG IT NOW
+    // TODO: Find out why this happens, and fix it.
 
-    // Renew auth token from API
-    const response = (await axios({
-        method: 'post',
-        url: api + 'auth/token/renew',
-        headers: {
-            Authorization: 'Bearer ' + refreshToken
-        }
-    })).data;
+    // For context, the API throws the following error when the client experiences this:
+    // System.ArgumentException: IDX12709: CanReadToken() returned false. JWT is not well formed: 'System.String'.
+    // The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE):
 
-    // Process the received data from api
-    authToken = response.authToken
-    refreshToken = response.refreshToken
+    try {
+        // Renew auth token from API
+        const response = (await axios({
+            method: 'post',
+            url: api + 'auth/token/renew',
+            headers: {
+                Authorization: 'Bearer ' + refreshToken
+            }
+        })).data;
 
-    // Log the response if dev mode is enabled
-    if (dev) console.debug(response)
+        // Process the received data from api
+        authToken = response.authToken;
+        refreshToken = response.refreshToken;
 
-    // Store data in localStorage
-    localStorage['refreshToken'] = refreshToken
-    localStorage['authToken'] = authToken;
+        // Log the response if dev mode is enabled
+        if (dev) console.debug(response);
+
+        // Store data in localStorage
+        localStorage['refreshToken'] = refreshToken;
+        localStorage['authToken'] = authToken;
+    }
+    catch (e)
+    {
+        window.location.href = '/login/';
+    }
 }
 
 /**
