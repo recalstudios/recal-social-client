@@ -79,7 +79,7 @@ body
     img
     {
       // Force square images
-      height: 50px;
+      height: 50px; // TODO: Maybe this height should be specified in a variable?
       aspect-ratio: 1;
 
       border-radius: globals.$border-radius-small;
@@ -137,7 +137,8 @@ body
     overflow: scroll;
     scroll-behavior: smooth;
 
-    padding: globals.$padding-standard;
+    // Remove the padding on the bottom because I think that might improve the typing users display thingy
+    padding: globals.$padding-standard globals.$padding-standard 0;
 
     // Inside each individual chat there is the message, username and pfp
 
@@ -172,11 +173,49 @@ body
     }
   }
 
+  // Field that displays currently typing users
+  #currently-typing-users
+  {
+    // I hate absolutely everything about this css but I'm already so mad at this so i cba fixing it
+    // Ugh this should have been done on each child element individually instead to some degree i think, if i want them to animate individually when popping up
+    display: flex;
+    gap: globals.$padding-standard;
+
+    // Move slightly behind chat box
+    position: relative;
+    top: globals.$padding-standard * 2;
+    margin-top: -#{globals.$padding-standard};
+
+    // Sizing and positioning
+    flex-shrink: 0; // It needs this to not get resized down when it is empty for some dumb reason
+    height: globals.$padding-standard * 2;
+    padding: 0 globals.$padding-standard * 2;
+
+    transition: .2s ease;
+
+    img
+    {
+      // Force square images
+      aspect-ratio: 1;
+    }
+
+    // Hide the entire thing if it is empty
+    // omg it doesnt even work properly what the fuck
+    &:empty
+    {
+      top: globals.$padding-standard * 3;
+      margin-top: -#{globals.$padding-standard * 2};
+    }
+  }
+
   // Input field where you write the message
   #chat-box
   {
     // Always position self at the bottom
     margin-top: auto;
+
+    // Having a position attribute (but not actually doing anything with the position) will let the currently typing users appear behind the chat box
+    position: relative;
 
     textarea
     {

@@ -603,3 +603,25 @@ async function deleteMessage(id) {
     if (dev) console.debug(message);
     ws.send(message); // Sends delete message to ws
 }
+
+function add3RandomTypingUsers()
+{
+    // Get the users in the current chatroom
+    const currentRoomUsers = chatroomList.find(r => r.id === parseInt(currentChatroom.replace(/\D/g,''))).users;
+
+    for (let i = 0; i < 3; i++)
+    {
+        currentlyTypingUsers.push(currentRoomUsers[Math.floor(Math.random()*currentRoomUsers.length)]);
+    }
+
+    console.log(currentlyTypingUsers);
+}
+
+function displayTypingUsers()
+{
+    currentlyTypingUsers.forEach(u => document.querySelector('#currently-typing-users').innerHTML += `
+        <img src='${u.pfp}' alt='${u.username}'>
+    `);
+
+    setTimeout(() => document.querySelector(".chat:last-child").scrollIntoView(), 200);
+}

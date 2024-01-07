@@ -46,6 +46,16 @@ let chatroomList;
  */
 let chatroomDetails;
 
+/**
+ * This array contains the users that are actively typing in the currently selected chatroom. This information is
+ * gathered from the WebSocket.
+ *
+ * @type {*[]}
+ *
+ * @author Soni
+ */
+let currentlyTypingUsers = [];
+
 // Other variable declarations
 // I really should document all of these variables, but I really don't want to
 let authToken, refreshToken, message, sendMessage, input, input2;
