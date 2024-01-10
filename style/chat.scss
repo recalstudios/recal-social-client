@@ -5,6 +5,7 @@
   2 Section styling
     2.1 Header
     2.2 Lists (chatroom list and user list)
+      2.2.1 New room buttons
     2.3 Main chat window
   3 Animations
  */
@@ -110,6 +111,23 @@ body
       background: globals.$color-profile-background-light;
       border-radius: globals.$border-radius-small;
     }
+  }
+}
+
+// 2.2.1 New room buttons
+#new-room-buttons
+{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: globals.$padding-standard;
+
+  padding: globals.$padding-standard;
+
+  .btn
+  {
+    padding: globals.$padding-small 0;
+    border-radius: globals.$border-radius-large;
+    font-size: 1.4rem;
   }
 }
 

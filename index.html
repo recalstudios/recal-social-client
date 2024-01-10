@@ -37,8 +37,6 @@
             <div id="btn-box">
                 <span id="btn-more-actions" class="material-symbols-outlined clickable dropbtn" onclick="show('#btn-dropdown')">more_horiz</span>
                 <div id="btn-dropdown" class="dropdown-content">
-                    <a id="join-chatroom" onclick="openDialog('join-chatroom-dialog')">Join chatroom</a>
-                    <a id="make-chatroom" onclick="openDialog('create-chatroom-dialog')">Create chatroom</a>
                     <a id="profile-btn" href="/profile/">Profile</a>
                     <a id="logout-btn" onclick="logOut()">Log out</a>
                 </div>
@@ -46,7 +44,13 @@
         </div>
 
         <!-- Chatroom list -->
-        <div id="chatroom-list" class="list"></div>
+        <div id="left-list">
+            <div id="chatroom-list" class="list"></div>
+            <div id="new-room-buttons">
+                <a class="btn" onclick="openDialog('create-chatroom-dialog')">Create</a>
+                <a class="btn" onclick="openDialog('join-chatroom-dialog')">Join</a>
+            </div>
+        </div>
 
         <!-- Chat window -->
         <div id="chat-window">
