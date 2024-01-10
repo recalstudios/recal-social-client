@@ -604,23 +604,43 @@ async function deleteMessage(id) {
     ws.send(message); // Sends delete message to ws
 }
 
-function add3RandomTypingUsers()
+async function testAddRandomTypingUser()
 {
     // Get the users in the current chatroom
     const currentRoomUsers = chatroomList.find(r => r.id === parseInt(currentChatroom.replace(/\D/g,''))).users;
 
-    for (let i = 0; i < 3; i++)
-    {
-        currentlyTypingUsers.push(currentRoomUsers[Math.floor(Math.random()*currentRoomUsers.length)]);
+    // Get a user that isn't already in the list
+    let randomUser;
+    do {
+        randomUser = currentRoomUsers[Math.floor(Math.random()*currentRoomUsers.length)];
     }
+    while (currentlyTypingUsers.filter(u => u === randomUser).length > 0);
 
+    currentlyTypingUsers.push(randomUser);
     console.log(currentlyTypingUsers);
+
+    // Load the thing
+    document.querySelector('#currently-typing-users').innerHTML += `
+        <img id="typing-indicator-user-${randomUser.id}" src="${randomUser.pfp}" alt="${randomUser.username}" class="animating">
+    `;
+
+    // Remove the fuckass after the shit
+    const indicator = document.querySelector(`#typing-indicator-user-${randomUser.id}`);
+    indicator.addEventListener('animationend', () => indicator.classList.remove('animating'));
+}
+
+function testRemoveLastTypingUser()
+{
+    currentlyTypingUsers.pop();
+    displayTypingUsers();
 }
 
 function displayTypingUsers()
 {
+    document.querySelector('#currently-typing-users').innerHTML = '';
+
     currentlyTypingUsers.forEach(u => document.querySelector('#currently-typing-users').innerHTML += `
-        <img src='${u.pfp}' alt='${u.username}'>
+        <img id="typing-indicator-user-${u.id}" src="${u.pfp}" alt="${u.username}">
     `);
 
     setTimeout(() => document.querySelector(".chat:last-child").scrollIntoView(), 200);

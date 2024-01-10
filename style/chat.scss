@@ -6,6 +6,7 @@
     2.1 Header
     2.2 Lists (chatroom list and user list)
     2.3 Main chat window
+  3 Animations
  */
 
 // 1.1 Imports
@@ -176,35 +177,29 @@ body
   // Field that displays currently typing users
   #currently-typing-users
   {
-    // I hate absolutely everything about this css but I'm already so mad at this so i cba fixing it
-    // Ugh this should have been done on each child element individually instead to some degree i think, if i want them to animate individually when popping up
     display: flex;
     gap: globals.$padding-standard;
 
-    // Move slightly behind chat box
-    position: relative;
-    top: globals.$padding-standard * 2;
-    margin-top: -#{globals.$padding-standard};
+    // Place 'behind' chat box
+    position: absolute;
 
-    // Sizing and positioning
-    flex-shrink: 0; // It needs this to not get resized down when it is empty for some dumb reason
-    height: globals.$padding-standard * 2;
     padding: 0 globals.$padding-standard * 2;
-
-    transition: .2s ease;
+    z-index: 1;
 
     img
     {
-      // Force square images
-      aspect-ratio: 1;
-    }
+      // Move in from below on load
+      position: relative;
 
-    // Hide the entire thing if it is empty
-    // omg it doesnt even work properly what the fuck
-    &:empty
-    {
-      top: globals.$padding-standard * 3;
-      margin-top: -#{globals.$padding-standard * 2};
+      // Force square images
+      height: globals.$padding-standard * 2;
+      aspect-ratio: 1;
+
+      &.animating
+      {
+        top: globals.$padding-standard;
+        animation: vertical-position-zero .2s ease forwards 1;
+      }
     }
   }
 
@@ -214,15 +209,16 @@ body
     // Always position self at the bottom
     margin-top: auto;
 
-    // Having a position attribute (but not actually doing anything with the position) will let the currently typing users appear behind the chat box
-    position: relative;
-
     textarea
     {
       // Store margin in its own variable to account for width calculation
       $margin: globals.$padding-standard;
 
       box-sizing: border-box;
+
+      // Let the currently typing users appear behind the chat box
+      position: relative;
+      z-index: 1;
 
       width: calc(100% - (#{$margin} * 2));
       margin: $margin;
@@ -251,5 +247,16 @@ body
         color: globals.$accent-light-periwinkle;
       }
     }
+  }
+}
+
+// 3 Animations
+
+// Animation used for moving in the typing user avatars
+@keyframes vertical-position-zero
+{
+  to
+  {
+    top: 0;
   }
 }
