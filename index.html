@@ -47,8 +47,14 @@
         <div id="left-list">
             <div id="chatroom-list" class="list"></div>
             <div id="new-room-buttons">
-                <a class="btn" onclick="openDialog('create-chatroom-dialog')">Create</a>
-                <a class="btn" onclick="openDialog('join-chatroom-dialog')">Join</a>
+                <div class="btn" onclick="openDialog('create-chatroom-dialog')">
+                    <span class="material-symbols-outlined">add</span>
+                    <p>Create</p>
+                </div>
+                <div class="btn" onclick="openDialog('join-chatroom-dialog')">
+                    <span class="material-symbols-outlined">pin</span>
+                    <p class="nudge-down">Join</p>
+                </div>
             </div>
         </div>
 
