@@ -149,6 +149,9 @@ body
   display: flex;
   flex-direction: column;
 
+  // This is needed to let the loading animation correctly center itself
+  position: relative;
+
   // I don't know why we need this, but it stops the chat from expanding the grid for no reason
   overflow: scroll;
 

@@ -173,6 +173,9 @@ async function loadChat()
         `;
     }
 
+    // Hide the loading animation
+    document.querySelector('#chat-window .loading-animation').classList.add('hidden');
+
     // Check if the chat room has any messages
     if (chatListElement.innerHTML.length > 0)
     {

@@ -251,6 +251,19 @@ code
     margin-top: -25px;
 }
 
+// Loading icons
+.loading-animation
+{
+    // This is probably not the best way to position this, but I don't care. It works well enough.
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 3rem;
+
+    transform: translate(-50%, -50%);
+}
+
 //====================================
 // 3 Header styling
 //====================================
