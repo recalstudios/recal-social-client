@@ -182,7 +182,7 @@ dialog
     color: globals.$accent-light-periwinkle;
     background-color: globals.$accent-purple-navy;
     padding: 10px 45px;
-    min-width: 5vw;
+    // min-width: 5vw; // https://github.com/recalstudios/recal-social-client/issues/33
     border-radius: globals.$border-radius-small;
     text-decoration: none;
     justify-content: center;
