@@ -114,6 +114,12 @@ body
   }
 }
 
+// https://github.com/recalstudios/recal-social-client/issues/34
+#left-list
+{
+  overflow: scroll;
+}
+
 // 2.2.1 New room buttons
 #new-room-buttons
 {
