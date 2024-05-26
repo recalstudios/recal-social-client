@@ -9,6 +9,17 @@ const createChatroomNameField = $("#create-chatroom-name");
 const createChatroomPasswordField = $("#create-chatroom-password");
 const sendMessage = $("#sendMessage"); // Message text field
 
+/**
+ * Whether the client is waiting in a cooldown before being able to relay typing status again. The default behaviour of
+ * this variable is to set it to true when the typing status is being relayed. It will then have a cooldown of a certain
+ * time before being set to false again.
+ *
+ * @type {boolean}
+ *
+ * @author Soni
+ */
+let relayTypingStatusCooldown = false;
+
 // Clear fields on load
 joinChatroomCodeField.val('')
 joinChatroomPasswordField.val('')
@@ -74,8 +85,26 @@ document.onkeydown = e =>
             }
             break;
         default:
-            // If another key is pressed, focus the message field
+            // If any "normal" key is pressed, focus the message field
             sendMessage.focus();
+
+            // Then, tell the websocket that you are typing, UNLESS you are temporarily rate limited
+            if (!relayTypingStatusCooldown)
+            {
+                // Construct the payload
+                const typingPayload = JSON.stringify({
+                    type: 'typing',
+                    userId: JSON.parse(user.id),
+                    room: JSON.parse(localStorage['currentChatroomId'])
+                });
+
+                // Send the payload to the websocket
+                ws.send(typingPayload);
+
+                // Set cooldown to true and wait for 4 seconds before setting it to false
+                relayTypingStatusCooldown = true;
+                setTimeout(() => { relayTypingStatusCooldown = false; }, 4000);
+            }
     }
 }
 
