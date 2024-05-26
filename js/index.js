@@ -676,6 +676,40 @@ function testRemoveLastTypingUser()
     displayTypingUsers();
 }
 
+function addTypingUser(userId)
+{
+    // Fetch user data for the relevant user from already existing data
+    const roomUsers = chatroomList.find(r => r.id === parseInt(currentChatroomId)).users;
+    const typingUser = roomUsers.find(u => u.id === userId);
+
+    // Add the user to the global list of currently typing users
+    currentlyTypingUsers.push(typingUser);
+
+    // Add the user avatar to the DOM
+    document.querySelector('#currently-typing-users').innerHTML += `
+        <img id="typing-indicator-user-${typingUser.id}" src="${typingUser.pfp}" alt="${typingUser.username}" class="animating">
+    `;
+
+    // Remove the animation class when the animation finishes
+    const indicator = document.querySelector(`#typing-indicator-user-${typingUser.id}`);
+    indicator.addEventListener('animationend', () => indicator.classList.remove('animating'));
+
+    // Remove the user from the list after 5 seconds
+    setTimeout(() => removeTypingUser(typingUser), 5000);
+}
+
+function removeTypingUser(typingUser)
+{
+    // Get the index of the user to remove
+    const typingUserIndex = currentlyTypingUsers.indexOf(typingUser);
+
+    // Remove the user from the list
+    currentlyTypingUsers.splice(typingUserIndex, 1);
+
+    // Recalculate the DOM
+    displayTypingUsers();
+}
+
 function displayTypingUsers()
 {
     document.querySelector('#currently-typing-users').innerHTML = '';

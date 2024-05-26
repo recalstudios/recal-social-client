@@ -102,6 +102,10 @@ function openWebsocketConnection()
 
                 // Reload the chat
                 loadChat().then(() => console.log('Reloaded chat'));
+                break;
+            case "typing":
+                // If the relevant room is selected, show a typing indicator for the user
+                if (data.room === parseInt(currentChatroomId)) addTypingUser(data.userId);
         }
     }
 
