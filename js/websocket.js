@@ -104,6 +104,9 @@ function openWebsocketConnection()
                 loadChat().then(() => console.log('Reloaded chat'));
                 break;
             case "typing":
+                // Ignore if the user is the same as the currently logged in one
+                if (data.userId === user.id) return;
+
                 // If the relevant room is selected, show a typing indicator for the user
                 if (data.room === parseInt(currentChatroomId)) addTypingUser(data.userId);
         }
