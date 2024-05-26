@@ -151,7 +151,7 @@ dialog
 // Width
 ::-webkit-scrollbar
 {
-    width: 10px;
+    width: 5px;
 }
 
 // Track
@@ -164,13 +164,20 @@ dialog
 // Handle
 ::-webkit-scrollbar-thumb
 {
-    background: globals.$accent-cornflower-blue;
+    background: globals.$accent-purple-navy;
 }
 
 // Handle on hover
 ::-webkit-scrollbar-thumb:hover
 {
-    background: globals.$accent-white;
+    background: globals.$accent-cornflower-blue;
+}
+
+// Fix ugly white box in the corner on chromium based browsers
+// https://github.com/recalstudios/recal-social-client/issues/36
+::-webkit-scrollbar-corner
+{
+    background: rgba(0, 0, 0, 0);
 }
 
 // 2.1.2 Buttons
