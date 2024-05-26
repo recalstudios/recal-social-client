@@ -20,6 +20,15 @@ const sendMessage = $("#sendMessage"); // Message text field
  */
 let relayTypingStatusCooldown = false;
 
+/**
+ * An array holding all timeouts for removing users from the typing list
+ *
+ * @type {*[]}
+ *
+ * @author Soni
+ */
+let typingUsersTimeouts = [];
+
 // Clear fields on load
 joinChatroomCodeField.val('')
 joinChatroomPasswordField.val('')
@@ -682,20 +691,30 @@ function addTypingUser(userId)
     const roomUsers = chatroomList.find(r => r.id === parseInt(currentChatroomId)).users;
     const typingUser = roomUsers.find(u => u.id === userId);
 
-    // Add the user to the global list of currently typing users
-    currentlyTypingUsers.push(typingUser);
+    // Check if the user is already added to the list of currently typing users
+    if (currentlyTypingUsers.includes(typingUser))
+    {
+        // User is already in the list of typing users. Remove and recreate the timeout to keep the user typing status for longer.
+        clearTimeout(typingUsersTimeouts[userId]);
+        typingUsersTimeouts[userId] = setTimeout(() => removeTypingUser(typingUser), 5000);
+    }
+    else
+    {
+        // User is not in the list of typing users. Add the user to the global list of currently typing users.
+        currentlyTypingUsers.push(typingUser);
 
-    // Add the user avatar to the DOM
-    document.querySelector('#currently-typing-users').innerHTML += `
-        <img id="typing-indicator-user-${typingUser.id}" src="${typingUser.pfp}" alt="${typingUser.username}" class="animating">
-    `;
+        // Add the user avatar to the DOM
+        document.querySelector('#currently-typing-users').innerHTML += `
+            <img id="typing-indicator-user-${typingUser.id}" src="${typingUser.pfp}" alt="${typingUser.username}" class="animating">
+        `;
 
-    // Remove the animation class when the animation finishes
-    const indicator = document.querySelector(`#typing-indicator-user-${typingUser.id}`);
-    indicator.addEventListener('animationend', () => indicator.classList.remove('animating'));
+        // Remove the animation class when the animation finishes
+        const indicator = document.querySelector(`#typing-indicator-user-${typingUser.id}`);
+        indicator.addEventListener('animationend', () => indicator.classList.remove('animating'));
 
-    // Remove the user from the list after 5 seconds
-    setTimeout(() => removeTypingUser(typingUser), 5000);
+        // Remove the user from the list after 5 seconds
+        typingUsersTimeouts[userId] = setTimeout(() => removeTypingUser(typingUser), 5000);
+    }
 }
 
 function removeTypingUser(typingUser)
