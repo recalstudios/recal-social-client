@@ -58,7 +58,7 @@ let currentlyTypingUsers = [];
 
 // Other variable declarations
 // I really should document all of these variables, but I really don't want to
-let authToken, refreshToken, message, sendMessage, input, input2;
+let authToken, refreshToken, message, input, input2;
 let username, email, passphrase, result;
 let changePasswordResult;
 let changeUserResult;

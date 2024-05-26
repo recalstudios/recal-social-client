@@ -7,6 +7,7 @@ const joinChatroomCodeField = $("#join-chatroom-code");
 const joinChatroomPasswordField = $("#join-chatroom-password");
 const createChatroomNameField = $("#create-chatroom-name");
 const createChatroomPasswordField = $("#create-chatroom-password");
+const sendMessage = $("#sendMessage"); // Message text field
 
 // Clear fields on load
 joinChatroomCodeField.val('')
@@ -32,43 +33,53 @@ document.querySelectorAll("#current-chatroom-code").forEach(e =>
     });
 });
 
-// Stores #sendmessage text box in variable
-sendMessage = $("#sendMessage")
-
-// Send message to ws
-// This runs when a key is pressed in the send chat message field
-sendMessage.keypress(function (e)
+// Register key listener
+document.onkeydown = e =>
 {
-    // Check that the key is enter and shift is not held (i think)
-    if (e.which === 13 && !e.shiftKey)
-    {
-        e.preventDefault();
-        $(this).closest("form").submit(); // On enter send message
+    console.log(e.key)
 
-        // Check that the message has content
-        if (document.querySelector("#sendMessage").value.length >= 1) {
-            // Structure of content sent to ws
-            message = JSON.stringify({
-                "type": "message",
-                "room": JSON.parse(localStorage['currentChatroomId']),
-                "author": JSON.parse(user.id),
-                "content": {
-                    "attachments": [
-                        {
-                            "type":"image",
-                            "src":"yorumom" // uhh, what is this
+    // Check which key is being pressed
+    switch (e.key)
+    {
+        case "Shift": case "Control": case "Alt": case "Escape": case "Tab": case "Meta": case "PageUp": case "PageDown":
+            // Ignore keypress if it is a non-standard key
+            break;
+        case "Enter":
+            // Send message on enter
+            if (!e.shiftKey) // Make sure shift is not held
+            {
+                // Check that the message has content
+                if (document.querySelector("#sendMessage").value.length >= 1)
+                {
+                    // Construct object to send to Websocket
+                    let messageContent = JSON.stringify({
+                        "type": "message",
+                        "room": JSON.parse(localStorage['currentChatroomId']),
+                        "author": JSON.parse(user.id),
+                        "content": {
+                            "attachments": [
+                                {
+                                    "type": "image",
+                                    "src": "null"
+                                }
+                            ],
+                            "text": sendMessage.val()
                         }
-                    ],
-                    "text": sendMessage.val()
+                    });
+
+                    // Send the message content to the websocket
+                    ws.send(messageContent);
+
+                    // Clear the message field
+                    sendMessage.val('');
                 }
-            });
-            //if (dev) console.debug(message);
-            ws.send(message); // Sends content to message
-            sendMessage.val('')
-        }
-        // document.querySelector(".chat:last-child").style.color = red;
+            }
+            break;
+        default:
+            // If another key is pressed, focus the message field
+            sendMessage.focus();
     }
-});
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 
