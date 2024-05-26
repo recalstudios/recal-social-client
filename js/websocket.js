@@ -68,10 +68,9 @@ function openWebsocketConnection()
                 chatroomList = chatroomList.filter(e => e.id !== data.room);
                 chatroomList.unshift(newestRoom[0]);
 
-                // This is not tested but apparently it works idk
-                // I also have no idea what it is supposed to do or why it is here
-                loadChatroomList()
-                document.querySelector("#" + currentChatroom).style.backgroundColor = "#123";
+                // Reload and reselect the chat room
+                selectTopmostChatroom();
+                //document.querySelector("#" + currentChatroom).style.backgroundColor = "#123"; // FUCK YOU SO MUCH LITTLE THIS IS NOT SUPPOSED TO BE HERE I SPENT SO LONG TRYING TO FIGURE OUT WHY THIS SHIT HAPPENED WHY THE FUCK WAS IT IN THIS FILE OMG
                 break;
             case "system":
                 // System message
