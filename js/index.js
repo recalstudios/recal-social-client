@@ -36,8 +36,6 @@ document.querySelectorAll("#current-chatroom-code").forEach(e =>
 // Register key listener
 document.onkeydown = e =>
 {
-    console.log(e.key)
-
     // Check which key is being pressed
     switch (e.key)
     {
