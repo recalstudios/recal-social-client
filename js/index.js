@@ -654,37 +654,6 @@ async function deleteMessage(id) {
     ws.send(message); // Sends delete message to ws
 }
 
-async function testAddRandomTypingUser()
-{
-    // Get the users in the current chatroom
-    const currentRoomUsers = chatroomList.find(r => r.id === parseInt(currentChatroom.replace(/\D/g,''))).users;
-
-    // Get a user that isn't already in the list
-    let randomUser;
-    do {
-        randomUser = currentRoomUsers[Math.floor(Math.random()*currentRoomUsers.length)];
-    }
-    while (currentlyTypingUsers.filter(u => u === randomUser).length > 0);
-
-    currentlyTypingUsers.push(randomUser);
-    console.log(currentlyTypingUsers);
-
-    // Load the thing
-    document.querySelector('#currently-typing-users').innerHTML += `
-        <img id="typing-indicator-user-${randomUser.id}" src="${randomUser.pfp}" alt="${randomUser.username}" class="animating">
-    `;
-
-    // Remove the fuckass after the shit
-    const indicator = document.querySelector(`#typing-indicator-user-${randomUser.id}`);
-    indicator.addEventListener('animationend', () => indicator.classList.remove('animating'));
-}
-
-function testRemoveLastTypingUser()
-{
-    currentlyTypingUsers.pop();
-    displayTypingUsers();
-}
-
 function addTypingUser(userId)
 {
     // Fetch user data for the relevant user from already existing data
