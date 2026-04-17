@@ -212,7 +212,7 @@ async function loadChat()
                     </div>
                     <div class="right-box">
                         <span class="material-symbols-outlined clickable" onclick="deleteMessage(${message.id})" style="display: ${deleteMessage}">delete</span>
-                        <p class="bold"><i>${new Date(message.timestamp).toLocaleString()}</i></p>
+                        <p>${new Date(message.timestamp).toLocaleString()}</p>
                     </div>
                 </div>
                 <p class="chat-message">${message.content.text}</p>
